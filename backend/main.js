@@ -6,4 +6,6 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
+app.use(express.static("../dist"))
+
 app.listen(3000);
