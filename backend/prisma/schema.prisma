@@ -12,8 +12,8 @@ model User {
   id            Int @id @default(autoincrement())
   email         String @unique
   name          String
-  create_dt     DateTime
-  update_dt     DateTime
+  createDt      DateTime
+  updateDt      DateTime
   events        Event[]
 }
 
@@ -21,10 +21,10 @@ model Event {
   id            Int @id @default(autoincrement())
   name          String
   description   String
-  start_dt      DateTime
-  end_dt        DateTime
-  create_dt     DateTime
-  update_dt     DateTime
+  startDt       DateTime
+  endDt         DateTime
+  createDt      DateTime
+  updateDt      DateTime
   user          User @relation(fields: [userId], references: [id])
   userId        Int
 }
