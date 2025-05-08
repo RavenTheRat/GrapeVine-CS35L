@@ -12,7 +12,7 @@ app.get("/", async (req, res) => {
   res.send("There is nothing here.");
 });
 
-app.post("/createUser", async (req, res) => {
+app.post("/createuser", async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400)
@@ -39,7 +39,7 @@ app.post("/createUser", async (req, res) => {
 
 })
 
-app.post("/createEvent", async (req, res) => {
+app.post("/createevent", async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400)
