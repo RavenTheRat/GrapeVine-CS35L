@@ -8,7 +8,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model hello {
-  id Int        @id @default(autoincrement())
-  magic_word    String
+model User {
+  id            Int @id @default(autoincrement())
+  email         String @unique
+  name          String
+  create_dt     DateTime
+  update_dt     DateTime
+  events        Event[]
+}
+
+model Event {
+  id            Int @id @default(autoincrement())
+  name          String
+  description   String
+  start_dt      DateTime
+  end_dt        DateTime
+  create_dt     DateTime
+  update_dt     DateTime
+  user          User @relation(fields: [userId], references: [id])
+  userId        Int
 }
