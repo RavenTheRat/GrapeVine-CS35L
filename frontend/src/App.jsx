@@ -34,9 +34,17 @@ function App() {
 
 export default App */
 
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import CalendarDays from './days.jsx';
 import './calendar.css'
+
+const friends = [
+  {name: "Adelisa"},
+  {name: "David"},
+  {name: "Remi"},
+  {name: "Thomas"},
+  {name: "Zayd"}
+];
 
 export default class Calendar extends Component {
   constructor() {
@@ -87,14 +95,7 @@ function Sidebar() {
   /* temporary list of friends for testing purposes,
      in the future will be replaced with user's friends
      */
-  const friends = [
-    {name: "Adelisa"},
-    {name: "David"},
-    {name: "Remi"},
-    {name: "Thomas"},
-    {name: "Zayd"}
-  ]
-     
+
   const [searchItem, setSearchItem] = useState('');
   const [filteredFriends, setFilteredFriends] = useState(friends); // [] will be replaced with the current user's friends list
 
@@ -114,11 +115,11 @@ function Sidebar() {
         type="text"
         value={searchItem}
         onChange={handleInputChange}
-        placeholder='Search friends list'
+        placeholder="Search friends list"
       />
       <ul>
-        {filteredFriends.map((friend) => <li>{friend}</li>)}
+        {filteredFriends.map((friend) => <li>{friend.name}</li>)}
       </ul>
     </>
   );
-}//{filteredFriends.map(friend => <li key={friend.id}>{friend.name}</li>)}
+}
