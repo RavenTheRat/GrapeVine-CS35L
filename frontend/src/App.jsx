@@ -75,10 +75,50 @@ export default class Calendar extends Component {
         </div>
       </div>
       <div className="side-bar">
-        <h1>more stuff will go here later, trust</h1>
+        <h1><Sidebar /></h1>
       </div>
       </div>
     </>
     )
   }
 }
+
+function Sidebar() {
+  /* temporary list of friends for testing purposes,
+     in the future will be replaced with user's friends
+     */
+  const friends = [
+    {name: "Adelisa"},
+    {name: "David"},
+    {name: "Remi"},
+    {name: "Thomas"},
+    {name: "Zayd"}
+  ]
+     
+  const [searchItem, setSearchItem] = useState('');
+  const [filteredFriends, setFilteredFriends] = useState(friends); // [] will be replaced with the current user's friends list
+
+  const handleInputChange = (e) => {
+    const searchTerm = e.target.value;
+    setSearchItem(searchTerm);
+
+    const filteredItems = friends.filter((friend) =>
+    friend.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    setFilteredFriends(filteredItems);
+  }
+
+  return (
+    <>
+      <input
+        type="text"
+        value={searchItem}
+        onChange={handleInputChange}
+        placeholder='Search friends list'
+      />
+      <ul>
+        {filteredFriends.map((friend) => <li>{friend}</li>)}
+      </ul>
+    </>
+  );
+}//{filteredFriends.map(friend => <li key={friend.id}>{friend.name}</li>)}
