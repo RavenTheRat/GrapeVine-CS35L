@@ -106,6 +106,45 @@ app.post("/createevent", requiresAuth(), async (req, res) => {
 
 })
 
+/*
+```
+type Req {
+  userId: number,
+  eventId: number,
+}
+
+returns Event model
+```
+*/
+app.post("/getevent", async (req, res) => {
+  if (!req.body) {
+    // Bad Request
+    res.sendStatus(400);
+  }
+
+  // TODO: Check if user is authorized or perhaps if this is "public".
+  if (req.body._) {
+    // Not Authorized
+    res.sendStatus(401);
+    return;
+  }
+
+  let ret;
+  try {
+    ret = await prisma.event.findUniqueOrThrow({
+      where: {
+        id: req.body.eventId,
+        userId: req.body.userId,
+      }
+    });
+  } catch (e) {
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+
+  return ret;
+});
 
 /*
 ```
@@ -123,17 +162,18 @@ type Req {
 }
 ```
 */
-
 app.post("/updateevent", async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400);
+    return;
   }
 
   // TODO: Check if user is authorized.
   if (req.body._) {
     // Not Authorized
     res.sendStatus(401);
+    return;
   }
 
   // TODO: Check integrity of dates, ie end after start
@@ -159,6 +199,7 @@ app.post("/updateevent", async (req, res) => {
   } catch (e) {
     // Bad Request
     res.sendStatus(400);
+    return;
   }
 })
 
