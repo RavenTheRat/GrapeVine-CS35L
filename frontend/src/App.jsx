@@ -38,6 +38,10 @@ import React, { Component, useState } from 'react';
 import CalendarDays from './days.jsx';
 import './calendar.css'
 
+
+/* temporary list of friends for testing purposes,
+   in the future will be replaced with user's friends
+  */
 const friends = [
   {name: "Adelisa"},
   {name: "David"},
@@ -92,13 +96,14 @@ export default class Calendar extends Component {
 }
 
 function Sidebar() {
-  /* temporary list of friends for testing purposes,
-     in the future will be replaced with user's friends
-     */
-
+  // State containing text from search box
   const [searchItem, setSearchItem] = useState('');
-  const [filteredFriends, setFilteredFriends] = useState(friends); // [] will be replaced with the current user's friends list
+  // State containing the list of friends matching search query
+  // using implementation with temporary friends array
+  // to be replaced with user's friends from database
+  const [filteredFriends, setFilteredFriends] = useState(friends);
 
+  // Searching algorithm
   const handleInputChange = (e) => {
     const searchTerm = e.target.value;
     setSearchItem(searchTerm);
