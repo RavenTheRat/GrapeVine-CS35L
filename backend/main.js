@@ -106,6 +106,62 @@ app.post("/createevent", requiresAuth(), async (req, res) => {
 
 })
 
+
+/*
+```
+type EventDiff {
+  name: Optional<String>,
+  description: Optional<String>,
+  startDt: Optional<String>,
+  endDt: Optional<String>,
+}
+
+type Req {
+  userId: number,
+  eventId: number,
+  diff: EventDiff,
+}
+```
+*/
+
+app.post("/updateevent", async (req, res) => {
+  if (!req.body) {
+    // Bad Request
+    res.sendStatus(400);
+  }
+
+  // TODO: Check if user is authorized.
+  if (req.body._) {
+    // Not Authorized
+    res.sendStatus(401);
+  }
+
+  // TODO: Check integrity of dates, ie end after start
+  // TODO: Check that name is not "strange looking"
+
+  let updateTime = new Date();
+  const updateData = {
+    name: req.body.diff.name,
+    description: req.body.diff.description,
+    start_dt: req.body.diff.start_dt,
+    end_dt: req.body.diff.end_dt,
+    update_dt: updateTime,
+  };
+
+  try {
+    await prisma.event.update({
+      where: {
+        id: req.body.eventId,
+        userId: req.body.userId,
+      },
+      data: updateData,
+    });
+  } catch (e) {
+    // Bad Request
+    res.sendStatus(400);
+  }
+})
+
 app.use(express.static("../dist"));
 
 try {
