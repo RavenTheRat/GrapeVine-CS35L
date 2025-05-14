@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/RavenTheRat/GrapeVine-CS35L/issues"
   },
-  "homepage": "https://github.com/RavenTheRat/GrapeVine-CS35L#readme"
+  "homepage": "https://github.com/RavenTheRat/GrapeVine-CS35L#readme",
+  "dependencies": {
+    "@auth0/auth0-react": "^2.3.0",
+    "react-router-dom": "^7.6.0"
+  }
 }

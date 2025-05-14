@@ -35,10 +35,12 @@ function App() {
 export default App */
 
 import React, { Component } from 'react';
+import { useNavigate } from "react-router-dom";
 import CalendarDays from './days.jsx';
 import './calendar.css'
 
 export default class Calendar extends Component {
+  
   constructor() {
     super();
 
@@ -75,6 +77,16 @@ export default class Calendar extends Component {
         </div>
       </div>
       <div className="side-bar">
+        <button onClick={() => {
+            window.location.href = "http://localhost:3000/login";
+              }}>
+                Login
+        </button>
+        <button onClick={() => {
+            window.location.href = "http://localhost:3000/logout";
+              }}>
+                Logout
+        </button>
         <h1>more stuff will go here later, trust</h1>
       </div>
       </div>
