@@ -28,6 +28,16 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/user", async (req, res) => {
+  if (req.oidc && req.oidc.isAuthenticated()) {
+    const { name, email } = req.oidc.user;
+    res.json({ name, email });
+  } else {
+    // Unauthenticated
+    res.sendStatus(401)
+  }
+});
+
 app.post("/createuser", async (req, res) => {
   if (!req.body) {
     // Bad Request
