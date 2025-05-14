@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(auth(authConfig));
 
 app.get("/", async (req, res) => {
-  res.send("There is nothing here.");
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
 app.post("/createuser", async (req, res) => {
