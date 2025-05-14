@@ -13,7 +13,8 @@ const authConfig = {
   secret: process.env.AUTH0_CLIENT_SECRET,
   baseURL: 'http://localhost:3000',
   clientID: process.env.AUTH0_CLIENT_ID,
-  issuerBaseURL: 'https://grapevine35l.us.auth0.com'
+  issuerBaseURL: 'https://grapevine35l.us.auth0.com',
+  postLogoutRedirectUri: 'http://localhost:3000/index.html'
 };
 
 // application/json parser
