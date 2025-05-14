@@ -87,7 +87,7 @@ export default class Calendar extends Component {
               }}>
                 Logout
         </button>
-        <h1>more stuff will go here later, trust</h1>
+        <h1>more stuff will go here later, trust me</h1>
       </div>
       </div>
     </>
