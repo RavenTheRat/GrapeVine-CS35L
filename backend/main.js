@@ -21,11 +21,7 @@ app.use(express.json());
 app.use(auth(authConfig));
 
 app.get("/", async (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    res.send(JSON.stringify(req.oidc.user));
-  } else {
-    res.send("Logged out");
-  }
+  res.redirect('/index.html')
 });
 
 app.get("/user", async (req, res) => {
