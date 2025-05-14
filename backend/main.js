@@ -21,7 +21,21 @@ app.use(express.json());
 app.use(auth(authConfig));
 
 app.get("/", async (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+  if (req.oidc.isAuthenticated()) {
+    res.send(JSON.stringify(req.oidc.user));
+  } else {
+    res.send("Logged out");
+  }
+});
+
+app.get("/user", async (req, res) => {
+  if (req.oidc && req.oidc.isAuthenticated()) {
+    const { name, email } = req.oidc.user;
+    res.json({ name, email });
+  } else {
+    // Unauthenticated
+    res.sendStatus(401)
+  }
 });
 
 app.post("/createuser", async (req, res) => {
