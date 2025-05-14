@@ -1,12 +1,24 @@
-import express from "express";
+import express from "express"
 import { PrismaClient } from './generated/prisma/index.js'
+import { auth } from "express-openid-connect"
+// add env variables to process.env
+import "dotenv/config"
 
 const app = express();
 const prisma = new PrismaClient();
 
+const authConfig = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.AUTH0_CLIENT_SECRET,
+  baseURL: 'http://localhost:3000',
+  clientID: process.env.AUTH0_CLIENT_ID,
+  issuerBaseURL: 'https://grapevine35l.us.auth0.com'
+};
+
 // application/json parser
 app.use(express.json());
-
+app.use(auth(authConfig));
 
 app.get("/", async (req, res) => {
   res.send("There is nothing here.");
