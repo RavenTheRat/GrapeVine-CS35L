@@ -116,17 +116,18 @@ type Req {
 returns Event model
 ```
 */
-app.post("/getevent", async (req, res) => {
+app.post("/getevent", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch(e) {
+    console.log(e);
+    return;
+  }
+
   if (!req.body) {
     // Bad Request
     res.sendStatus(400);
-  }
-
-  // TODO: Check if user is authorized or perhaps if this is "public".
-  if (req.body._) {
-    // Not Authorized
-    res.sendStatus(401);
-    return;
   }
 
   let ret;
@@ -162,17 +163,10 @@ type Req {
 }
 ```
 */
-app.post("/updateevent", async (req, res) => {
+app.post("/updateevent", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400);
-    return;
-  }
-
-  // TODO: Check if user is authorized.
-  if (req.body._) {
-    // Not Authorized
-    res.sendStatus(401);
     return;
   }
 
