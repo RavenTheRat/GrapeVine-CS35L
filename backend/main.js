@@ -109,7 +109,6 @@ app.post("/createevent", requiresAuth(), async (req, res) => {
 /*
 ```
 type Req {
-  userId: number,
   eventId: number,
 }
 
@@ -135,7 +134,7 @@ app.post("/getevent", requiresAuth(), async (req, res) => {
     ret = await prisma.event.findUniqueOrThrow({
       where: {
         id: req.body.eventId,
-        userId: req.body.userId,
+        userId: user.userId,
       }
     });
   } catch (e) {
@@ -186,7 +185,7 @@ app.post("/updateevent", requiresAuth(), async (req, res) => {
     await prisma.event.update({
       where: {
         id: req.body.eventId,
-        userId: req.body.userId,
+        userId: user.userId,
       },
       data: updateData,
     });
