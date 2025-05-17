@@ -102,6 +102,8 @@ function Sidebar() {
   // using implementation with temporary friends array
   // to be replaced with user's friends from database
   const [filteredFriends, setFilteredFriends] = useState(friends);
+  // State: checked or unchecked for a checkbox
+  const [checked, setChecked] = useState([]);
 
   // Searching algorithm
   const handleInputChange = (e) => {
@@ -114,6 +116,18 @@ function Sidebar() {
     setFilteredFriends(filteredItems);
   }
 
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if(currentIndex === -1)
+      newChecked.push(value);
+    else
+      newChecked.splice(currentIndex, 1);
+
+      setChecked(newChecked);
+  }
+
   return (
     <>
       <input
@@ -122,8 +136,17 @@ function Sidebar() {
         onChange={handleInputChange}
         placeholder="Search friends list"
       />
-      <ul>
-        {filteredFriends.map((friend) => <li>{friend.name}</li>)}
+      <ul style={{listStyleType:'none'}}>
+        {filteredFriends.map((friend) => (
+          <li>
+            <input
+              type="checkbox"
+              checked={checked.includes(friend.name)}
+              onChange={handleToggle(friend.name)}>
+            </input>
+            {friend.name}
+          </li>
+        ))}
       </ul>
     </>
   );
