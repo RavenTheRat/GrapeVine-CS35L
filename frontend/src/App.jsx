@@ -51,6 +51,9 @@ const friends = [
   {name: "Zayd"}
 ];
 
+/* temporary list of users that are not friended by the current user,
+   in the future will be replaced with users in the backend database
+  */
 const otherUsers = [
   {name: "Eggert"},
   {name: "Bob"},
@@ -109,6 +112,9 @@ export default class Calendar extends Component {
   }
 }
 
+// Profile button in top right (contains username and profile photo)
+// onClick: Opens a popup that displays the username and profile photo
+// To add: display the user's email, button to edit friends list, and logout button
 function ProfilePopup() {
   const ProfileButton = React.forwardRef(({open, ...props}, ref) =>(
     <div ref={ref} {...props}>
@@ -153,31 +159,6 @@ function ProfilePopup() {
   );
 }
 
-// function ProfileButton() {
-//   const handleClick = () => {
-//     // open profile page/popup
-//     // shows username, email
-//     // allows user to manage friends and logout
-//   }
-
-//   // TODO: make this clickable
-//   return (
-//     <>
-//       <div>
-//         <div className="profile-button">
-//           <text className="profile-button-text">
-//           Username
-//           </text>
-//           <img
-//             src="https://helloartsy.com/wp-content/uploads/kids/fruit/how-to-draw-a-grapevine/how-to-draw-a-grapevine-step-6.jpg"
-//             id="profile-photo">
-//           </img>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
 function Sidebar() {
   // State containing text from search box
   const [searchItem, setSearchItem] = useState('');
@@ -199,6 +180,7 @@ function Sidebar() {
     setFilteredFriends(filteredItems);
   }
 
+  // Event handler for the check boxes, updates newChecked state with list of selected friends
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -247,6 +229,8 @@ function AddFriend() {
   // State containing array of users that are being searched for
   const [displayedUsers, setDisplayedUsers] = useState([]);
   
+  // Searching algorithm
+  // Will need to be updated to allow for searching users in database
   const searchForFriends = (e) => {
     e.preventDefault();
 
