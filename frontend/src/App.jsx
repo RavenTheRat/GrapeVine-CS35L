@@ -70,9 +70,12 @@ export default class Calendar extends Component {
   render() {
     return (
       <>
-      <h2>
-        GrapeVine
-      </h2>
+      <div>
+        <ProfileButton />
+        <h2>
+          GrapeVine
+        </h2>
+      </div>
       <div className="page-layout">
       <div className="calendar">
         <div className="calendar-header" style = {{ backgroundColor: 'whitesmoke', padding: '20px'}}>
@@ -96,6 +99,30 @@ export default class Calendar extends Component {
     </>
     )
   }
+}
+
+function ProfileButton() {
+  const handleClick = () => {
+    // open profile page/popup
+    // shows username, email
+    // allows user to manage friends and logout
+  }
+
+  return (
+    <>
+      <div onClick={handleClick}>
+        <div className="profile-button">
+          <text className="profile-button-text">
+          Username
+          </text>
+          <img
+            src="https://helloartsy.com/wp-content/uploads/kids/fruit/how-to-draw-a-grapevine/how-to-draw-a-grapevine-step-6.jpg"
+            id="profile-photo">
+          </img>
+        </div>
+      </div>
+    </>
+  );
 }
 
 function Sidebar() {
