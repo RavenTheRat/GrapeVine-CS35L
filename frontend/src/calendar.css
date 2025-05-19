@@ -124,6 +124,11 @@
     bottom: 40%;
   }
 
+  #profile-button-img {
+    width: 100px;
+    height: 100px;
+  }
+
   #profile-photo {
     position: relative;
     width: 50px;
