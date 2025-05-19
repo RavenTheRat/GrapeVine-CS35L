@@ -116,6 +116,7 @@ function ProfileButton() {
     // allows user to manage friends and logout
   }
 
+  // TODO: make this clickable
   return (
     <>
       <div onClick={handleClick}>
