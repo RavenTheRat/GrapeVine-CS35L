@@ -51,6 +51,13 @@ const friends = [
   {name: "Zayd"}
 ];
 
+const otherUsers = [
+  {name: "Eggert"},
+  {name: "Bob"},
+  {name: "Daniel"},
+  {name: "Genericname"}
+];
+
 export default class Calendar extends Component {
   constructor() {
     super();
@@ -159,40 +166,13 @@ function Sidebar() {
       setChecked(newChecked);
   }
 
-  const AddFriend = () =>  {
-    return (
-      <div className="side-bar-add">
-        <Popup trigger=
-          {<button>+</button>}
-          modal nested>
-            {
-              close => (
-                <div className="modal">
-                  <div>
-                  </div>
-                  <div>
-                    <button onClick={() => close()}>
-                      Close
-                    </button>
-                  </div>
-                </div>
-              )
-            }
-        </Popup>
-      </div>
-    )
-  }
-
   return (
     <>
     <div>
       <h2>
         Friends
       </h2>
-      {/* <button className="side-bar-add">
-        +
-      </button> */}
-      <AddFriend/>
+      <AddFriend />
     </div>
       <input
         type="text"
@@ -214,4 +194,59 @@ function Sidebar() {
       </ul>
     </>
   );
+}
+
+function AddFriend() {
+  // State containing text when searching for a friend to add
+  const [searchAddFriend, setSearchAddFriend] = useState('');
+  // State containing array of users that are being searched for
+  const [displayedUsers, setDisplayedUsers] = useState([]);
+  
+  const searchForFriends = (e) => {
+    e.preventDefault();
+
+    const filteredItems = otherUsers.filter((user) =>
+      user.name.toLowerCase().includes(searchAddFriend.toLowerCase()));
+    
+    setDisplayedUsers(filteredItems);
+  }
+
+
+  return (
+    <div className="side-bar-add">
+      <Popup trigger=
+        {<button>+</button>}
+        modal nested>
+          {
+            close => (
+              <>
+                <div className="modal">
+                  <div className="side-bar">
+                    <h2>Add Friends</h2>
+                    <form onSubmit={searchForFriends}>
+                      <input
+                        type="text"
+                        placeholder="Enter an email address"
+                        value={searchAddFriend}
+                        onChange={(e) => setSearchAddFriend(e.target.value)}/>
+                      <button type="submit" style={{marginLeft: '5px'}}>Search</button>
+                      </form>
+                        <ul style={{listStyleType:'none'}}>
+                          {displayedUsers.map((user) => (
+                            <li>{user.name}</li>
+                          ))}
+                        </ul>
+                  </div>
+                  <div>
+                    <button onClick={() => close()}>
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </>
+            )
+          }
+      </Popup>
+    </div>
+  )
 }
