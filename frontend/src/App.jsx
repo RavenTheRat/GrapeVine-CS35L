@@ -37,8 +37,8 @@ export default App */
 import React, { Component, useState } from 'react';
 import Popup from 'reactjs-popup';
 import CalendarDays from './days.jsx';
-import './calendar.css'
-
+import './calendar.css';
+import 'reactjs-popup/dist/index.css';
 
 /* temporary list of friends for testing purposes,
    in the future will be replaced with user's friends
@@ -159,15 +159,40 @@ function Sidebar() {
       setChecked(newChecked);
   }
 
+  const AddFriend = () =>  {
+    return (
+      <div className="side-bar-add">
+        <Popup trigger=
+          {<button>+</button>}
+          modal nested>
+            {
+              close => (
+                <div className="modal">
+                  <div>
+                  </div>
+                  <div>
+                    <button onClick={() => close()}>
+                      Close
+                    </button>
+                  </div>
+                </div>
+              )
+            }
+        </Popup>
+      </div>
+    )
+  }
+
   return (
     <>
     <div>
       <h2>
         Friends
       </h2>
-      <button className="side-bar-add">
+      {/* <button className="side-bar-add">
         +
-      </button>
+      </button> */}
+      <AddFriend/>
     </div>
       <input
         type="text"
