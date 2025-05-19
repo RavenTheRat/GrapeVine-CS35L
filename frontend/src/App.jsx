@@ -35,6 +35,7 @@ function App() {
 export default App */
 
 import React, { Component, useState } from 'react';
+import Popup from 'reactjs-popup';
 import CalendarDays from './days.jsx';
 import './calendar.css'
 
@@ -160,6 +161,9 @@ function Sidebar() {
 
   return (
     <>
+    <h2>
+      Friends
+    </h2>
       <input
         type="text"
         value={searchItem}
