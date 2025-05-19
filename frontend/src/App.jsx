@@ -161,9 +161,14 @@ function Sidebar() {
 
   return (
     <>
-    <h2>
-      Friends
-    </h2>
+    <div>
+      <h2>
+        Friends
+      </h2>
+      <button className="side-bar-add">
+        +
+      </button>
+    </div>
       <input
         type="text"
         value={searchItem}
