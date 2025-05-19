@@ -70,6 +70,9 @@ export default class Calendar extends Component {
   render() {
     return (
       <>
+      <h2>
+        GrapeVine
+      </h2>
       <div className="page-layout">
       <div className="calendar">
         <div className="calendar-header" style = {{ backgroundColor: 'whitesmoke', padding: '20px'}}>
