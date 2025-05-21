@@ -68,6 +68,12 @@ app.get("/user", requiresAuth(), async (req, res) => {
 });
 
 app.post("/createevent", requiresAuth(), async (req, res) => {
+  if (!req.body) {
+    // Bad Request
+    res.sendStatus(400)
+    return;
+  }
+
   let user;
   try {
     user = await syncUser(req.oidc);
@@ -76,28 +82,24 @@ app.post("/createevent", requiresAuth(), async (req, res) => {
     return;
   }
 
-  if (!req.body) {
-    // Bad Request
-    res.sendStatus(400)
-    return;
-  }
-
   try {
     let now = new Date()
-    await prisma.event.create({
+    let event = await prisma.event.create({
       data: {
         name: req.body.name,
         description: req.body.description,
-        startDt: new Date(req.body.startDt),
-        endDt: new Date(req.body.endDt),
+        // TODO: Check integrity of dates, ie end after start
+        startDt: new Date(parseInt(req.body.startDt)),
+        endDt: new Date(parseInt(req.body.endDt)),
         createDt: now,
         updateDt: now,
         // this automatically creates the foreign key relation
-        userId: user.userId
+        userId: user.id
       }
     })
-    // OK
-    res.sendStatus(201)
+    res.send({
+      eventId: event.id
+    });
   } catch (e) {
     // Bad Request
     console.log(e)
@@ -106,16 +108,12 @@ app.post("/createevent", requiresAuth(), async (req, res) => {
 
 })
 
-/*
-```
-type Req {
-  eventId: number,
-}
-
-returns Event model
-```
-*/
 app.post("/getevent", requiresAuth(), async (req, res) => {
+  if (!req.body) {
+    // Bad Request
+    res.sendStatus(400);
+  }
+
   let user;
   try {
     user = await syncUser(req.oidc);
@@ -124,17 +122,12 @@ app.post("/getevent", requiresAuth(), async (req, res) => {
     return;
   }
 
-  if (!req.body) {
-    // Bad Request
-    res.sendStatus(400);
-  }
-
   let ret;
   try {
     ret = await prisma.event.findUniqueOrThrow({
       where: {
         id: req.body.eventId,
-        userId: user.userId,
+        userId: user.id,
       }
     });
   } catch (e) {
@@ -143,29 +136,29 @@ app.post("/getevent", requiresAuth(), async (req, res) => {
     return;
   }
 
-  return ret;
+  res.send({
+    name: ret.name,
+    description: ret.description,
+    startDt: ret.startDt,
+    endDt: ret.endDt,
+    createDt: ret.createDt,
+    updateDt: ret.updateDt,
+    userId: ret.userId,
+  })
 });
 
-/*
-```
-type EventDiff {
-  name: Optional<String>,
-  description: Optional<String>,
-  startDt: Optional<String>,
-  endDt: Optional<String>,
-}
-
-type Req {
-  userId: number,
-  eventId: number,
-  diff: EventDiff,
-}
-```
-*/
 app.post("/updateevent", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400);
+    return;
+  }
+
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch(e) {
+    console.log(e);
     return;
   }
 
@@ -176,16 +169,16 @@ app.post("/updateevent", requiresAuth(), async (req, res) => {
   const updateData = {
     name: req.body.diff.name,
     description: req.body.diff.description,
-    start_dt: req.body.diff.start_dt,
-    end_dt: req.body.diff.end_dt,
-    update_dt: updateTime,
+    startDt: req.body.diff.start_dt,
+    endDt: req.body.diff.end_dt,
+    updateDt: updateTime,
   };
 
   try {
     await prisma.event.update({
       where: {
         id: req.body.eventId,
-        userId: user.userId,
+        userId: user.id,
       },
       data: updateData,
     });
