@@ -3,31 +3,48 @@
 const BASE_URL = "http://localhost:3000";
 
 export async function gvCreateEvent(req) {
-  return post("/createevent", req);
+  return gvFetch("/event/new", "POST", req, true);
 }
 
 export async function gvGetEvent(req) {
-  return post("/getevent", req);
+  return gvFetch(`/event/${req.eventId}`, "GET", null, true);
 }
 
 export async function gvUpdateEvent(req) {
-  return post("/getevent", req);
+  return gvFetch(`/event/${req.eventId}`, "POST", req);
 }
 
-async function get(endpoint) {
-  return fetch(`${BASE_URL}${endpoint}`).catch(handleError);
+export async function gvDeleteEvent(req) {
+  return gvFetch(`/event/${req.eventId}`, "DELETE");
 }
 
-async function post(endpoint, data) {
-  return fetch(`${BASE_URL}${endpoint}`, {
-    method: "POST",
-    headers: {
+export async function gvGetEvents() {
+  return gvFetch(`/events`, "GET", null, true);
+}
+
+async function gvFetch(endpoint, method, data = null, useJsonResponse = false) {
+  const fetchParams = {
+    method
+  };
+
+  if (data) {
+    fetchParams.headers = {
       "Accept": "application/json",
       "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data),
-  })
-    .then(res => res.status == 200 ? res.text().then(t => JSON.parse(t)) : null)
+    };
+    fetchParams.body = JSON.stringify(data);
+  }
+
+  return fetch(`${BASE_URL}${endpoint}`, fetchParams)
+    .then(async (res) => {
+      const text = await res.text().catch(_ => null);
+      if (useJsonResponse && res.status == 200) {
+        return JSON.parse(text);
+      } else {
+        return text;
+      }
+
+    })
     .catch(handleError);
 }
 
