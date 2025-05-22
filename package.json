@@ -21,10 +21,8 @@
   },
   "homepage": "https://github.com/RavenTheRat/GrapeVine-CS35L#readme",
   "dependencies": {
-    "reactjs-popup": "^2.0.6"
-  },
-  "dependencies": {
     "@auth0/auth0-react": "^2.3.0",
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "reactjs-popup": "^2.0.6"
   }
 }

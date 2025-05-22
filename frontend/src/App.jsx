@@ -40,7 +40,7 @@ import {useNavigate} from "react-router-dom";
 import CalendarDays from './days.jsx';
 import './calendar.css';
 import 'reactjs-popup/dist/index.css';
-
+import EventPopup from "./addForm.jsx";
 /* temporary list of friends for testing purposes,
    in the future will be replaced with user's friends
   */
@@ -88,11 +88,32 @@ export default class Calendar extends Component {
         <h2>
           GrapeVine
         </h2>
+
       </div>
       <div className="page-layout">
       <div className="calendar">
-        <div className="calendar-header" style = {{ backgroundColor: 'whitesmoke', padding: '20px'}}>
+        <div className="calendar-header" style = {{ backgroundColor: 'whitesmoke', padding: '20px', display: 'flex', gap: '10px'}}>
           <h2>{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
+          <div style={{ marginRight: '10px' }}>
+            <Popup
+              trigger={<button className="add-event-btn">+ Add Event</button>}
+              modal
+              nested
+            >
+            {close => (
+              <div className="modal">
+                <h3>Add Event</h3>
+                <EventPopup
+                  onSubmit={event => {
+                  console.log("New event:", event); // Hook into calendar logic here
+                  close();
+                  }}
+                />
+                <button onClick={close} style={{ marginTop: '10px' }}>Cancel</button>
+              </div>
+            )}
+            </Popup>
+          </div>
         </div>
         <div className="calendar-body"style = {{ backgroundColor: 'thistle', padding: '20px'}}>
           <div className="table-header" style = {{ backgroundColor: '#c5a0c5', padding: '20px'}}>
@@ -102,6 +123,7 @@ export default class Calendar extends Component {
               })
             }
           </div>
+        
           <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} />
         </div>
       </div>
