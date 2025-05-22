@@ -51,17 +51,17 @@ app.use(express.json());
 app.use(auth(authConfig));
 
 app.get("/", async (req, res) => {
-  res.redirect('/index.html')
+  res.redirect('/index.html');
 });
 
 app.get("/user", requiresAuth(), async (req, res) => {
   let user;
   try {
     user = await syncUser(req.oidc);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     // Bad Request
-    res.sendStatus(400)
+    res.sendStatus(400);
     return;
   }
 
@@ -72,22 +72,22 @@ app.get("/user", requiresAuth(), async (req, res) => {
 app.post("/event/new", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
-    res.sendStatus(400)
+    res.sendStatus(400);
     return;
   }
 
   let user;
   try {
     user = await syncUser(req.oidc);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     // Bad Request
-    res.sendStatus(400)
+    res.sendStatus(400);
     return;
   }
 
   try {
-    const now = new Date()
+    const now = new Date();
     const startDt = new Date(req.body.startDt);
     const endDt = new Date(req.body.endDt);
     if (startDt > endDt) {
@@ -106,16 +106,16 @@ app.post("/event/new", requiresAuth(), async (req, res) => {
         // this automatically creates the foreign key relation
         userId: user.id
       }
-    })
+    });
     res.send({
       eventId: event.id
     });
   } catch (e) {
     console.log(e)
     // Bad Request
-    res.sendStatus(400)
+    res.sendStatus(400);
   }
-})
+});
 
 app.get("/event/:id", requiresAuth(), async (req, res) => {
   if (!req.body) {
@@ -127,10 +127,10 @@ app.get("/event/:id", requiresAuth(), async (req, res) => {
   let user;
   try {
     user = await syncUser(req.oidc);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     // Bad Request
-    res.sendStatus(400)
+    res.sendStatus(400);
     return;
   }
 
@@ -150,11 +150,11 @@ app.get("/event/:id", requiresAuth(), async (req, res) => {
       createDt: event.createDt,
       updateDt: event.updateDt,
       userId: event.userId,
-    })
+    });
   } catch (e) {
     console.log(e);
     // Bad Request
-    res.sendStatus(400)
+    res.sendStatus(400);
   }
 });
 
@@ -168,7 +168,7 @@ app.post("/event/:id", requiresAuth(), async (req, res) => {
   let user;
   try {
     user = await syncUser(req.oidc);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     return;
   }
@@ -200,13 +200,13 @@ app.post("/event/:id", requiresAuth(), async (req, res) => {
       data: updateData,
     });
     // OK
-    res.send(200)
+    res.send(200);
   } catch (e) {
     console.log(e);
     // Bad Request
     res.sendStatus(400);
   }
-})
+});
 
 app.use(express.static("../dist"));
 
