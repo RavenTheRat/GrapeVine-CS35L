@@ -1,4 +1,3 @@
-
 declare interface ReqCreateEvent {
   name: String,  
   description: String,
@@ -7,7 +6,11 @@ declare interface ReqCreateEvent {
 }
 
 declare interface ResCreateEvent {
-    eventId: number
+  id: number
+  name: String,  
+  description: String,
+  startDt: Date,
+  endDt: Date,
 }
 
 declare function gvCreateEvent(req: ReqCreateEvent): Promise<void>;
@@ -28,17 +31,19 @@ declare interface ResGetEvent {
 
 declare function gvGetEvent(req: ReqGetEvent): Promise<ResGetEvent>;
 
-declare interface PartialEvent {
-  name: String | undefined,
-  description: String | undefined,
-  startDt: String | undefined,
-  endDt: String | undefined,
-}
-
 declare interface ReqUpdateEvent {
-  eventId: number,
-  diff: PartialEvent,
+  name: String,
+  description: String,
+  startDt: String,
+  endDt: String,
 }
 
 declare function gvUpdateEvent(req: ReqUpdateEvent): Promise<void>;
+
+declare interface ReqDeleteEvent {
+  eventId: number,
+}
+
+declare function gvDeleteEvent(req: ReqDeleteEvent): Promise<void>;
+declare function gvGetEvents(): Promise<Array<ResGetEvent>>;
 
