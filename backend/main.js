@@ -129,7 +129,7 @@ app.get("/event/:id", requiresAuth(), async (req, res) => {
     const event = await prisma.event.findUniqueOrThrow({
       where: {
         // req.params.id refers to :id
-        id: req.params.id,
+        id: Number(req.params.id),
         userId: user.id,
       }
     });
@@ -177,12 +177,39 @@ app.post("/event/:id", requiresAuth(), async (req, res) => {
     const event = await prisma.event.update({
       where: {
         // req.params.id refers to :id
-        id: req.params.id,
+        id: Number(req.params.id),
         userId: user.id,
       },
       data: updateData,
     });
     res.send(event);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+  }
+});
+
+app.delete("/event/:id", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    return;
+  }
+
+  try {
+    await prisma.event.delete({
+      where: {
+        // req.params.id refers to :id
+        id: Number(req.params.id),
+        userId: user.id,
+      },
+      data: updateData,
+    });
+    // OK
+    res.sendStatus(200);
   } catch (e) {
     console.log(e);
     // Bad Request
