@@ -118,12 +118,6 @@ app.post("/event/new", requiresAuth(), async (req, res) => {
 });
 
 app.get("/event/:id", requiresAuth(), async (req, res) => {
-  if (!req.body) {
-    // Bad Request
-    res.sendStatus(400);
-    return;
-  }
-
   let user;
   try {
     user = await syncUser(req.oidc);
@@ -201,6 +195,39 @@ app.post("/event/:id", requiresAuth(), async (req, res) => {
     });
     // OK
     res.send(200);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+  }
+});
+
+app.get("/events", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+
+  try {
+    const event = await prisma.event.findUniqueOrThrow({
+      where: {
+        userId: user.id,
+      }
+    });
+    res.send({
+      name: event.name,
+      description: event.description,
+      startDt: event.startDt,
+      endDt: event.endDt,
+      createDt: event.createDt,
+      updateDt: event.updateDt,
+      userId: event.userId,
+    });
   } catch (e) {
     console.log(e);
     // Bad Request
