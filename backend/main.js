@@ -67,7 +67,7 @@ app.get("/user", requiresAuth(), async (req, res) => {
   res.json({ name, email, db: user });
 });
 
-app.post("/createevent", requiresAuth(), async (req, res) => {
+app.post("/event/new", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400)
@@ -108,7 +108,7 @@ app.post("/createevent", requiresAuth(), async (req, res) => {
 
 })
 
-app.post("/getevent", requiresAuth(), async (req, res) => {
+app.get("/event/:id", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400);
@@ -126,7 +126,8 @@ app.post("/getevent", requiresAuth(), async (req, res) => {
   try {
     ret = await prisma.event.findUniqueOrThrow({
       where: {
-        id: req.body.eventId,
+        // req.params.id refers to :id
+        id: req.params.id,
         userId: user.id,
       }
     });
@@ -147,7 +148,7 @@ app.post("/getevent", requiresAuth(), async (req, res) => {
   })
 });
 
-app.post("/updateevent", requiresAuth(), async (req, res) => {
+app.post("/event/:id", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400);
@@ -177,7 +178,8 @@ app.post("/updateevent", requiresAuth(), async (req, res) => {
   try {
     await prisma.event.update({
       where: {
-        id: req.body.eventId,
+        // req.params.id refers to :id
+        id: req.params.id,
         userId: user.id,
       },
       data: updateData,
