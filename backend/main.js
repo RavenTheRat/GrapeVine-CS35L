@@ -34,7 +34,7 @@ async function syncUser(oidc) {
 
 // throws on failure.
 async function createUser(oidc) {
-  let now = new Date();
+  const now = new Date();
   return await prisma.user.create({
     data: {
       email: oidc.user.email,
@@ -51,103 +51,97 @@ app.use(express.json());
 app.use(auth(authConfig));
 
 app.get("/", async (req, res) => {
-  res.redirect('/index.html')
+  res.redirect('/index.html');
 });
 
 app.get("/user", requiresAuth(), async (req, res) => {
   let user;
   try {
     user = await syncUser(req.oidc);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
+    // Bad Request
+    res.sendStatus(400);
     return;
   }
 
-  const { name, email } = req.oidc.user;
-  res.json({ name, email, db: user });
+  res.send(user);
 });
 
-app.post("/createevent", requiresAuth(), async (req, res) => {
+app.post("/event/new", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
-    res.sendStatus(400)
+    res.sendStatus(400);
     return;
   }
 
   let user;
   try {
     user = await syncUser(req.oidc);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
+    // Bad Request
+    res.sendStatus(400);
     return;
   }
 
   try {
-    let now = new Date()
-    let event = await prisma.event.create({
+    const now = new Date();
+    const startDt = new Date(req.body.startDt);
+    const endDt = new Date(req.body.endDt);
+    if (startDt > endDt) {
+      // Bad Request
+      res.status(400).send("Start date cannot be later than end date");
+      return;
+    }
+    const event = await prisma.event.create({
       data: {
         name: req.body.name,
         description: req.body.description,
-        // TODO: Check integrity of dates, ie end after start
-        startDt: new Date(parseInt(req.body.startDt)),
-        endDt: new Date(parseInt(req.body.endDt)),
+        startDt: startDt,
+        endDt: endDt,
         createDt: now,
         updateDt: now,
         // this automatically creates the foreign key relation
         userId: user.id
       }
-    })
-    res.send({
-      eventId: event.id
     });
+    res.send(event);
   } catch (e) {
-    // Bad Request
     console.log(e)
-    res.sendStatus(400)
-  }
-
-})
-
-app.post("/getevent", requiresAuth(), async (req, res) => {
-  if (!req.body) {
     // Bad Request
     res.sendStatus(400);
   }
+});
 
+app.get("/event/:id", requiresAuth(), async (req, res) => {
   let user;
   try {
     user = await syncUser(req.oidc);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
+    // Bad Request
+    res.sendStatus(400);
     return;
   }
 
-  let ret;
   try {
-    ret = await prisma.event.findUniqueOrThrow({
+    const event = await prisma.event.findUniqueOrThrow({
       where: {
-        id: req.body.eventId,
+        // req.params.id refers to :id
+        id: Number(req.params.id),
         userId: user.id,
       }
     });
+    res.send(event);
   } catch (e) {
+    console.log(e);
     // Bad Request
     res.sendStatus(400);
-    return;
   }
-
-  res.send({
-    name: ret.name,
-    description: ret.description,
-    startDt: ret.startDt,
-    endDt: ret.endDt,
-    createDt: ret.createDt,
-    updateDt: ret.updateDt,
-    userId: ret.userId,
-  })
 });
 
-app.post("/updateevent", requiresAuth(), async (req, res) => {
+app.post("/event/:id", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400);
@@ -157,37 +151,95 @@ app.post("/updateevent", requiresAuth(), async (req, res) => {
   let user;
   try {
     user = await syncUser(req.oidc);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     return;
   }
 
-  // TODO: Check integrity of dates, ie end after start
-  // TODO: Check that name is not "strange looking"
+  const startDt = new Date(req.body.startDt);
+  const endDt = new Date(req.body.endDt);
+  if (startDt > endDt) {
+    // Bad Request
+    res.status(400).send("Start date cannot be later than end date");
+    return;
+  }
 
-  let updateTime = new Date();
+  const now = new Date();
   const updateData = {
-    name: req.body.diff.name,
-    description: req.body.diff.description,
-    startDt: req.body.diff.start_dt,
-    endDt: req.body.diff.end_dt,
-    updateDt: updateTime,
+    name: req.body.name,
+    description: req.body.description,
+    startDt: startDt,
+    endDt: endDt,
+    updateDt: now,
   };
 
   try {
-    await prisma.event.update({
+    const event = await prisma.event.update({
       where: {
-        id: req.body.eventId,
+        // req.params.id refers to :id
+        id: Number(req.params.id),
         userId: user.id,
       },
       data: updateData,
     });
+    res.send(event);
   } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+  }
+});
+
+app.delete("/event/:id", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    return;
+  }
+
+  try {
+    await prisma.event.delete({
+      where: {
+        // req.params.id refers to :id
+        id: Number(req.params.id),
+        userId: user.id,
+      }
+    });
+    // OK
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+  }
+});
+
+app.get("/events", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
     // Bad Request
     res.sendStatus(400);
     return;
   }
-})
+
+  try {
+    const events = await prisma.event.findMany({
+      where: {
+        userId: user.id,
+      }
+    });
+    res.send(events);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+  }
+});
 
 app.use(express.static("../dist"));
 
