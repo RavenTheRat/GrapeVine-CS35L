@@ -60,11 +60,13 @@ app.get("/user", requiresAuth(), async (req, res) => {
     user = await syncUser(req.oidc);
   } catch(e) {
     console.log(e);
+    // Bad Request
+    res.sendStatus(400)
     return;
   }
 
   const { name, email } = req.oidc.user;
-  res.json({ name, email, db: user });
+  res.send({ name, email, db: user });
 });
 
 app.post("/event/new", requiresAuth(), async (req, res) => {
@@ -79,6 +81,8 @@ app.post("/event/new", requiresAuth(), async (req, res) => {
     user = await syncUser(req.oidc);
   } catch(e) {
     console.log(e);
+    // Bad Request
+    res.sendStatus(400)
     return;
   }
 
@@ -101,17 +105,17 @@ app.post("/event/new", requiresAuth(), async (req, res) => {
       eventId: event.id
     });
   } catch (e) {
-    // Bad Request
     console.log(e)
+    // Bad Request
     res.sendStatus(400)
   }
-
 })
 
 app.get("/event/:id", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
     res.sendStatus(400);
+    return;
   }
 
   let user;
@@ -119,33 +123,33 @@ app.get("/event/:id", requiresAuth(), async (req, res) => {
     user = await syncUser(req.oidc);
   } catch(e) {
     console.log(e);
+    // Bad Request
+    res.sendStatus(400)
     return;
   }
 
-  let ret;
   try {
-    ret = await prisma.event.findUniqueOrThrow({
+    let event = await prisma.event.findUniqueOrThrow({
       where: {
         // req.params.id refers to :id
         id: req.params.id,
         userId: user.id,
       }
     });
+    res.send({
+      name: event.name,
+      description: event.description,
+      startDt: event.startDt,
+      endDt: event.endDt,
+      createDt: event.createDt,
+      updateDt: event.updateDt,
+      userId: event.userId,
+    })
   } catch (e) {
+    console.log(e);
     // Bad Request
-    res.sendStatus(400);
-    return;
+    res.sendStatus(400)
   }
-
-  res.send({
-    name: ret.name,
-    description: ret.description,
-    startDt: ret.startDt,
-    endDt: ret.endDt,
-    createDt: ret.createDt,
-    updateDt: ret.updateDt,
-    userId: ret.userId,
-  })
 });
 
 app.post("/event/:id", requiresAuth(), async (req, res) => {
@@ -184,10 +188,12 @@ app.post("/event/:id", requiresAuth(), async (req, res) => {
       },
       data: updateData,
     });
+    // OK
+    res.send(200)
   } catch (e) {
+    console.log(e);
     // Bad Request
     res.sendStatus(400);
-    return;
   }
 })
 
