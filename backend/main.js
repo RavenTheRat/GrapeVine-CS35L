@@ -65,8 +65,7 @@ app.get("/user", requiresAuth(), async (req, res) => {
     return;
   }
 
-  const { name, email } = req.oidc.user;
-  res.send({ name, email, db: user });
+  res.send(user);
 });
 
 app.post("/event/new", requiresAuth(), async (req, res) => {
@@ -107,9 +106,7 @@ app.post("/event/new", requiresAuth(), async (req, res) => {
         userId: user.id
       }
     });
-    res.send({
-      eventId: event.id
-    });
+    res.send(event);
   } catch (e) {
     console.log(e)
     // Bad Request
@@ -136,15 +133,7 @@ app.get("/event/:id", requiresAuth(), async (req, res) => {
         userId: user.id,
       }
     });
-    res.send({
-      name: event.name,
-      description: event.description,
-      startDt: event.startDt,
-      endDt: event.endDt,
-      createDt: event.createDt,
-      updateDt: event.updateDt,
-      userId: event.userId,
-    });
+    res.send(event);
   } catch (e) {
     console.log(e);
     // Bad Request
@@ -185,7 +174,7 @@ app.post("/event/:id", requiresAuth(), async (req, res) => {
   };
 
   try {
-    await prisma.event.update({
+    const event = await prisma.event.update({
       where: {
         // req.params.id refers to :id
         id: req.params.id,
@@ -193,8 +182,7 @@ app.post("/event/:id", requiresAuth(), async (req, res) => {
       },
       data: updateData,
     });
-    // OK
-    res.send(200);
+    res.send(event);
   } catch (e) {
     console.log(e);
     // Bad Request
@@ -214,20 +202,12 @@ app.get("/events", requiresAuth(), async (req, res) => {
   }
 
   try {
-    const event = await prisma.event.findUniqueOrThrow({
+    const events = await prisma.event.findMany({
       where: {
         userId: user.id,
       }
     });
-    res.send({
-      name: event.name,
-      description: event.description,
-      startDt: event.startDt,
-      endDt: event.endDt,
-      createDt: event.createDt,
-      updateDt: event.updateDt,
-      userId: event.userId,
-    });
+    res.send(events);
   } catch (e) {
     console.log(e);
     // Bad Request
