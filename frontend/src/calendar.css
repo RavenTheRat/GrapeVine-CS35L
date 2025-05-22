@@ -91,12 +91,47 @@
 
   .side-bar {
     width: 300px;
-    height: 670px;
+    height: 700px;
     padding: 1rem;
     background: whitesmoke;
   }
 
   .side-bar h2 {
+    display: inline-block;
     font-family: 'Comic Sans MS';
     font-weight: bold;
+  }
+
+  .side-bar-add {
+    position: relative;
+    float: right;
+    width: 50px;
+    height: 50px;
+    transform: translateY(50%);
+  }
+
+  .profile-button {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    width: 150px;
+    height: 50px;
+    text-align: right;
+  }
+
+  .profile-button-text {
+    position: relative;
+    bottom: 40%;
+  }
+
+  #profile-button-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  #profile-photo {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    left: 5px;
   }
