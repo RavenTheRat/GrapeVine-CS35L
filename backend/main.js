@@ -205,8 +205,7 @@ app.delete("/event/:id", requiresAuth(), async (req, res) => {
         // req.params.id refers to :id
         id: Number(req.params.id),
         userId: user.id,
-      },
-      data: updateData,
+      }
     });
     // OK
     res.sendStatus(200);
