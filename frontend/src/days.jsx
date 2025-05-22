@@ -3,6 +3,8 @@ function Days(props) {
     const weekdayOfFirstDay = firstDayOfMonth.getDay();
     let currentDays = [];
   
+    
+
     for (let day = 0; day < 42; day++) {
       if (day === 0 && weekdayOfFirstDay === 0) {
         firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 7);
