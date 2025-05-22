@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { gvCreateEvent } from "lib/api";
 
 function EventPopup({ onSubmit }) {
     const [date, setDate] = useState("");
