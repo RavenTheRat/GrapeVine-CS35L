@@ -95,24 +95,7 @@ export default class Calendar extends Component {
         <div className="calendar-header" style = {{ backgroundColor: 'whitesmoke', padding: '20px', display: 'flex', gap: '10px'}}>
           <h2>{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
           <div style={{ marginRight: '10px' }}>
-            <Popup
-              trigger={<button className="add-event-btn">+ Add Event</button>}
-              modal
-              nested
-            >
-            {close => (
-              <div className="modal">
-                <h3>Add Event</h3>
-                <EventPopup
-                  onSubmit={event => {
-                  console.log("New event:", event); // Hook into calendar logic here
-                  close();
-                  }}
-                />
-                <button onClick={close} style={{ marginTop: '10px' }}>Cancel</button>
-              </div>
-            )}
-            </Popup>
+            <EventPopup />
           </div>
         </div>
         <div className="calendar-body"style = {{ backgroundColor: 'thistle', padding: '20px'}}>
