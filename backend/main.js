@@ -34,7 +34,7 @@ async function syncUser(oidc) {
 
 // throws on failure.
 async function createUser(oidc) {
-  let now = new Date();
+  const now = new Date();
   return await prisma.user.create({
     data: {
       email: oidc.user.email,
@@ -87,14 +87,20 @@ app.post("/event/new", requiresAuth(), async (req, res) => {
   }
 
   try {
-    let now = new Date()
-    let event = await prisma.event.create({
+    const now = new Date()
+    const startDt = new Date(req.body.startDt);
+    const endDt = new Date(req.body.endDt);
+    if (startDt > endDt) {
+      // Bad Request
+      res.status(400).send("Start date cannot be later than end date");
+      return;
+    }
+    const event = await prisma.event.create({
       data: {
         name: req.body.name,
         description: req.body.description,
-        // TODO: Check integrity of dates, ie end after start
-        startDt: new Date(parseInt(req.body.startDt)),
-        endDt: new Date(parseInt(req.body.endDt)),
+        startDt: startDt,
+        endDt: endDt,
         createDt: now,
         updateDt: now,
         // this automatically creates the foreign key relation
@@ -129,7 +135,7 @@ app.get("/event/:id", requiresAuth(), async (req, res) => {
   }
 
   try {
-    let event = await prisma.event.findUniqueOrThrow({
+    const event = await prisma.event.findUniqueOrThrow({
       where: {
         // req.params.id refers to :id
         id: req.params.id,
@@ -167,16 +173,21 @@ app.post("/event/:id", requiresAuth(), async (req, res) => {
     return;
   }
 
-  // TODO: Check integrity of dates, ie end after start
-  // TODO: Check that name is not "strange looking"
+  const startDt = new Date(req.body.startDt);
+  const endDt = new Date(req.body.endDt);
+  if (startDt > endDt) {
+    // Bad Request
+    res.status(400).send("Start date cannot be later than end date");
+    return;
+  }
 
-  let updateTime = new Date();
+  const now = new Date();
   const updateData = {
-    name: req.body.diff.name,
-    description: req.body.diff.description,
-    startDt: req.body.diff.start_dt,
-    endDt: req.body.diff.end_dt,
-    updateDt: updateTime,
+    name: req.body.name,
+    description: req.body.description,
+    startDt: startDt,
+    endDt: endDt,
+    updateDt: now,
   };
 
   try {
