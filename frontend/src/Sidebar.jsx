@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AddFriend from "./AddFriend";
+import './styles.css'
 
 const friends = [
   { name: "Adelisa" },
@@ -55,7 +56,7 @@ function Sidebar() {
   return (
     <>
       <div>
-        <h2>Friends</h2>
+        <h2 className="friends-title">Friends</h2>
         <AddFriend />
       </div>
       <input

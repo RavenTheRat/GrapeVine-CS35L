@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Popup from "reactjs-popup";
 import axios from "axios";
+import './styles.css'
 
 function EventPopup() {
   const [name, setName] = useState("");

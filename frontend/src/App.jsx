@@ -1,11 +1,13 @@
 import Calendar from "./Calendar";
 import ProfilePopup from "./ProfilePopup";
 import Sidebar from "./Sidebar";
+import "./styles.css"
 
+// "format" is to have a cohesive font/styling (comic sans for now >:D); I'll pick a nicer font later
 function App() {
   return (
     <>
-      <div>
+      <div className="format">
         <ProfilePopup />
         <h2>GrapeVine</h2>
       </div>

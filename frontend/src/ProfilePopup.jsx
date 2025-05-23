@@ -1,6 +1,7 @@
 import React from "react";
 import "reactjs-popup/dist/index.css";
 import Popup from "reactjs-popup";
+import './styles.css'
 
 // Profile button in top right (contains username and profile photo)
 // onClick: Opens a popup that displays the username and profile photo
