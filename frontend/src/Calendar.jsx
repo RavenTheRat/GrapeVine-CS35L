@@ -38,8 +38,6 @@ function Calendar() {
       <div
         className="calendar-header"
         style={{
-          // image upload works! Will leave for now b/c it's super cute, but will def update later
-          background: "url('https://i.ytimg.com/vi/vH8kYVahdrU/maxresdefault.jpg')",
           padding: "20px",
         }}
       >

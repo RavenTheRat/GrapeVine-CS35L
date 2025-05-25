@@ -1,5 +1,6 @@
 import Calendar from "./Calendar";
 import ProfilePopup from "./ProfilePopup";
+import EventPopup from "./EventPopup";
 import Sidebar from "./Sidebar";
 import "./styles.css"
 
@@ -7,10 +8,12 @@ import "./styles.css"
 function App() {
   return (
     <>
-      <div className="format">
-        <ProfilePopup />
-        <h2>GrapeVine</h2>
-      </div>
+    <header className = "page-header">
+      <h1>Grapevine</h1>
+      <h2> <EventPopup /></h2>
+      <h3> <ProfilePopup /></h3>
+    </header>
+    <div className = "page-body">
       <div className="page-layout">
         <Calendar />
         <div className="side-bar">
@@ -32,6 +35,7 @@ function App() {
             <Sidebar />
           </h1>
         </div>
+      </div>
       </div>
     </>
   );
