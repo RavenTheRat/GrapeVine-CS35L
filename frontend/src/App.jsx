@@ -8,10 +8,13 @@ import "./styles.css"
 function App() {
   return (
     <>
+    <div className = "body-font">
     <header className = "page-header">
       <h1>Grapevine</h1>
-      <h2> <EventPopup /></h2>
-      <h3> <ProfilePopup /></h3>
+      <div className = "right-header">
+        <h1> <EventPopup /></h1>
+        <h2> <ProfilePopup /></h2>
+      </div>
     </header>
     <div className = "page-body">
       <div className="page-layout">
@@ -35,6 +38,7 @@ function App() {
             <Sidebar />
           </h1>
         </div>
+      </div>
       </div>
       </div>
     </>
