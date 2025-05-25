@@ -11,12 +11,14 @@ html, body, #root {
 .page-header {
     display: flex;
     justify-content: space-between;
-    background-color: thistle;
+    background-color: #b4be89;
     border-top: 8px solid black;
     border-left: 8px solid black;
     border-right: 8px solid black;
     border-bottom: 8px solid black;
     margin: 10px 10px 0 10px;
+
+    height: 80px;
 }
 
 .right-header {
@@ -26,8 +28,8 @@ html, body, #root {
 }
 
 .page-body {
-    background-color: white;
-    height: 900px;
+    background-color: thistle;
+    height: 700px;
     border-left: 8px solid black;
     border-right: 8px solid black;
     border-bottom: 8px solid black;
@@ -43,21 +45,29 @@ html, body, #root {
 }
 
 .calendar {
-    width: 1000px;
-    height: 500px;
+    width: 800px;
     display: flex;
-    flex-direction: column;
 
+    flex-direction: column;
     position: relative;
     left: 20px;
     top: 20px;
+
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.2);
+
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-top: 4px solid black;
+    border-bottom: 8px solid black;
 }
   
 .month-display {
-    height: 100px;
+    height: 75px;
     width: 100%;
     display: flex;
     align-items: center;
+    border-bottom: 4px solid black;
+    background-color: #b4be89;
 }
     
 /* switched to block & grid instead of flex for most of the calendar! */
@@ -66,6 +76,7 @@ html, body, #root {
     flex-grow: 1;
     display: block;
     position: relative;
+    background-color: white;
 }
   
 .table-header {
@@ -139,11 +150,9 @@ html, body, #root {
 
 /* side bar stuff */
 
-.side-bar {
-    width: 300px;
-    height: 400px;
-    padding: 1rem;
-    background: whitesmoke;
+.friend-display {
+    border-top: 1px solid black;
+    background-color: white;
 }
 
 .side-bar h2 {
@@ -159,20 +168,23 @@ html, body, #root {
     transform: translateY(50%);
 }
 
+.friends-display {
+    position: relative;
+    right: 30px;
+    font-size: 20px;
+}
+
 /* profile */
 
 .profile-button {
-    position: relative;
-    right: 15px;
-    top: 10px;
-    width: 150px;
-    height: 50px;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .profile-button-text {
-    position: relative;
-    bottom: 40%;
+    margin: 0;
+    font-weight: bold;
 }
 
 #profile-button-img {
@@ -185,6 +197,8 @@ html, body, #root {
     width: 50px;
     height: 50px;
     left: 5px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .today-title {

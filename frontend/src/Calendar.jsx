@@ -1,5 +1,4 @@
 import { useState } from "react";
-import EventPopup from "./EventPopup";
 import Days from "./Days";
 import "./styles.css";
 
