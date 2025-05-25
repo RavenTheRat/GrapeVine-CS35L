@@ -9,40 +9,42 @@ const events = [
 ];
 
 function Days(props) {
-  const firstDayOfMonth = new Date(
+  const firstOfMonth = new Date(
     props.day.getFullYear(),
     props.day.getMonth(),
     1,
   );
-  const weekdayOfFirstDay = firstDayOfMonth.getDay();
-  let currentDays = [];
+  const weekdayOfFirstDay = firstOfMonth.getDay();
+  let allDays = [];
+  let day = 0;
 
-  for (let day = 0; day < 42; day++) {
-    if (day === 0 && weekdayOfFirstDay === 0) {
-      firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 7);
-    } else if (day === 0) {
-      firstDayOfMonth.setDate(
-        firstDayOfMonth.getDate() + (day - weekdayOfFirstDay),
+  while (day < 42) {
+    if (day === 0) {
+      firstOfMonth.setDate(
+        firstOfMonth.getDate() + (day - weekdayOfFirstDay),
       );
+    } else if (day === 0 && weekdayOfFirstDay === 0) {
+      firstOfMonth.setDate(firstOfMonth.getDate() - 7)
     } else {
-      firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 1);
+      firstOfMonth.setDate(firstOfMonth.getDate() + 1);
     }
 
     let calendarDay = {
-      currentMonth: firstDayOfMonth.getMonth() === props.day.getMonth(),
-      date: new Date(firstDayOfMonth),
-      month: firstDayOfMonth.getMonth(),
-      number: firstDayOfMonth.getDate(),
-      selected: firstDayOfMonth.toDateString() === props.day.toDateString(),
-      year: firstDayOfMonth.getFullYear(),
+      date: new Date(firstOfMonth),
+      date_number: firstOfMonth.getDate(),
+      selected: firstOfMonth.toDateString() === props.day.toDateString(),
+      currentMonth: firstOfMonth.getMonth() === props.day.getMonth(),
+      month: firstOfMonth.getMonth(),
+      year: firstOfMonth.getFullYear(),
     };
+    allDays.push(calendarDay);
 
-    currentDays.push(calendarDay);
+    day++;
   }
 
   return (
     <div className="table-content">
-      {currentDays.map((day, idx) => {
+      {allDays.map((day, idx) => {
         return (
           <div
             key={idx}
@@ -53,7 +55,7 @@ function Days(props) {
             }
             onClick={() => props.changeCurrentDay(day)}
           >
-            <p>{day.number}</p>
+            <p>{day.date_number}</p>
             <h1 className="days-events">
               <ul className="event-list">
                 {events.map((Event, index) => (

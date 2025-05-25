@@ -3,6 +3,7 @@ import ProfilePopup from "./ProfilePopup";
 import AddFriend from "./AddFriend";
 import EventPopup from "./EventPopup";
 import Sidebar from "./Sidebar";
+import DaySummary from "./DaySummary"
 import "./styles.css"
 
 // "format" is to have a cohesive font/styling (comic sans for now >:D); I'll pick a nicer font later
@@ -11,7 +12,7 @@ function App() {
     <>
     <div className = "body-font">
     <header className = "page-header">
-      <h1>Grapevine</h1>
+      <h1 className = "logo-header">GRAPEVINE</h1>
       <div className = "right-header">
         <h1> <EventPopup /></h1>
         <h2> <AddFriend /></h2>
@@ -40,6 +41,9 @@ function App() {
           <h1>
             <Sidebar />
           </h1>
+          <h2>
+            <DaySummary />
+          </h2>
         </div>
       </div>
       </div>

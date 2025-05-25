@@ -55,9 +55,10 @@ function Sidebar() {
   return (
     <>
     <div className = "friend-display">
-      <div>
-        <h2 className="friends-title">Friends</h2>
-      </div>
+      <header className = "friend-header">
+        Friends:
+      </header>
+      <div className = "friend-body">
       <input
         type="text"
         value={searchItem}
@@ -76,6 +77,7 @@ function Sidebar() {
           </li>
         ))}
       </ul>
+      </div>
       </div>
     </>
   );
