@@ -58,8 +58,6 @@ html, body, #root {
     left: 20px;
     top: 20px;
 
-    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.2);
-
     border-left: 4px solid black;
     border-right: 4px solid black;
     border-top: 4px solid black;
