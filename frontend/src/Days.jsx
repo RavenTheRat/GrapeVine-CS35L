@@ -1,17 +1,22 @@
 import './styles.css'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {gvGetEvents, gvCreateEvent, gvDeleteEvent } from "./lib/api.js";
 
 // hard-coded set of events; this will be replaced by user's events, and have a date associated
 // to only display on relevant day (my birthday is currently everyday apparently :P)
-const events = [
-  { event: "Birthday" },
-  { event: "Graduation" },
-  { event: "Class" },
-];
+//const events = [
+  //{ event: "Birthday" },
+  //{ event: "Graduation" },
+  //{ event: "Class" },
+//];
 
-function Days(props) {
+function Days({events, day, changeCurrentDay}) {
+  
+
   const firstDayOfMonth = new Date(
-    props.day.getFullYear(),
-    props.day.getMonth(),
+    day.getFullYear(),
+    day.getMonth(),
     1,
   );
   const weekdayOfFirstDay = firstDayOfMonth.getDay();
@@ -29,11 +34,11 @@ function Days(props) {
     }
 
     let calendarDay = {
-      currentMonth: firstDayOfMonth.getMonth() === props.day.getMonth(),
+      currentMonth: firstDayOfMonth.getMonth() === day.getMonth(),
       date: new Date(firstDayOfMonth),
       month: firstDayOfMonth.getMonth(),
       number: firstDayOfMonth.getDate(),
-      selected: firstDayOfMonth.toDateString() === props.day.toDateString(),
+      selected: firstDayOfMonth.toDateString() === day.toDateString(),
       year: firstDayOfMonth.getFullYear(),
     };
 
@@ -51,13 +56,13 @@ function Days(props) {
               (day.currentMonth ? " current" : "") +
               (day.selected ? " selected" : "")
             }
-            onClick={() => props.changeCurrentDay(day)}
+            onClick={() => changeCurrentDay(day)}
           >
             <p>{day.number}</p>
             <h1 className="days-events">
               <ul className="event-list">
-                {events.map((Event, index) => (
-                  <li key={index} className="single-event">
+                {events.map((Event, day ) => (
+                  <li key={day} className="single-event">
                     {Event.event}
                   </li>
                 ))}

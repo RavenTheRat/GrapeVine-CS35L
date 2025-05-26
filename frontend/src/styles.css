@@ -168,3 +168,8 @@
 .event-list {
     list-style-type: circle;
 }
+
+.add-event-btn{
+    background: #c5a0c5;
+    font-family: 'Comic Sans MS';
+}

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import EventPopup from "./EventPopup";
 import Days from "./Days";
+import axios from "axios";
 import "./styles.css";
 
 function Calendar() {
@@ -28,10 +29,39 @@ function Calendar() {
     "December",
   ];
   const [currentDay, setCurrentDay] = useState(new Date());
+  const [events, setEvents] = useState([]);
+  //const [loading, setLoading] = useState(true);
 
   const changeCurrentDay = (day) => {
     setCurrentDay(new Date(day.year, day.month, day.number));
   };
+
+  useEffect(() => {
+      const loadEvents = async () => {
+      axios
+      .get("http://localhost:3000/events")
+      // response will be the json object returned (in this case the id)
+      // this can optionally be sent to a higher level component and used there
+      // in this case we are just closing the popup
+      .then((response) => {
+        setEvents(response);
+      })
+
+      // error can be used to give better error messages, but we probably
+      // won't need to do that for this project
+      .catch((error) => {
+        alert("There was an error fetching your data. Please try again.");
+      });
+        
+      }
+      loadEvents();
+    }, []);
+    
+
+
+
+
+  
 
   return (
     <div className="calendar">
@@ -39,13 +69,13 @@ function Calendar() {
         className="calendar-header"
         style={{
           backgroundColor: "whitesmoke",
-          padding: "20px",
+          paddingRight: "20px",
         }}
       >
         <h2>
           {months[currentDay.getMonth()]} {currentDay.getFullYear()}
         </h2>
-        <div style={{ marginRight: "10px" }}>
+        <div style={{ color: "#5f3a5f", marginRight: "10px", paddingLeft: "700px" }}>
           <EventPopup />
         </div>
       </div>
@@ -66,7 +96,7 @@ function Calendar() {
           })}
         </div>
 
-        <Days day={currentDay} changeCurrentDay={changeCurrentDay} />
+        <Days events = {events} day={currentDay} changeCurrentDay={changeCurrentDay} />
       </div>
     </div>
   );
