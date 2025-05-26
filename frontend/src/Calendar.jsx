@@ -1,5 +1,4 @@
 import { useState } from "react";
-import EventPopup from "./EventPopup";
 import Days from "./Days";
 import "./styles.css";
 
@@ -36,26 +35,17 @@ function Calendar() {
   return (
     <div className="calendar">
       <div
-        className="calendar-header"
-        style={{
-          backgroundColor: "whitesmoke",
-          padding: "20px",
-        }}
+        className="month-display"
       >
         <h2>
           {months[currentDay.getMonth()]} {currentDay.getFullYear()}
         </h2>
-        <div style={{ marginRight: "10px" }}>
-          <EventPopup />
-        </div>
       </div>
       <div
         className="calendar-body"
-        style={{ backgroundColor: "thistle", padding: "20px" }}
       >
         <div
           className="table-header"
-          style={{ backgroundColor: "#c5a0c5", padding: "20px" }}
         >
           {weekdays.map((weekday, idx) => {
             return (

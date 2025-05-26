@@ -1,5 +1,4 @@
 import { useState } from "react";
-import AddFriend from "./AddFriend";
 import './styles.css'
 
 const friends = [
@@ -55,17 +54,18 @@ function Sidebar() {
 
   return (
     <>
-      <div>
-        <h2 className="friends-title">Friends</h2>
-        <AddFriend />
-      </div>
+    <div className = "friend-display">
+      <header className = "friend-header">
+        Friends:
+      </header>
+      <div className = "friend-body">
       <input
         type="text"
         value={searchItem}
         onChange={handleInputChange}
         placeholder="Search friends list"
       />
-      <ul style={{ listStyleType: "none" }}>
+      <ul className = "friends-display" style={{ listStyleType: "none" }}>
         {filteredFriends.map((friend, idx) => (
           <li key={idx}>
             <input
@@ -77,6 +77,8 @@ function Sidebar() {
           </li>
         ))}
       </ul>
+      </div>
+      </div>
     </>
   );
 }
