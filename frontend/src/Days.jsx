@@ -20,20 +20,21 @@ function Days(props) {
 
   while (day < 42) {
     if (day === 0) {
-      firstOfMonth.setDate(
-        firstOfMonth.getDate() + (day - weekdayOfFirstDay),
-      );
-    } else if (day === 0 && weekdayOfFirstDay === 0) {
-      firstOfMonth.setDate(firstOfMonth.getDate() - 7)
+      if (weekdayOfFirstDay === 0) {
+        firstOfMonth.setDate(firstOfMonth.getDate() - 7)
+      }
+      else {
+        firstOfMonth.setDate(firstOfMonth.getDate() + (day - weekdayOfFirstDay));
+      }
     } else {
       firstOfMonth.setDate(firstOfMonth.getDate() + 1);
     }
 
     let calendarDay = {
-      date: new Date(firstOfMonth),
-      date_number: firstOfMonth.getDate(),
-      selected: firstOfMonth.toDateString() === props.day.toDateString(),
       currentMonth: firstOfMonth.getMonth() === props.day.getMonth(),
+      date: new Date(firstOfMonth),
+      number: firstOfMonth.getDate(),
+      selected: firstOfMonth.toDateString() === props.day.toDateString(),
       month: firstOfMonth.getMonth(),
       year: firstOfMonth.getFullYear(),
     };
@@ -55,7 +56,7 @@ function Days(props) {
             }
             onClick={() => props.changeCurrentDay(day)}
           >
-            <p>{day.date_number}</p>
+            <p>{day.number}</p>
             <h1 className="days-events">
               <ul className="event-list">
                 {events.map((Event, index) => (
