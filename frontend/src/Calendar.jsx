@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import EventPopup from "./EventPopup";
 import Days from "./Days";
+import axios from "axios";
 import "./styles.css";
 
 function Calendar() {
@@ -27,11 +29,28 @@ function Calendar() {
     "December",
   ];
   const [currentDay, setCurrentDay] = useState(new Date());
+  const [events, setEvents] = useState([]);
+  //const [loading, setLoading] = useState(true);
 
   const changeCurrentDay = (day) => {
     setCurrentDay(new Date(day.year, day.month, day.number));
   };
 
+  useEffect(() => {
+    const loadEvents = async () => {
+      axios
+      .get("http://localhost:3000/events")
+      // response will be the json object returned (in this case the data)
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => {
+        alert("There was an error fetching your data. Please try again.");
+      });
+    }
+    loadEvents();
+    }, []);
+  
   return (
     <div className="calendar">
       <div
@@ -56,7 +75,7 @@ function Calendar() {
           })}
         </div>
 
-        <Days day={currentDay} changeCurrentDay={changeCurrentDay} />
+        <Days events = {events} day={currentDay} changeCurrentDay={changeCurrentDay} />
       </div>
     </div>
   );

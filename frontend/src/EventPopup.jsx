@@ -16,8 +16,8 @@ function EventPopup() {
         .post("http://localhost:3000/event/new", {
           name: name,
           description: description,
-          startDt: startDate,
-          endDt: endDate,
+          startDt: new Date(startDate),
+          endDt: new Date(endDate),
         })
         // response will be the json object returned (in this case the id)
         // this can optionally be sent to a higher level component and used there
@@ -44,41 +44,54 @@ function EventPopup() {
       trigger={<button className="add-event-btn">Schedule Event!</button>}
       modal
       nested
+      contentStyle={{ color: '#5f3a5f' }}
     >
       {(close) => (
         <div className="modal">
           <h2>Add New Event</h2>
-          <form onSubmit={(e) => handleSubmit(e, close)}>
-            Name:
-            <input
+          <form className="flex flex-col gap-4" onSubmit={(e) => handleSubmit(e, close)}>
+            <div className="flex flex-col gap-4">
+              Name:
+              <input
               type="text"
               name="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="My Event"
-            />
-            Description:
-            <input
+              />
+            </div>
+            
+            <div className="flex flex-col gap-4">
+              Description:
+              <input
               type="text"
               name="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Event details"
-            />
-            Start Date:
-            <input
+              />
+            </div>
+            
+            <div className="flex flex-col gap-4">
+              Start Date:
+              <input
               type="date"
               name="startDate"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-            />
-            End Date:
-            <input
+              />
+            </div>
+            
+            <div className="flex flex-col gap-4">
+              End Date:
+              <input
               type="date"
               name="endDate"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-            />
+              />
+            </div>
+            
             <div>
               <button type="submit">Submit</button>
               <button onClick={close}>Cancel</button>
