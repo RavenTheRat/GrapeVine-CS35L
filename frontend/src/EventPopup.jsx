@@ -16,8 +16,8 @@ function EventPopup() {
         .post("http://localhost:3000/event/new", {
           name: name,
           description: description,
-          startDt: startDate,
-          endDt: endDate,
+          startDt: new Date(startDate),
+          endDt: new Date(endDate),
         })
         // response will be the json object returned (in this case the id)
         // this can optionally be sent to a higher level component and used there
