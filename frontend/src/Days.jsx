@@ -19,35 +19,38 @@ function Days({events, day, changeCurrentDay}) {
     day.getMonth(),
     1,
   );
-  const weekdayOfFirstDay = firstDayOfMonth.getDay();
-  let currentDays = [];
+  const weekdayOfFirstDay = firstOfMonth.getDay();
+  let allDays = [];
+  let day = 0;
 
-  for (let i = 0; i < 42; i++) {
-    if (i === 0 && weekdayOfFirstDay === 0) {
-      firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 7);
-    } else if (i === 0) {
-      firstDayOfMonth.setDate(
-        firstDayOfMonth.getDate() + (i - weekdayOfFirstDay),
-      );
+  while (day < 42) {
+    if (day === 0) {
+      if (weekdayOfFirstDay === 0) {
+        firstOfMonth.setDate(firstOfMonth.getDate() - 7)
+      }
+      else {
+        firstOfMonth.setDate(firstOfMonth.getDate() + (day - weekdayOfFirstDay));
+      }
     } else {
-      firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 1);
+      firstOfMonth.setDate(firstOfMonth.getDate() + 1);
     }
 
     let calendarDay = {
-      currentMonth: firstDayOfMonth.getMonth() === day.getMonth(),
-      date: new Date(firstDayOfMonth),
-      month: firstDayOfMonth.getMonth(),
-      number: firstDayOfMonth.getDate(),
-      selected: firstDayOfMonth.toDateString() === day.toDateString(),
-      year: firstDayOfMonth.getFullYear(),
+      currentMonth: firstOfMonth.getMonth() === props.day.getMonth(),
+      date: new Date(firstOfMonth),
+      number: firstOfMonth.getDate(),
+      selected: firstOfMonth.toDateString() === props.day.toDateString(),
+      month: firstOfMonth.getMonth(),
+      year: firstOfMonth.getFullYear(),
     };
+    allDays.push(calendarDay);
 
-    currentDays.push(calendarDay);
+    day++;
   }
 
   return (
     <div className="table-content">
-      {currentDays.map((day, idx) => {
+      {allDays.map((day, idx) => {
         return (
           <div
             key={idx}

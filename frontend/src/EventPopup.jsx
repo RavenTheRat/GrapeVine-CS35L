@@ -41,7 +41,7 @@ function EventPopup() {
 
   return (
     <Popup
-      trigger={<button className="add-event-btn">+ Add Event</button>}
+      trigger={<button className="add-event-btn">Schedule Event!</button>}
       modal
       nested
       contentStyle={{ color: '#5f3a5f' }}

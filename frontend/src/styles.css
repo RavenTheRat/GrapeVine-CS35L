@@ -1,27 +1,76 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.body-font {
+    font-family: 'Courier New';
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #b4be89;
+    border-top: 8px solid black;
+    border-left: 8px solid black;
+    border-right: 8px solid black;
+    border-bottom: 8px solid black;
+    margin: 10px 10px 0 10px;
+
+    height: 80px;
+}
+
+.logo-header {
+    position: relative;
+    left: 20px;
+}
+
+.right-header {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.page-body {
+    background-color: thistle;
+    height: 650px;
+    border-left: 8px solid black;
+    border-right: 8px solid black;
+    border-bottom: 8px solid black;
+    margin: 0 10px 10px 10px;
+}
+
 .page-layout {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    flex-direction: horizontal;
-}
-
-.format {
-    font-family: 'Comic Sans MS'
+    flex-direction: row;
+    height: 100%;
 }
 
 .calendar {
-    width: 900px;
-    height: 600px;
+    width: 800px;
     display: flex;
+
     flex-direction: column;
-    font-family: 'Comic Sans MS';
+    position: relative;
+    left: 20px;
+    top: 20px;
+
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-top: 4px solid black;
+    border-bottom: 8px solid black;
 }
   
-.calendar-header {
-    height: 100px;
+.month-display {
+    height: 75px;
     width: 100%;
     display: flex;
     align-items: center;
+    border-bottom: 4px solid black;
+    background-color: #b4be89;
 }
     
 /* switched to block & grid instead of flex for most of the calendar! */
@@ -30,7 +79,7 @@
     flex-grow: 1;
     display: block;
     position: relative;
-    right: 20px;
+    background-color: white;
 }
   
 .table-header {
@@ -46,6 +95,7 @@
 .weekday {
     width: 100px;
     text-align: center;
+    
 }
   
 .table-content {
@@ -79,7 +129,7 @@
     font-size: 15px;
 }
 
-.calendar-header h2 {
+.month-display h2 {
     color: #305030
 }
 
@@ -95,46 +145,110 @@
 .selected p {
     color: #5f3a5f;
     font-weight: bold;
-    font-family: 'Comic Sans MS';
 }
 
 .selected {
     background: #c5a0c5;
 }
 
-.side-bar {
-    width: 300px;
-    height: 700px;
-    padding: 1rem;
-    background: whitesmoke;
-}
+/* side bar stuff */
 
-.side-bar h2 {
-    display: inline-block;
-    font-family: 'Comic Sans MS';
-    font-weight: bold;
-}
+.friend-display {
+    width: 340px;
+    height: 270px;
+    background-color: #b4be89;
 
-.side-bar-add {
+    border-top: 4px solid black;
+    border-bottom: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+
     position: relative;
-    float: right;
-    width: 50px;
-    height: 50px;
-    transform: translateY(50%);
+    right: 25px;
+
+    font-size: 20px;
 }
+
+.friend-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-top: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-bottom: 4px solid black;
+    margin: 8px 8px 0 8px;
+
+    height: 40px;
+}
+
+.friend-body {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-top: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-bottom: 4px solid black;
+    margin: 8px 8px 0 8px;
+
+    height: 190px;
+}
+
+.day-summary {
+    width: 340px;
+    height: 270px;
+    background-color: #b4be89;
+
+    border-top: 4px solid black;
+    border-bottom: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+
+    position: relative;
+    right: 25px;
+    top: 14px;
+
+    font-size: 20px;
+}
+
+.day-summary-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-top: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-bottom: 4px solid black;
+    margin: 8px 8px 0 8px;
+
+    height: 40px;
+}
+
+.day-summary-body {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-top: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-bottom: 4px solid black;
+    margin: 8px 8px 0 8px;
+
+    height: 190px;
+}
+
+/* profile */
 
 .profile-button {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    width: 150px;
-    height: 50px;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .profile-button-text {
-    position: relative;
-    bottom: 40%;
+    margin: 0;
+    font-weight: bold;
 }
 
 #profile-button-img {
@@ -147,6 +261,8 @@
     width: 50px;
     height: 50px;
     left: 5px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .today-title {
@@ -156,6 +272,8 @@
 .friends-title {
     font-size: 30px;
 }
+
+/* experimental */
 
 .days-events {
     font-size: 10px;

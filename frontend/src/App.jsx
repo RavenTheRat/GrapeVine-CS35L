@@ -1,20 +1,24 @@
 import Calendar from "./Calendar";
 import ProfilePopup from "./ProfilePopup";
+import AddFriend from "./AddFriend";
+import EventPopup from "./EventPopup";
 import Sidebar from "./Sidebar";
+import DaySummary from "./DaySummary"
 import "./styles.css"
 
 // "format" is to have a cohesive font/styling (comic sans for now >:D); I'll pick a nicer font later
 function App() {
   return (
     <>
-      <div className="format">
-        <ProfilePopup />
-        <h2>GrapeVine</h2>
-      </div>
-      <div className="page-layout">
-        <Calendar />
-        <div className="side-bar">
-          <button
+    <div className = "body-font">
+    <header className = "page-header">
+      <h1 className = "logo-header">GRAPEVINE</h1>
+      <div className = "right-header">
+        <h1> <EventPopup /></h1>
+        <h2> <AddFriend /></h2>
+        <h3> <ProfilePopup /></h3>
+    
+        <button
             onClick={() => {
               window.location.href = "http://localhost:3000/login";
             }}
@@ -28,10 +32,21 @@ function App() {
           >
             Logout
           </button>
+      </div>
+    </header>
+    <div className = "page-body">
+      <div className="page-layout">
+        <Calendar />
+        <div className="side-bar">
           <h1>
             <Sidebar />
           </h1>
+          <h2>
+            <DaySummary />
+          </h2>
         </div>
+      </div>
+      </div>
       </div>
     </>
   );

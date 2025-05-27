@@ -54,26 +54,21 @@ function Calendar() {
   return (
     <div className="calendar">
       <div
-        className="calendar-header"
+        className="month-display"
         style={{
           backgroundColor: "whitesmoke",
-          paddingRight: "20px",
+          padding: "20px",
         }}
       >
         <h2>
           {months[currentDay.getMonth()]} {currentDay.getFullYear()}
         </h2>
-        <div style={{ color: "#5f3a5f", marginRight: "10px", paddingLeft: "700px" }}>
-          <EventPopup />
-        </div>
       </div>
       <div
         className="calendar-body"
-        style={{ backgroundColor: "thistle", padding: "20px" }}
       >
         <div
           className="table-header"
-          style={{ backgroundColor: "#c5a0c5", padding: "20px" }}
         >
           {weekdays.map((weekday, idx) => {
             return (
