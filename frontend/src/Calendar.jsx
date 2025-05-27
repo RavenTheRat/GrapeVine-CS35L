@@ -37,32 +37,20 @@ function Calendar() {
   };
 
   useEffect(() => {
-      const loadEvents = async () => {
+    const loadEvents = async () => {
       axios
       .get("http://localhost:3000/events")
-      // response will be the json object returned (in this case the id)
-      // this can optionally be sent to a higher level component and used there
-      // in this case we are just closing the popup
+      // response will be the json object returned (in this case the data)
       .then((response) => {
-        setEvents(response);
+        setEvents(response.data);
       })
-
-      // error can be used to give better error messages, but we probably
-      // won't need to do that for this project
       .catch((error) => {
         alert("There was an error fetching your data. Please try again.");
       });
-        
-      }
-      loadEvents();
+    }
+    loadEvents();
     }, []);
-    
-
-
-
-
   
-
   return (
     <div className="calendar">
       <div

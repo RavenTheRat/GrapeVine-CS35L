@@ -22,12 +22,12 @@ function Days({events, day, changeCurrentDay}) {
   const weekdayOfFirstDay = firstDayOfMonth.getDay();
   let currentDays = [];
 
-  for (let day = 0; day < 42; day++) {
-    if (day === 0 && weekdayOfFirstDay === 0) {
+  for (let i = 0; i < 42; i++) {
+    if (i === 0 && weekdayOfFirstDay === 0) {
       firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 7);
-    } else if (day === 0) {
+    } else if (i === 0) {
       firstDayOfMonth.setDate(
-        firstDayOfMonth.getDate() + (day - weekdayOfFirstDay),
+        firstDayOfMonth.getDate() + (i - weekdayOfFirstDay),
       );
     } else {
       firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 1);
@@ -61,9 +61,14 @@ function Days({events, day, changeCurrentDay}) {
             <p>{day.number}</p>
             <h1 className="days-events">
               <ul className="event-list">
-                {events.map((Event, day ) => (
-                  <li key={day} className="single-event">
-                    {Event.event}
+                {events
+                .filter(
+                  (event) => 
+                    new Date(event.startDt).toDateString() === calendarDay.date.toDateString()
+                )
+                .map((Event, idx) => (
+                  <li key={idx} className="single-event">
+                    {Event.name}
                   </li>
                 ))}
               </ul>
