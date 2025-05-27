@@ -10,7 +10,7 @@ function ProfilePopup() {
   const ProfileButton = React.forwardRef(({ open, ...props }, ref) => (
     <div ref={ref} {...props}>
       <div className="profile-button">
-        <p className="profile-button-text">Username</p>
+        <p className="profile-button-text">Welcome, Username!</p>
         <img
           src="https://helloartsy.com/wp-content/uploads/kids/fruit/how-to-draw-a-grapevine/how-to-draw-a-grapevine-step-6.jpg"
           id="profile-photo"
