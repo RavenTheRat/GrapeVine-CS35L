@@ -64,7 +64,7 @@ function Days({events, day, changeCurrentDay}) {
                 {events
                 .filter(
                   (event) => 
-                    new Date(event.startDt).toDateString() === calendarDay.date.toDateString()
+                    new Date(event.startDt).toDateString() === day.date.toDateString()
                 )
                 .map((Event, idx) => (
                   <li key={idx} className="single-event">
