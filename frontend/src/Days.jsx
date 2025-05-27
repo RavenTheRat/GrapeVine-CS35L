@@ -64,7 +64,12 @@ function Days({events, day, changeCurrentDay}) {
                 {events
                 .filter(
                   (event) => 
-                    new Date(event.startDt).toDateString() === day.date.toDateString()
+                    // adi's note on fix: it seemed like all of the events were being displayed one day earlier
+                    // this was because of some wonky thing with timezones, so the fix ensures we only check the
+                    // date, and not the time (to avoid that issue!)
+                    event.startDt.slice(0, 10) === day.date.toISOString().slice(0, 10)
+                    // more details from adi: slice extracts the "date part" without the timezone part (gets only
+                    // the first 10 chars) turn day.date to ISOString and get the same components to compare!
                 )
                 .map((Event, idx) => (
                   <li key={idx} className="single-event">
