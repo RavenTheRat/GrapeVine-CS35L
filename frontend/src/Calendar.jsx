@@ -55,10 +55,6 @@ function Calendar() {
     <div className="calendar">
       <div
         className="month-display"
-        style={{
-          backgroundColor: "whitesmoke",
-          padding: "20px",
-        }}
       >
         <h2>
           {months[currentDay.getMonth()]} {currentDay.getFullYear()}

@@ -14,38 +14,38 @@ import {gvGetEvents, gvCreateEvent, gvDeleteEvent } from "./lib/api.js";
 function Days({events, day, changeCurrentDay}) {
   
 
-  const firstDayOfMonth = new Date(
+  const firstOfMonth = new Date(
     day.getFullYear(),
     day.getMonth(),
     1,
   );
   const weekdayOfFirstDay = firstOfMonth.getDay();
   let allDays = [];
-  let day = 0;
+  let loopDay = 0;
 
-  while (day < 42) {
-    if (day === 0) {
+  while (loopDay < 42) {
+    if (loopDay === 0) {
       if (weekdayOfFirstDay === 0) {
         firstOfMonth.setDate(firstOfMonth.getDate() - 7)
       }
       else {
-        firstOfMonth.setDate(firstOfMonth.getDate() + (day - weekdayOfFirstDay));
+        firstOfMonth.setDate(firstOfMonth.getDate() + (loopDay - weekdayOfFirstDay));
       }
     } else {
       firstOfMonth.setDate(firstOfMonth.getDate() + 1);
     }
 
     let calendarDay = {
-      currentMonth: firstOfMonth.getMonth() === props.day.getMonth(),
+      currentMonth: firstOfMonth.getMonth() === day.getMonth(),
       date: new Date(firstOfMonth),
       number: firstOfMonth.getDate(),
-      selected: firstOfMonth.toDateString() === props.day.toDateString(),
+      selected: firstOfMonth.toDateString() === day.toDateString(),
       month: firstOfMonth.getMonth(),
       year: firstOfMonth.getFullYear(),
     };
     allDays.push(calendarDay);
 
-    day++;
+    loopDay++;
   }
 
   return (
