@@ -72,6 +72,10 @@ html, body, #root {
     border-bottom: 4px solid black;
     background-color: #b4be89;
 }
+
+.month-display search-field {
+    position: relative;
+}
     
 /* switched to block & grid instead of flex for most of the calendar! */
 .calendar-body {

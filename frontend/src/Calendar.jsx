@@ -30,7 +30,23 @@ function Calendar() {
   ];
   const [currentDay, setCurrentDay] = useState(new Date());
   const [events, setEvents] = useState([]);
+  const [searchItem, setSearchItem] = useState("");
+  const [filteredEvents, setFilteredEvents] = useState([]);
   //const [loading, setLoading] = useState(true);
+
+  // Searching algorithm
+  const handleInputChange = (e) => {
+    const searchTerm = e.target.value;
+    setSearchItem(searchTerm);
+
+    const filteredItems = events.filter((event) =>
+      //event.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      event.description.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    setFilteredEvents(filteredItems);
+  };
 
   const changeCurrentDay = (day) => {
     setCurrentDay(new Date(day.year, day.month, day.number));
@@ -59,6 +75,14 @@ function Calendar() {
         <h2>
           {months[currentDay.getMonth()]} {currentDay.getFullYear()}
         </h2>
+        <search-field>
+          <input
+          type="text"
+          value={searchItem}
+          onChange={handleInputChange}
+          placeholder="Search events by name or description"
+          />
+        </search-field>
       </div>
       <div
         className="calendar-body"
@@ -75,7 +99,11 @@ function Calendar() {
           })}
         </div>
 
-        <Days events = {events} day={currentDay} changeCurrentDay={changeCurrentDay} />
+        {searchItem.length > 0 ? (
+          <Days events = {filteredEvents} day={currentDay} changeCurrentDay={changeCurrentDay} />
+        ) : (
+          <Days events = {events} day={currentDay} changeCurrentDay={changeCurrentDay} />
+        )}
       </div>
     </div>
   );
