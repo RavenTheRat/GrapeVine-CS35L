@@ -102,7 +102,6 @@ function EventPopup() {
                 id="public-toggle"
                 defaultChecked={isPublic}
                 onChange={setIsPublic}
-                // className="toggle-switch"
               />
               <label htmlFor="public-toggle">Do you want this event to be public?</label>
             </div>
