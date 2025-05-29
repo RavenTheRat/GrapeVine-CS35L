@@ -75,6 +75,7 @@ html, body, #root {
 
 .month-display search-field {
     position: relative;
+    transform: translateX(225%);
 }
     
 /* switched to block & grid instead of flex for most of the calendar! */
