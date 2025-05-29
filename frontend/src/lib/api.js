@@ -38,6 +38,10 @@ async function gvGetFriendStatus(uid) {
   return gvFetch(`/friends/status/${uid}`, "GET");
 }
 
+async function gvGetUserByEmail(req) {
+  return gvFetch(`/user/byemail/`, "POST", req, true);
+}
+
 async function gvFetch(endpoint, method, data = null, useJsonResponse = false) {
   const fetchParams = {
     method
