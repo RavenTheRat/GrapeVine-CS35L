@@ -4,6 +4,8 @@ import AddFriend from "./AddFriend";
 import EventPopup from "./EventPopup";
 import Sidebar from "./Sidebar";
 import DaySummary from "./DaySummary"
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import "./styles.css"
 
 // "format" is to have a cohesive font/styling (comic sans for now >:D); I'll pick a nicer font later
@@ -34,19 +36,34 @@ function App() {
           </button>
       </div>
     </header>
-    <div className = "page-body">
-      <div className="page-layout">
-        <Calendar />
-        <div className="side-bar">
-          <h1>
-            <Sidebar />
-          </h1>
-          <h2>
-            <DaySummary />
-          </h2>
+    <Tabs>
+      <TabList>
+        <Tab>Calendar</Tab>
+        <Tab>Discover</Tab>
+      </TabList>
+      <TabPanel>
+        <div className = "page-body">
+          <div className="page-layout">
+            <Calendar />
+            <div className="side-bar">
+              <h1>
+                <Sidebar />
+              </h1>
+              <h2>
+                <DaySummary />
+              </h2>
+            </div>
+          </div>
         </div>
-      </div>
-      </div>
+        </TabPanel>
+        <TabPanel>
+          <div className = "page-body">
+            <div className="page-layout">
+              <text>Discover Page goes here.</text>
+            </div>
+          </div>
+        </TabPanel>
+    </Tabs>
       </div>
     </>
   );

@@ -78,7 +78,7 @@ function Calendar() {
         <search-field>
           <input
           type="text"
-          style={{width: "200px"}}
+          style={{width: "225px"}}
           value={searchItem}
           onChange={handleInputChange}
           placeholder="Search events by name or description"
