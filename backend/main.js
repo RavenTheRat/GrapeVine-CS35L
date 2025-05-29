@@ -68,6 +68,33 @@ app.get("/user", requiresAuth(), async (req, res) => {
   res.send(user);
 });
 
+// To avoid confusion, I avoided using a query param.
+app.post("/user/byemail/", requiresAuth(), async (req, res) => {
+  let user;
+  // In theory, you can enumerate all user data by guessing emails.
+  try {
+    user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { AND: { email: req.body.email } }
+        ]
+      }
+    });
+  } catch (e) {
+    res.sendStatus(400);
+  }
+
+  if (!user) {
+    res.sendStatus(404);
+    return;
+  }
+
+  res.send({
+    id: user.id,
+    name: user.name,
+  });
+});
+
 app.post("/event/new", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
