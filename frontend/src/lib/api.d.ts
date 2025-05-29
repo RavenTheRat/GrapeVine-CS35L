@@ -47,3 +47,6 @@ declare interface ReqDeleteEvent {
 declare function gvDeleteEvent(req: ReqDeleteEvent): Promise<void>;
 declare function gvGetEvents(): Promise<Array<ResGetEvent>>;
 
+declare interface ReqAddFriend {
+  userId: number
+}

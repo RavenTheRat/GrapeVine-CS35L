@@ -18,6 +18,12 @@ model User {
   events        Event[]
 }
 
+model FriendConnection {
+  id          Int   @id @default(autoincrement())
+  sendUserId  Int
+  recvUserId  Int
+}
+
 model Event {
   id            Int @id @default(autoincrement())
   name          String
