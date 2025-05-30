@@ -1,3 +1,11 @@
+import Calendar from "./Calendar";
+import ProfilePopup from "./ProfilePopup";
+import AddFriend from "./AddFriend";
+import EventPopup from "./EventPopup";
+import Sidebar from "./Sidebar";
+import DaySummary from "./DaySummary";
+import Discover from "./Discover";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import axios from "axios";
 import { useState, useEffect} from "react";

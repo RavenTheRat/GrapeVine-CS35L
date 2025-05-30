@@ -2,6 +2,7 @@ import Calendar from "./Calendar";
 import ProfilePopup from "./ProfilePopup";
 import AddFriend from "./AddFriend";
 import EventPopup from "./EventPopup";
+import Discover from "./Discover";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import "./styles.css"
@@ -40,7 +41,7 @@ function MainDisplay() {
         <TabPanel>
           <div className = "page-body">
             <div className="page-layout">
-              <text>Discover Page goes here.</text>
+              <Discover />
             </div>
           </div>
         </TabPanel>

@@ -103,7 +103,9 @@ app.post("/event/new", requiresAuth(), async (req, res) => {
         createDt: now,
         updateDt: now,
         // this automatically creates the foreign key relation
-        userId: user.id
+        userId: user.id,
+        // Thomas's changes: I'm not sure what I'm doing so these could break it
+        isPublic: req.body.isPublic
       }
     });
     res.send(event);
@@ -171,6 +173,7 @@ app.post("/event/:id", requiresAuth(), async (req, res) => {
     startDt: startDt,
     endDt: endDt,
     updateDt: now,
+    isPublic: req.body.isPublic
   };
 
   try {

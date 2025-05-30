@@ -63,7 +63,7 @@ function Calendar() {
         setEvents(response.data);
       })
       .catch((error) => {
-        alert("There was an error fetching your data. Please try again.");
+        //alert("There was an error fetching your data. Please try again.");
       });
     }
     loadEvents();
