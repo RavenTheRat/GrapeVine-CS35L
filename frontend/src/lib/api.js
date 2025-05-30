@@ -2,24 +2,44 @@
 
 const BASE_URL = "http://localhost:3000";
 
-export async function gvCreateEvent(req) {
+async function gvCreateEvent(req) {
   return gvFetch("/event/new", "POST", req, true);
 }
 
-export async function gvGetEvent(req) {
+async function gvGetEvent(req) {
   return gvFetch(`/event/${req.eventId}`, "GET", null, true);
 }
 
-export async function gvUpdateEvent(req) {
+async function gvUpdateEvent(req) {
   return gvFetch(`/event/${req.eventId}`, "POST", req);
 }
 
-export async function gvDeleteEvent(req) {
+async function gvDeleteEvent(req) {
   return gvFetch(`/event/${req.eventId}`, "DELETE");
 }
 
-export async function gvGetEvents() {
+async function gvGetEvents() {
   return gvFetch(`/events`, "GET", null, true);
+}
+
+async function gvAddFriend(req) {
+  return gvFetch(`/friends/add`, "POST", req, true);
+}
+
+async function gvRemoveFriend(req) {
+  return gvFetch(`/friends/remove`, "POST", req, true);
+}
+
+async function gvGetFriends() {
+  return gvFetch(`/friends`, "GET");
+}
+
+async function gvGetFriendStatus(uid) {
+  return gvFetch(`/friends/status/${uid}`, "GET");
+}
+
+async function gvGetUserByEmail(req) {
+  return gvFetch(`/user/byemail/`, "POST", req, true);
 }
 
 async function gvFetch(endpoint, method, data = null, useJsonResponse = false) {

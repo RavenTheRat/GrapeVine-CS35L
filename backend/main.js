@@ -68,6 +68,33 @@ app.get("/user", requiresAuth(), async (req, res) => {
   res.send(user);
 });
 
+// To avoid confusion, I avoided using a query param.
+app.post("/user/byemail/", requiresAuth(), async (req, res) => {
+  let user;
+  // In theory, you can enumerate all user data by guessing emails.
+  try {
+    user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { AND: { email: req.body.email } }
+        ]
+      }
+    });
+  } catch (e) {
+    res.sendStatus(400);
+  }
+
+  if (!user) {
+    res.sendStatus(404);
+    return;
+  }
+
+  res.send({
+    id: user.id,
+    name: user.name,
+  });
+});
+
 app.post("/event/new", requiresAuth(), async (req, res) => {
   if (!req.body) {
     // Bad Request
@@ -241,6 +268,183 @@ app.get("/events", requiresAuth(), async (req, res) => {
     console.log(e);
     // Bad Request
     res.sendStatus(400);
+  }
+});
+
+app.post("/friends/add", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    return;
+  }
+
+  const recvUserId = req.body.userId;
+
+  // Check that user is not friending themselves.
+  if (recvUserId == user.id) {
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+
+  // Check that the recvUser does exist.
+  try {
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+
+  // Check that this connection doesn't already. 
+  try {
+    let maybeConnection = await prisma.friendConnection.findFirst({
+      where: {
+        OR: [
+          { AND: { sendUserId: user.id } },
+          { AND: { recvUserId: recvUserId } },
+        ]
+      }
+    });
+
+    if (maybeConnection != null) {
+      res.sendStatus(200);
+      return;
+    }
+
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+
+  // Create the connection
+  try {
+    await prisma.friendConnection.create({
+      data: {
+        sendUserId: user.id,
+        recvUserId: recvUserId,
+      }
+    });
+  } catch (e) {
+    console.log(e);
+    // Internal Error
+    res.sendStatus(500);
+    return;
+  }
+});
+
+app.post("/friends/remove", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    return;
+  }
+
+  let recvUserId = req.body.userId;
+
+  try {
+    await prisma.friendConnection.deleteMany({
+      where: {
+        sendUserId: user.id,
+        recvUserId: recvUserId,
+      }
+    });
+  } catch (e) {
+    console.log(e);
+    // Internal Error
+    res.sendStatus(500);
+    return;
+  }
+});
+
+app.get("/friends", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+
+  let initialConnections = await prisma.friendConnection.findMany({
+    where: {
+      sendUserId: user.id,
+    }
+  });
+
+  // Painful O(n) query, perfect for an attacker.
+  // If we were cool, we would cache this result.
+  const friends = await Promise.all(initialConnections.map(async (conn) => {
+    let fullConnection = await prisma.friendConnection.findFirst({
+      where: {
+        OR: [
+          { AND: { sendUserId: conn.recvUserId } },
+          { AND: { recvUserId: user.id } },
+        ]
+      }
+    });
+    return [conn.recvUserId, fullConnection ? "full" : "sent_pending"];
+  }));
+  
+  res.send({ friends });
+});
+
+app.get("/friends/status/:uid", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+  
+  try {
+    let recvUserId = parseInt(req.params.uid);
+    let status = null;
+
+    // if I have sent a friend request to Other.
+    let maybeSender = await prisma.friendConnection.findFirst({
+      where: {
+        OR: [
+          { AND: { sendUserId: user.id } },
+          { AND: { recvUserId: recvUserId } },
+        ]
+      }
+    });
+
+    if (maybeSender) {
+      // If my request has been reciprocated.
+      let maybeRecv = await prisma.friendConnection.findFirst({
+        where: {
+          OR: [
+            { AND: { sendUserId: recvUserId } },
+            { AND: { recvUserId: user.id } },
+          ]
+        }
+      });
+      
+      if (maybeRecv) {
+        status = "full";
+      } else {
+        status = "sent_pending";
+      }
+    }
+    res.send({ status });
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
   }
 });
 
