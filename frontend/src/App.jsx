@@ -2,8 +2,6 @@ import Calendar from "./Calendar";
 import ProfilePopup from "./ProfilePopup";
 import AddFriend from "./AddFriend";
 import EventPopup from "./EventPopup";
-import Sidebar from "./Sidebar";
-import DaySummary from "./DaySummary"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import "./styles.css"
@@ -45,14 +43,6 @@ function App() {
         <div className = "page-body">
           <div className="page-layout">
             <Calendar />
-            <div className="side-bar">
-              <h1>
-                <Sidebar />
-              </h1>
-              <h2>
-                <DaySummary />
-              </h2>
-            </div>
           </div>
         </div>
         </TabPanel>

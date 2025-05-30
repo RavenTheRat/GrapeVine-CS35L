@@ -1,5 +1,7 @@
 import { useState, useEffect} from "react";
 import EventPopup from "./EventPopup";
+import DaySummary from "./DaySummary"
+import Sidebar from "./Sidebar"
 import Days from "./Days";
 import axios from "axios";
 import "./styles.css";
@@ -66,8 +68,12 @@ function Calendar() {
     }
     loadEvents();
     }, []);
+
+    // for DaySummary:
+    const [showDaySummary, setShowDaySummary] = useState(false);
   
   return (
+    <div className = "calendar-parent">
     <div className="calendar">
       <div
         className="month-display"
@@ -84,6 +90,11 @@ function Calendar() {
           placeholder="Search events by name or description"
           />
         </search-field>
+
+        <button onClick={() => setShowDaySummary((prev) => !prev)}>
+          {showDaySummary ? "Hide" : "Show"} Day's Events!
+          </button>
+
       </div>
       <div
         className="calendar-body"
@@ -107,23 +118,21 @@ function Calendar() {
         )}
       </div>
     </div>
-  );
-}
 
-function GetDate() {
-  return <div></div>;
-}
-
-// Once I get a better idea of the information held by an event and it's interaction with a date, I will
-// implement further.
-function TodayDisplay() {
-  return (
-    <>
-      <div>
-        <h2 className="today-title">Today's Events:</h2>
+    {showDaySummary ? (
+      <div >
+        <DaySummary events={events} selectedDay={currentDay} />
       </div>
-    </>
+    ) : (
+      <div >
+        <Sidebar />
+      </div>
+    )}
+
+    </div>
   );
 }
+
+// added a button to toggle whether user wants a day's summary or not!
 
 export default Calendar;

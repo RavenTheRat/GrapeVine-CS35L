@@ -49,6 +49,13 @@ html, body, #root {
     height: 100%;
 }
 
+.calendar-parent {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
 .calendar {
     width: 800px;
     display: flex;
