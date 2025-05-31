@@ -1,3 +1,5 @@
+// OUTDATED
+
 declare interface ReqCreateEvent {
   name: String,  
   description: String,
