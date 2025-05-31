@@ -46,6 +46,31 @@ async function createUser(oidc) {
   });
 }
 
+// throws the http status code on failure.
+async function getUserInfoWithEmail(email) {
+  let user;
+  try {
+    user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { AND: { email } }
+        ]
+      }
+    });
+  } catch (e) {
+    throw 400;
+  }
+
+  if (!user) {
+    throw 404;
+  }
+
+  return {
+    id: user.id,
+    name: user.name
+  }
+}
+
 // application/json parser
 app.use(express.json());
 app.use(auth(authConfig));
@@ -70,29 +95,11 @@ app.get("/user", requiresAuth(), async (req, res) => {
 
 // To avoid confusion, I avoided using a query param.
 app.post("/user/byemail/", requiresAuth(), async (req, res) => {
-  let user;
-  // In theory, you can enumerate all user data by guessing emails.
   try {
-    user = await prisma.user.findFirst({
-      where: {
-        OR: [
-          { AND: { email: req.body.email } }
-        ]
-      }
-    });
-  } catch (e) {
-    res.sendStatus(400);
+    res.send(await getUserInfoWithEmail(req.body.email));
+  } catch(status) {
+    res.sendStatus(status);
   }
-
-  if (!user) {
-    res.sendStatus(404);
-    return;
-  }
-
-  res.send({
-    id: user.id,
-    name: user.name,
-  });
 });
 
 app.post("/event/new", requiresAuth(), async (req, res) => {
@@ -280,7 +287,21 @@ app.post("/friends/add", requiresAuth(), async (req, res) => {
     return;
   }
 
-  const recvUserId = req.body.userId;
+  let recvUserId;
+  if (req.body.email) {
+    try {
+      recvUserId = (await getUserInfoWithEmail(req.body.email)).id;
+    } catch (status) {
+      res.sendStatus(status);
+      return;
+    }
+  } else if (req.body.userId) {
+    recvUserId = req.body.userId;
+  } else {
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
 
   // Check that user is not friending themselves.
   if (recvUserId == user.id) {
