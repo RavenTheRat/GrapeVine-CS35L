@@ -104,7 +104,7 @@ function EventPopup() {
                 type="checkbox"
                 id="public-toggle"
                 defaultChecked={isPublic}
-                onChange={(e) => setIsPublic(e)}
+                onChange={(e) => setIsPublic(e.target.checked)}
               />
               <label htmlFor="public-toggle">Do you want this event to be public?</label>
             </div>
