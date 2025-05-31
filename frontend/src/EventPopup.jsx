@@ -1,23 +1,28 @@
 import { useState } from "react";
 import Popup from "reactjs-popup";
+import Toggle from 'react-toggle';
+import "react-toggle/style.css";
 import axios from "axios";
-import './styles.css'
+import './styles.css';
 
 function EventPopup() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
 
   const handleSubmit = async (e, onSuccess) => {
     e.preventDefault(); // Prevent form submission from reloading the page
     if (name && description && startDate && endDate) {
+      console.log(isPublic);
       axios
         .post("http://localhost:3000/event/new", {
           name: name,
           description: description,
           startDt: new Date(startDate),
           endDt: new Date(endDate),
+          isPublic: isPublic
         })
         // response will be the json object returned (in this case the id)
         // this can optionally be sent to a higher level component and used there
@@ -27,11 +32,13 @@ function EventPopup() {
           setDescription("");
           setStartDate("");
           setEndDate("");
+          setIsPublic(false);
           onSuccess();
         })
         // error can be used to give better error messages, but we probably
         // won't need to do that for this project
         .catch((error) => {
+          console.log(error);
           alert("There was an error submitting your data. Please try again.");
         });
     } else {
@@ -90,6 +97,16 @@ function EventPopup() {
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
               />
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <input
+                type="checkbox"
+                id="public-toggle"
+                defaultChecked={isPublic}
+                onChange={(e) => setIsPublic(e.target.checked)}
+              />
+              <label htmlFor="public-toggle">Do you want this event to be public?</label>
             </div>
             
             <div>
