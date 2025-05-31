@@ -15,6 +15,7 @@ function EventPopup() {
   const handleSubmit = async (e, onSuccess) => {
     e.preventDefault(); // Prevent form submission from reloading the page
     if (name && description && startDate && endDate) {
+      console.log(isPublic);
       axios
         .post("http://localhost:3000/event/new", {
           name: name,
@@ -37,6 +38,7 @@ function EventPopup() {
         // error can be used to give better error messages, but we probably
         // won't need to do that for this project
         .catch((error) => {
+          console.log(error);
           alert("There was an error submitting your data. Please try again.");
         });
     } else {
@@ -98,10 +100,11 @@ function EventPopup() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <Toggle
+              <input
+                type="checkbox"
                 id="public-toggle"
                 defaultChecked={isPublic}
-                onChange={setIsPublic}
+                onChange={(e) => setIsPublic(e)}
               />
               <label htmlFor="public-toggle">Do you want this event to be public?</label>
             </div>
