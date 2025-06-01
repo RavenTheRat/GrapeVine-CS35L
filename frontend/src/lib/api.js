@@ -42,6 +42,14 @@ async function gvGetUserByEmail(req) {
   return gvFetch(`/user/byemail/`, "POST", req, true);
 }
 
+async function gvGetComments(req) {
+  return gvFetch(`/events/${req.eventId}/comments`, "GET", null, true);
+}
+
+async function gvAddComment(req) {
+  return gvFetch(`/events/${req.eventId}/comments/add`, "POST", req, true);
+}
+
 async function gvFetch(endpoint, method, data = null, useJsonResponse = false) {
   const fetchParams = {
     method

@@ -22,6 +22,7 @@ function Discover() {
             <p className="event-description">{event.description}</p>
             <div className="event-comment-section">
               <label className="comment-label">Comments</label>
+              
               <textarea 
                 className="comment-input" 
                 placeholder="Add a comment..."
@@ -38,7 +39,6 @@ function Discover() {
           // response will be the json object returned (in this case the data)
           .then((response) => {
             setEvents(response.data);
-            console.log(response.data);
           })
           .catch((error) => {
             alert("There was an error fetching your data. Please try again.");

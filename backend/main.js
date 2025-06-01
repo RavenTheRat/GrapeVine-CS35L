@@ -285,20 +285,16 @@ app.get("/events/public", async (_req, res) => {
           isPublic: true,
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            name: true,
+          }
+        }
       },
       orderBy: {
         startDt: "asc",
       }
     });
-
-    for (const event of events) {
-      // Minimize the amount of user information exposed.
-      event.user = {
-        id: event.user.id,
-        name: event.user.name,
-      }
-    }
 
     res.send(events);
   } catch (e) {
@@ -497,6 +493,72 @@ app.get("/friends/status/:uid", requiresAuth(), async (req, res) => {
     // Bad Request
     res.sendStatus(400);
     return;
+  }
+});
+
+app.get("/events/:id/comments/", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+
+  // TODO: We need to ensure that the user is allowed to see these comments.
+
+  try {
+    const eventId = parseInt(req.params.id);
+    const comments = await prisma.comment.findMany({
+      where: {
+        eventId,
+      },
+      include: {
+        user: {
+          select: {
+            name: true
+          }
+        },
+      }
+    });
+
+    res.send(comments);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+  }
+});
+
+app.post("/events/:id/comments/add", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+
+  // TODO: We need to ensure that the user is allowed to add comments.
+  
+  try {
+    const eventId = parseInt(req.params.id);
+    console.log(eventId);
+    await prisma.comment.create({
+      data: {
+        content: req.body.content,
+        eventId,
+        userId: user.id,
+      }
+    });
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
   }
 });
 
