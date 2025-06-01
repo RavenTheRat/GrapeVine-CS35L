@@ -2,6 +2,7 @@ import { useState } from "react";
 import "reactjs-popup/dist/index.css";
 import Popup from "reactjs-popup";
 import './styles.css'
+import axios from "axios";
 
 function AddFriend() {
   // State containing text when searching for a friend to add
