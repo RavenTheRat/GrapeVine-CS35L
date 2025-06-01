@@ -5,12 +5,18 @@ import "./styles.css";
 function Discover() {
     const [events, setEvents] = useState([]);
 
+    const formatDate = (dateString) => {
+      const d = new Date(dateString);
+      return `${d.getMonth()}/${d.getDate()}/${d.getFullYear()}`;
+    };
+
     const EventCard = ({ event }) => {
         return (
           <div className="event-card">
             <div className="event-header">
-              <span className="event-user">User's name goes here</span>
-              <span className="event-datetime">{event.startDt}-{event.endDt}</span>
+              <span className="event-user">{event.user.name}</span>
+              &nbsp;
+              <span className="event-datetime">{formatDate(event.startDt)} - {formatDate(event.endDt)}</span>
             </div>
             <h3 className="event-title">{event.name}</h3>
             <p className="event-description">{event.description}</p>
@@ -28,10 +34,11 @@ function Discover() {
     useEffect(() => {
         const loadEvents = async () => {
           axios
-          .get("http://localhost:3000/events")
+          .get("http://localhost:3000/events/public")
           // response will be the json object returned (in this case the data)
           .then((response) => {
             setEvents(response.data);
+            console.log(response.data);
           })
           .catch((error) => {
             alert("There was an error fetching your data. Please try again.");
@@ -43,7 +50,7 @@ function Discover() {
     return (
         <>
             <ul className="event-list" style={{ listStyleType: "none" }}>
-                {events.map((event, idx) => (
+                {events.map((event) => (
                 <li key={event.id}>
                     <EventCard event={event} />
                 </li>

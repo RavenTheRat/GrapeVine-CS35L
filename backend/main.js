@@ -278,6 +278,47 @@ app.get("/events", requiresAuth(), async (req, res) => {
   }
 });
 
+app.get("/events/public", async (_req, res) => {
+  try {
+    const events = await prisma.event.findMany({
+      where: {
+
+          isPublic: true,
+      },
+        orderBy: {
+            startDt: "asc"
+        }
+
+    });
+
+    for (const event of events) {
+      // Once again, this is unideal.
+      try {
+        let user = await prisma.user.findUniqueOrThrow({
+          where: {
+            id: event.userId,
+          }
+        });
+        event.user = {
+          name: user.name,
+        }
+      } catch(e) {
+        // This should only fail for missing users.
+        console.log(e);
+        res.sendStatus(500);
+        return;
+      }
+    }
+
+    res.send(events);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+});
+
 app.post("/friends/add", requiresAuth(), async (req, res) => {
   let user;
   try {
