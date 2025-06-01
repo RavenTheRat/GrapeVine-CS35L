@@ -282,31 +282,21 @@ app.get("/events/public", async (_req, res) => {
   try {
     const events = await prisma.event.findMany({
       where: {
-
           isPublic: true,
       },
-        orderBy: {
-            startDt: "asc"
-        }
-
+      include: {
+        user: true,
+      },
+      orderBy: {
+        startDt: "asc",
+      }
     });
 
     for (const event of events) {
-      // Once again, this is unideal.
-      try {
-        let user = await prisma.user.findUniqueOrThrow({
-          where: {
-            id: event.userId,
-          }
-        });
-        event.user = {
-          name: user.name,
-        }
-      } catch(e) {
-        // This should only fail for missing users.
-        console.log(e);
-        res.sendStatus(500);
-        return;
+      // Minimize the amount of user information exposed.
+      event.user = {
+        id: event.user.id,
+        name: event.user.name,
       }
     }
 
