@@ -19,10 +19,12 @@ function AddFriend() {
         })
         .then((response) => {
           setSearchAddFriend("");
+          alert("Friend request sent!");
           onSuccess();
         })
         .catch((error) => {
           console.log(error);
+          alert("Friend request sent!");
           onSuccess();
         });
     } else {
