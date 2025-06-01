@@ -274,8 +274,62 @@ app.get("/events", requiresAuth(), async (req, res) => {
   } catch (e) {
     console.log(e);
     // Bad Request
-    res.sendStatus(400);
+    res.sendStatus(500);
   }
+});
+
+app.get("/events/friends", requiresAuth(), async (req, res) => {
+  let user;
+  try {
+    user = await syncUser(req.oidc);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
+
+  try {
+    let initialConnections = await prisma.friendConnection.findMany({
+      where: {
+        sendUserId: user.id,
+      }
+    });
+    // Painful O(n) query, perfect for an attacker.
+    // If we were cool, we would cache this result.
+    let friends = await Promise.all(initialConnections.map(async (conn) => {
+      let fullConnection = await prisma.friendConnection.findFirst({
+        where: {
+          OR: [
+            { AND: { sendUserId: conn.recvUserId } },
+            { AND: { recvUserId: user.id } },
+          ]
+        }
+      });
+      return [conn.recvUserId, fullConnection ? "full" : "sent_pending"];
+    }));
+    friends = friends.filter((e) => e[1] == "full");
+
+    // get events for each friend
+    const events = [];
+    for (const f of friends) {
+      const newEvents = await prisma.event.findMany({
+        where: {
+          userId: f[0],
+        }
+      });
+      events.push(...newEvents);
+    }
+    console.log(events)
+    res.send(events);
+  } catch (e) {
+    console.log(e);
+    // Internal Server Error
+    res.sendStatus(500);
+    return;
+  }
+
+
 });
 
 app.post("/friends/add", requiresAuth(), async (req, res) => {
@@ -389,31 +443,36 @@ app.get("/friends", requiresAuth(), async (req, res) => {
     }
   });
 
-  // Painful O(n) query, perfect for an attacker.
-  // If we were cool, we would cache this result.
-  const friends = await Promise.all(initialConnections.map(async (conn) => {
-    let fullConnection = await prisma.friendConnection.findFirst({
-      where: {
-        OR: [
-          { AND: { sendUserId: conn.recvUserId } },
-          { AND: { recvUserId: user.id } },
-        ]
-      }
-    });
-    return [conn.recvUserId, fullConnection ? "full" : "sent_pending"];
-  }));
+  try {
+    // Painful O(n) query, perfect for an attacker.
+    // If we were cool, we would cache this result.
+    const friends = await Promise.all(initialConnections.map(async (conn) => {
+      let fullConnection = await prisma.friendConnection.findFirst({
+        where: {
+          OR: [
+            { AND: { sendUserId: conn.recvUserId } },
+            { AND: { recvUserId: user.id } },
+          ]
+        }
+      });
+      return [conn.recvUserId, fullConnection ? "full" : "sent_pending"];
+    }));
 
-  // get user objects from id
-  const users = await Promise.all(friends.filter((e) => e[1] == "full").map(async (e) => {
-    let usr = await prisma.user.findFirst({
-      where: {
-        id: e[0]
-      }
-    });
-    return usr;
-  }));
-  
-  res.send({ users });
+    // get user objects from id
+    const users = await Promise.all(friends.filter((e) => e[1] == "full").map(async (e) => {
+      let usr = await prisma.user.findFirst({
+        where: {
+          id: e[0]
+        }
+      });
+      return usr;
+    }));
+    
+    res.send({ users });
+  } catch {
+    // Internal Server Error
+    res.sendStatus(500);
+  }
 });
 
 app.get("/friends/status/:uid", requiresAuth(), async (req, res) => {

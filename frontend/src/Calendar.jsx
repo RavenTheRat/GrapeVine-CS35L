@@ -32,6 +32,7 @@ function Calendar() {
   ];
   const [currentDay, setCurrentDay] = useState(new Date());
   const [events, setEvents] = useState([]);
+  const [friends, setFriends] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [filteredEvents, setFilteredEvents] = useState([]);
   //const [loading, setLoading] = useState(true);
@@ -66,8 +67,22 @@ function Calendar() {
         //alert("There was an error fetching your data. Please try again.");
       });
     }
+    const getFriends = async () => {
+      try {
+        axios.get("http://localhost:3000/friends")
+          .then((response) => {
+            setFriends(response.data.users)
+            console.log(response.data.users)
+          }
+          )
+      } catch (e) {
+        console.log(e)
+        setFriends([])
+      }
+    };
+    getFriends();
     loadEvents();
-    }, []);
+  }, []);
 
     // for DaySummary:
     const [showDaySummary, setShowDaySummary] = useState(false);
@@ -125,7 +140,7 @@ function Calendar() {
       </div>
     ) : (
       <div >
-        <Sidebar />
+        <Sidebar friends={friends} />
       </div>
     )}
 

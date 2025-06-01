@@ -1,7 +1,6 @@
 import './styles.css'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {gvGetEvents, gvCreateEvent, gvDeleteEvent } from "./lib/api.js";
 
 // hard-coded set of events; this will be replaced by user's events, and have a date associated
 // to only display on relevant day (my birthday is currently everyday apparently :P)
