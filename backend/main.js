@@ -414,8 +414,17 @@ app.get("/friends", requiresAuth(), async (req, res) => {
     });
     return [conn.recvUserId, fullConnection ? "full" : "sent_pending"];
   }));
+
+  // get user objects from id
+  users = friends.filter((e) => e.get(1) == "full").map(async (e) => {
+    prisma.user.findFirst({
+      where: {
+        id: e.get(0)
+      }
+    })
+  })
   
-  res.send({ friends });
+  res.send({ users });
 });
 
 app.get("/friends/status/:uid", requiresAuth(), async (req, res) => {
