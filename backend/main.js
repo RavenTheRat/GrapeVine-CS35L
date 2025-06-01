@@ -292,11 +292,10 @@ app.post("/friends/add", requiresAuth(), async (req, res) => {
     try {
       recvUserId = (await getUserInfoWithEmail(req.body.email)).id;
     } catch (status) {
-      res.sendStatus(status);
+      // fail silently to not leak user info
+      res.sendStatus(200);
       return;
     }
-  } else if (req.body.userId) {
-    recvUserId = req.body.userId;
   } else {
     // Bad Request
     res.sendStatus(400);
@@ -310,23 +309,12 @@ app.post("/friends/add", requiresAuth(), async (req, res) => {
     return;
   }
 
-  // Check that the recvUser does exist.
-  try {
-  } catch (e) {
-    console.log(e);
-    // Bad Request
-    res.sendStatus(400);
-    return;
-  }
-
   // Check that this connection doesn't already. 
   try {
     let maybeConnection = await prisma.friendConnection.findFirst({
       where: {
-        OR: [
-          { AND: { sendUserId: user.id } },
-          { AND: { recvUserId: recvUserId } },
-        ]
+        sendUserId: user.id,
+        recvUserId: recvUserId
       }
     });
 
@@ -416,13 +404,14 @@ app.get("/friends", requiresAuth(), async (req, res) => {
   }));
 
   // get user objects from id
-  users = friends.filter((e) => e.get(1) == "full").map(async (e) => {
-    prisma.user.findFirst({
+  const users = await Promise.all(friends.filter((e) => e[1] == "full").map(async (e) => {
+    let usr = await prisma.user.findFirst({
       where: {
-        id: e.get(0)
+        id: e[0]
       }
-    })
-  })
+    });
+    return usr;
+  }));
   
   res.send({ users });
 });
