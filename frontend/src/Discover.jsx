@@ -49,7 +49,7 @@ function Discover() {
 
     return (
         <>
-            <ul className="event-list" style={{ listStyleType: "none" }}>
+            <ul className="event-list">
                 {events
                 .filter(
                   (event) => 
