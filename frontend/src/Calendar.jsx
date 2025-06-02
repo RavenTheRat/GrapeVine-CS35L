@@ -6,7 +6,7 @@ import Days from "./Days";
 import axios from "axios";
 import "./styles.css";
 
-function Calendar() {
+function Calendar({user}) {
   const weekdays = [
     "Sunday",
     "Monday",
@@ -32,8 +32,11 @@ function Calendar() {
   ];
   const [currentDay, setCurrentDay] = useState(new Date());
   const [events, setEvents] = useState([]);
+  const [friends, setFriends] = useState([]);
+  const [friendsToDisplay, setFriendsToDisplay] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [userId, setUserId] = useState(-1);
   //const [loading, setLoading] = useState(true);
 
   // Searching algorithm
@@ -50,27 +53,63 @@ function Calendar() {
     setFilteredEvents(filteredItems);
   };
 
+  const onCheckboxToggle = (friendId) => {
+    let nFriendsToDisplay;
+    if (friendsToDisplay.includes(friendId)) {
+      nFriendsToDisplay = friendsToDisplay.slice();
+      nFriendsToDisplay.splice(nFriendsToDisplay.indexOf(friendId), 1);
+      setFriendsToDisplay(nFriendsToDisplay);
+    } else {
+      nFriendsToDisplay = friendsToDisplay.slice();
+      nFriendsToDisplay.push(friendId);
+      setFriendsToDisplay(nFriendsToDisplay);
+    }
+  }
+
   const changeCurrentDay = (day) => {
     setCurrentDay(new Date(day.year, day.month, day.number));
   };
 
   useEffect(() => {
     const loadEvents = async () => {
-      axios
-      .get("http://localhost:3000/events")
-      // response will be the json object returned (in this case the data)
-      .then((response) => {
-        setEvents(response.data);
-      })
-      .catch((error) => {
-        //alert("There was an error fetching your data. Please try again.");
-      });
-    }
-    loadEvents();
-    }, []);
+      // straight outta gpt
+      const response1 = await axios.get("http://localhost:3000/events");
+      const response2 = await axios.get("http://localhost:3000/events/friends");
 
-    // for DaySummary:
-    const [showDaySummary, setShowDaySummary] = useState(false);
+      setEvents([...response1.data, ...response2.data]);
+    }
+    const getFriends = async () => {
+      try {
+        axios.get("http://localhost:3000/friends")
+          .then((response) => {
+            setFriends(response.data.users)
+          }
+          )
+      } catch (e) {
+        console.log(e)
+        setFriends([]);
+      }
+    };
+    const getUserId = async () => {
+      try {
+        axios.get("http://localhost:3000/user")
+          .then((response) => {
+            setUserId(response.data.id)
+          }
+          )
+      } catch (e) {
+        console.log(e)
+      }
+    };
+    getUserId();
+    getFriends();
+    loadEvents();
+  }, []);
+
+  
+
+  // for DaySummary:
+  const [showDaySummary, setShowDaySummary] = useState(false);
   
   return (
     <div className = "calendar-parent">
@@ -112,9 +151,9 @@ function Calendar() {
         </div>
 
         {searchItem.length > 0 ? (
-          <Days events = {filteredEvents} day={currentDay} changeCurrentDay={changeCurrentDay} />
+          <Days events = {filteredEvents} day={currentDay} userId={userId} friendsToDisplay={friendsToDisplay} changeCurrentDay={changeCurrentDay} />
         ) : (
-          <Days events = {events} day={currentDay} changeCurrentDay={changeCurrentDay} />
+          <Days events = {events} day={currentDay} userId={userId} friendsToDisplay={friendsToDisplay} changeCurrentDay={changeCurrentDay} />
         )}
       </div>
     </div>
@@ -125,7 +164,7 @@ function Calendar() {
       </div>
     ) : (
       <div >
-        <Sidebar />
+        <Sidebar friends={friends} onCheckboxToggle={onCheckboxToggle} />
       </div>
     )}
 

@@ -1,7 +1,6 @@
 import './styles.css'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {gvGetEvents, gvCreateEvent, gvDeleteEvent } from "./lib/api.js";
 
 // hard-coded set of events; this will be replaced by user's events, and have a date associated
 // to only display on relevant day (my birthday is currently everyday apparently :P)
@@ -11,7 +10,7 @@ import {gvGetEvents, gvCreateEvent, gvDeleteEvent } from "./lib/api.js";
   //{ event: "Class" },
 //];
 
-function Days({events, day, changeCurrentDay}) {
+function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
   
 
   const firstOfMonth = new Date(
@@ -74,11 +73,16 @@ function Days({events, day, changeCurrentDay}) {
                     // more details from adi: slice extracts the "date part" without the timezone part (gets only
                     // the first 10 chars) turn day.date to ISOString and get the same components to compare!
                 )
-                .map((Event, idx) => (
-                  <li key={idx} className="single-event">
-                    {Event.name}
-                  </li>
-                ))}
+                .filter((event) => friendsToDisplay.includes(event.userId) || event.userId == userId)
+                  .map((event, idx) => (
+                    <li
+                      key={idx}
+                      className="single-event"
+                      style={{ color: userId !== event.userId ? 'blue' : 'black' }}
+                    >
+                      {event.name}
+                    </li>
+                  ))}
               </ul>
             </h1>
           </div>
