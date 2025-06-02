@@ -327,8 +327,37 @@ app.get("/events/friends", requiresAuth(), async (req, res) => {
     res.sendStatus(500);
     return;
   }
+});
 
+app.get("/events/public", async (_req, res) => {
+  try {
+    const events = await prisma.event.findMany({
+      where: {
+          isPublic: true,
+      },
+      include: {
+        user: true,
+      },
+      orderBy: {
+        startDt: "asc",
+      }
+    });
 
+    for (const event of events) {
+      // Minimize the amount of user information exposed.
+      event.user = {
+        id: event.user.id,
+        name: event.user.name,
+      }
+    }
+
+    res.send(events);
+  } catch (e) {
+    console.log(e);
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
 });
 
 app.post("/friends/add", requiresAuth(), async (req, res) => {
