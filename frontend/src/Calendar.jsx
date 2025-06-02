@@ -159,11 +159,11 @@ function Calendar({user}) {
     </div>
 
     {showDaySummary ? (
-      <div >
+      <div>
         <DaySummary events={events} selectedDay={currentDay} />
       </div>
     ) : (
-      <div >
+      <div>
         <Sidebar friends={friends} onCheckboxToggle={onCheckboxToggle} />
       </div>
     )}

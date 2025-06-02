@@ -51,9 +51,8 @@ html, body, #root {
 
 .calendar-parent {
   display: flex;
-  gap: 20px;
+  gap: 50px;
   align-items: flex-start;
-  padding: 1rem;
 }
 
 .calendar {
@@ -169,16 +168,13 @@ html, body, #root {
     width: 340px;
     height: 270px;
     background-color: #b4be89;
-
-    border-top: 4px solid black;
-    border-bottom: 4px solid black;
-    border-left: 4px solid black;
-    border-right: 4px solid black;
-
-    position: relative;
-    right: 25px;
-
+    border: 4px solid black;
     font-size: 20px;
+
+    
+    position: relative;
+    left: 5px;
+    top: 20px;
 }
 
 .friend-header {
@@ -211,17 +207,12 @@ html, body, #root {
     width: 340px;
     height: 270px;
     background-color: #b4be89;
-
-    border-top: 4px solid black;
-    border-bottom: 4px solid black;
-    border-left: 4px solid black;
-    border-right: 4px solid black;
+    border: 4px solid black;
+    font-size: 20px;
 
     position: relative;
-    right: 25px;
-    top: 14px;
-
-    font-size: 20px;
+    left: 5px;
+    top: 20px;
 }
 
 .day-summary-header {
