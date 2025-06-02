@@ -32,9 +32,14 @@ html, body, #root {
     position: relative;
 }
 
+.right-header h1, h2, h3 {
+    margin: 5px 10px 0 10px;
+}
+
 .page-body {
     background-color: thistle;
-    height: 650px;
+    min-height: 800px;
+    height: 100%;
     border-left: 8px solid black;
     border-right: 8px solid black;
     border-bottom: 8px solid black;
@@ -81,7 +86,20 @@ html, body, #root {
 
 .month-display search-field {
     position: relative;
-    transform: translateX(188%);
+    transform: translateX(100%);
+    width: 225px;
+}
+
+.month-display search-field input {
+    width: 100%;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.month-display button {
+    position: relative;
+    transform: translateX(200%);
 }
     
 /* switched to block & grid instead of flex for most of the calendar! */
@@ -357,9 +375,17 @@ html, body, #root {
     display: inline-block;
 }
 
-.add-event-btn{
+.add-event-btn, .side-bar-add {
     background: #c5a0c5;
     font-family: 'Comic Sans MS';
+}
+
+.tab-list {
+    background-color: thistle;
+    border-left: 8px solid black;
+    border-right: 8px solid black;
+    border-bottom: 2px solid black;
+    margin: 0 10px 0 10px;
 }
 
 /* Event Card Styles */

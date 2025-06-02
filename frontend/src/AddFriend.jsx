@@ -142,8 +142,11 @@ function AddFriend() {
   }
 
   return (
-    <div className="side-bar-add">
-      <Popup trigger={<button>Add Friend!</button>} modal nested>
+    <div>
+      <Popup trigger={<button className="side-bar-add">Add Friend!</button>}
+      modal
+      nested
+      contentStyle={{ color: '#5f3a5f' }}>
         {(close) => (
           <div className="modal">
             <div className="side-bar">

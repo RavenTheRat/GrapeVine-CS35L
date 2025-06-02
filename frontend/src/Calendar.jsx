@@ -123,7 +123,6 @@ function Calendar({user}) {
         <search-field>
           <input
           type="text"
-          style={{width: "225px"}}
           value={searchItem}
           onChange={handleInputChange}
           placeholder="Search events by name or description"

@@ -15,7 +15,7 @@ function MainDisplay() {
       <h1 className = "logo-header">GRAPEVINE</h1>
       <div className = "right-header">
         <h1> <EventPopup /></h1>
-        <h2> <AddFriend /></h2>
+        <h1> <AddFriend /></h1>
         <h3> <ProfilePopup /></h3>
           <button
             onClick={() => {
@@ -27,7 +27,7 @@ function MainDisplay() {
       </div>
     </header>
     <Tabs>
-      <TabList>
+      <TabList className="tab-list">
         <Tab>Calendar</Tab>
         <Tab>Discover</Tab>
       </TabList>
