@@ -4,7 +4,7 @@ import Popup from "reactjs-popup";
 import './styles.css'
 import axios from "axios";
 
-function DaySummary( {selectedDay} ) {
+function DaySummary( {selectedDay, friendsToDisplay} ) {
   if (!selectedDay) {
     return <div className="day-summary">Loading date...</div>;
   }
@@ -54,12 +54,14 @@ function DaySummary( {selectedDay} ) {
                 <p>{event.description}</p>
               </div>
             ))}
-            {todayFriendEvents.map((friendEvent, idx) => (
-              <div key = {idx} className = "friend-event-summary-card">
-                <strong>{friendEvent.name}</strong>
-                <p>{friendEvent.description}</p>
-              </div>
-            ))}
+            {todayFriendEvents
+              .filter((event) => friendsToDisplay.includes(event.userId))
+              .map((friendEvent, idx) => (
+                <div key={idx} className="friend-event-summary-card">
+                  <strong>{friendEvent.name}</strong>
+                  <p>{friendEvent.description}</p>
+                </div>
+))}
           </div>
         )}
             </div>

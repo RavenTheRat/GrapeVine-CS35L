@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import './styles.css'
 
-function Sidebar({friends, onCheckboxToggle}) {
+function Sidebar({friends, onCheckboxToggle, friendsToDisplay}) {
   return (
     <>
       <div className="friend-display">
@@ -12,7 +12,11 @@ function Sidebar({friends, onCheckboxToggle}) {
           <ul className="friends-display" style={{ listStyleType: "none" }}>
             {friends.map((friend) => (
               <li key={friend.id}>
-                <input type="checkbox" onClick={() => onCheckboxToggle(friend.id)} />
+                <input 
+                  type="checkbox"
+                  checked = {friendsToDisplay.includes(friend.id)}
+                  onChange={() => onCheckboxToggle(friend.id)}
+                />
                 {friend.name}
               </li>
             ))}
