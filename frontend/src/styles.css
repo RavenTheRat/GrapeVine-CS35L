@@ -287,7 +287,12 @@ html, body, #root {
 }
 
 .event-list {
-    list-style-type: circle;
+    /* list-style-type: circle; */
+    list-style-type: none;
+}
+
+.event-list li {
+    display: inline-block;
 }
 
 .add-event-btn{
@@ -351,7 +356,7 @@ html, body, #root {
 }
 
 .comment-input {
-    width: 100%;
+    width: 85%;
     padding: 10px;
     border: 1px solid #b4be89;
     border-radius: 4px;
