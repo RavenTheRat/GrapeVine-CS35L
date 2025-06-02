@@ -249,6 +249,14 @@ html, body, #root {
     position: relative;
     left: 5px;
     top: 10px;
+
+    overflow-y: auto;
+    max-height: 490px;
+}
+
+/* made da scroll bar invisible B) */
+.day-summary-list::-webkit-scrollbar {
+  width: 6px;
 }
 
 .event-summary-card {
