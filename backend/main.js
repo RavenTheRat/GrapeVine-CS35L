@@ -320,7 +320,6 @@ app.get("/events/friends", requiresAuth(), async (req, res) => {
       });
       events.push(...newEvents);
     }
-    console.log(events)
     res.send(events);
   } catch (e) {
     console.log(e);

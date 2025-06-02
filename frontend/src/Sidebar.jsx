@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import './styles.css'
-import axios from "axios";
 
-function Sidebar({friends}) {
+function Sidebar({friends, onCheckboxToggle}) {
   return (
     <>
       <div className="friend-display">
@@ -13,7 +12,7 @@ function Sidebar({friends}) {
           <ul className="friends-display" style={{ listStyleType: "none" }}>
             {friends.map((friend) => (
               <li key={friend.id}>
-                <input type="checkbox" />
+                <input type="checkbox" onClick={() => onCheckboxToggle(friend.id)} />
                 {friend.name}
               </li>
             ))}
