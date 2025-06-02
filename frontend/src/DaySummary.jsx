@@ -23,14 +23,14 @@ function DaySummary( {events, selectedDay}) {
                 {todayEvents.length === 0 ? (
           <p>Nothing to see here!</p>
         ) : (
-          <ul className="day-summary-list">
+          <div className="day-summary-list">
             {todayEvents.map((event, idx) => (
-              <li key={idx} className="day-summary-item">
+              <div key={idx} className="event-summary-card">
                 <strong>{event.name}</strong>
                 <p>{event.description}</p>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
             </div>
         </div>

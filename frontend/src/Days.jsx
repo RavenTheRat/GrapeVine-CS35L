@@ -84,9 +84,7 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
                       className="single-event"
                       style={{ color: userId !== event.userId ? 'blue' : 'black' }}
                     >
-                      <button onClick {() => handleEdit(event)}>
                       {event.name}
-                      </button>
                     </li>
                   ))}
               </ul>
