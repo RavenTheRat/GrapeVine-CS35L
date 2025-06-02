@@ -160,7 +160,7 @@ function Calendar({user}) {
 
     {showDaySummary ? (
       <div>
-        <DaySummary events={events} selectedDay={currentDay} />
+        <DaySummary selectedDay={currentDay} />
       </div>
     ) : (
       <div>
