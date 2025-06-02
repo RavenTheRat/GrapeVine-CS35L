@@ -1,5 +1,6 @@
 import './styles.css'
 import React, { useEffect, useState } from "react";
+import Popup from "reactjs-popup";
 import axios from "axios";
 import {gvGetEvents, gvCreateEvent, gvDeleteEvent } from "./lib/api.js";
 
@@ -13,6 +14,10 @@ import {gvGetEvents, gvCreateEvent, gvDeleteEvent } from "./lib/api.js";
 
 function Days({events, day, changeCurrentDay}) {
   
+  const handleEdit = async (event) => {
+
+  }
+
 
   const firstOfMonth = new Date(
     day.getFullYear(),
@@ -48,6 +53,7 @@ function Days({events, day, changeCurrentDay}) {
     loopDay++;
   }
 
+
   return (
     <div className="table-content">
       {allDays.map((day, idx) => {
@@ -76,7 +82,9 @@ function Days({events, day, changeCurrentDay}) {
                 )
                 .map((Event, idx) => (
                   <li key={idx} className="single-event">
-                    {Event.name}
+                    <button onClick={() => handleEdit(Event)}>
+                        {Event.name}
+                    </button>
                   </li>
                 ))}
               </ul>

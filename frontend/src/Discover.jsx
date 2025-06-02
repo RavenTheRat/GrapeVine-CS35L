@@ -7,7 +7,7 @@ function Discover() {
 
     const formatDate = (dateString) => {
       const d = new Date(dateString);
-      return `${d.getMonth()}/${d.getDate()}/${d.getFullYear()}`;
+      return `${d.getMonth()+1}/${d.getDate()+1}/${d.getFullYear()}`;
     };
 
     const EventCard = ({ event }) => {
@@ -50,7 +50,14 @@ function Discover() {
     return (
         <>
             <ul className="event-list" style={{ listStyleType: "none" }}>
-                {events.map((event) => (
+                {events
+                .filter(
+                  (event) => 
+                    //this creates a new instance of day and compares it to the current instance of Day
+                    //both return date objects that are comparable to each other
+                    new Date(event.startDt) >= new Date()
+                )
+                .map((event) => (
                 <li key={event.id}>
                     <EventCard event={event} />
                 </li>
