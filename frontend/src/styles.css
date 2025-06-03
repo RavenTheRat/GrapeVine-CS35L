@@ -38,7 +38,7 @@ html, body, #root {
 
 .page-body {
     background-color: thistle;
-    min-height: 800px;
+    min-height: 650px;
     height: 100%;
     border-left: 8px solid black;
     border-right: 8px solid black;
@@ -489,4 +489,9 @@ html, body, #root {
     align-items: center;
     background-color: thistle;
     height: 650px;
+}
+
+.cute-buttons {
+    border-radius: 25px;
+    background-color: thistle;
 }
