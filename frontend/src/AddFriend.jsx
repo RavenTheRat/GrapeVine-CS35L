@@ -40,7 +40,10 @@ function AddFriend() {
             <div className="modal">
               <div className="side-bar">
                 <h2>Add Friends</h2>
-                <form onSubmit={(e) => handleSubmit(e, close)}>
+                <form onSubmit={(e) => handleSubmit(e, () => {
+                  close();
+                  window.location.reload();
+                })}>
                   <input
                     type="text"
                     placeholder="Enter an email address"

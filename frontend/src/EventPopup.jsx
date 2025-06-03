@@ -55,7 +55,10 @@ function EventPopup() {
       {(close) => (
         <div className="modal">
           <h2>Add New Event</h2>
-          <form className="flex flex-col gap-4" onSubmit={(e) => handleSubmit(e, close)}>
+          <form className="flex flex-col gap-4" onSubmit={(e) => handleSubmit(e, () => {
+                  close();
+                  window.location.reload();
+                })}>
             <div className="flex flex-col gap-4">
               Name:
               <input
