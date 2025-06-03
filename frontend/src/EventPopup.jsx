@@ -82,22 +82,16 @@ function EventPopup() {
             </div>
             
             <div className="flex flex-col gap-4">
-              Start Date:
+              Date:
               <input
               type="date"
               name="startDate"
               value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              />
-            </div>
-            
-            <div className="flex flex-col gap-4">
-              End Date:
-              <input
-              type="date"
-              name="endDate"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+                setEndDate(e.target.value);
+              }
+              }
               />
             </div>
 

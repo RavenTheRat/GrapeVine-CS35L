@@ -16,7 +16,7 @@ function Discover() {
             <div className="event-header">
               <span className="event-user">{event.user.name}</span>
               &nbsp;
-              <span className="event-datetime">{formatDate(event.startDt)} - {formatDate(event.endDt)}</span>
+              <span className="event-datetime">{formatDate(event.startDt)}</span>
             </div>
             <h3 className="event-title">{event.name}</h3>
             <p className="event-description">{event.description}</p>
