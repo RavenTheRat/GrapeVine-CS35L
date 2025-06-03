@@ -1,6 +1,7 @@
 import Calendar from "./Calendar";
 import ProfilePopup from "./ProfilePopup";
 import AddFriend from "./AddFriend";
+import RemoveFriend from "./RemoveFriend";
 import EventPopup from "./EventPopup";
 import Discover from "./Discover";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -16,6 +17,7 @@ function MainDisplay() {
       <div className = "right-header">
         <h1> <EventPopup /></h1>
         <h2> <AddFriend /></h2>
+        <h2> <RemoveFriend /></h2>
         <h3> <ProfilePopup /></h3>
           <button
             onClick={() => {
