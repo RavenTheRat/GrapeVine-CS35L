@@ -335,6 +335,11 @@ html, body, #root {
     color: #555;
 }
 
+.friend-name-card {
+    font-weight: bold;
+    font-size: 15px;
+}
+
 /* profile */
 
 .profile-button {
@@ -621,4 +626,69 @@ html, body, #root {
   to {
     opacity: 1;
   }
+}
+
+
+/* friend cards */
+
+.friend-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    position: relative;
+    top: 10px;
+
+    overflow-y: auto;
+    max-height: 490px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    gap: 10px;
+    padding-bottom: 12px;
+}
+
+.friend-card {
+    background-color: #f9f9f9;
+    border: 1px solid #b4be89;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 5px #b4be89;
+    transition: box-shadow 0.3s ease;
+
+    text-align: left;
+    width: 90%;
+    box-sizing: border-box;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    vertical-align: middle;
+}
+
+.friend-card:hover {
+    box-shadow: 0 4px 12px #b4be89;
+    cursor: pointer;
+}
+
+.friend-card strong {
+    display: block;
+    font-size: 1.1rem;
+}
+
+.friend-card p {
+    margin: 0;
+    color: #555;
+}
+
+.friend-checkbox {
+    accent-color: thistle;
+
+    width: 16px;
+    height: 16px;
+
+    vertical-align: middle;
 }

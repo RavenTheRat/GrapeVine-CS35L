@@ -96,8 +96,10 @@ function DaySummary( {selectedDay, friendsToDisplay, friends} ) {
               .filter((event) => friendsToDisplay.includes(event.userId))
               .map((friendEvent, idx) => (
               <div key={idx} className="friend-event-summary-card">
-                {friends.find(f => f.id === friendEvent.userId) &&
-                  <p><em>{friends.find(f => f.id === friendEvent.userId).name}</em></p> }
+                <div className = "friend-name-card">
+                  {friends.find(f => f.id === friendEvent.userId) &&
+                  <p>{friends.find(f => f.id === friendEvent.userId).name}</p> }
+                </div>
                 <strong>{friendEvent.name}</strong>
                 <p>{friendEvent.description}</p>
               </div>
