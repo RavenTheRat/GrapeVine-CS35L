@@ -437,7 +437,20 @@ app.post("/friends/remove", requiresAuth(), async (req, res) => {
     return;
   }
 
-  let recvUserId = req.body.userId;
+  let recvUserId;
+  if (req.body.email) {
+    try {
+      recvUserId = (await getUserInfoWithEmail(req.body.email)).id;
+    } catch (status) {
+      // fail silently to not leak user info
+      res.sendStatus(200);
+      return;
+    }
+  } else {
+    // Bad Request
+    res.sendStatus(400);
+    return;
+  }
 
   try {
     await prisma.friendConnection.deleteMany({
