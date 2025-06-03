@@ -1,6 +1,7 @@
 import './styles.css'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Popup from "reactjs-popup";
 
 // hard-coded set of events; this will be replaced by user's events, and have a date associated
 // to only display on relevant day (my birthday is currently everyday apparently :P)
@@ -12,6 +13,18 @@ import axios from "axios";
 
 function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
   
+  const handleDelete = async (e, eventID, close) => {
+    //e.preventDefault();
+      axios
+        .delete(`http://localhost:3000/event/${eventID}`, {
+        withCredentials: true,
+        })
+  
+        .catch((error) => {
+          console.log(error);
+          alert("There was an error deleting your data. Please try again.");
+        });
+  }
 
   const firstOfMonth = new Date(
     day.getFullYear(),
@@ -74,15 +87,40 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
                     // the first 10 chars) turn day.date to ISOString and get the same components to compare!
                 )
                 .filter((event) => friendsToDisplay.includes(event.userId) || event.userId == userId)
-                  .map((event, idx) => (
-                    <li
-                      key={idx}
-                      className="single-event"
-                      style={{ color: userId !== event.userId ? 'blue' : 'black' }}
-                    >
-                      {event.name}
-                    </li>
-                  ))}
+                .map((event, idx) => (
+                  <li
+                    key={idx}
+                    className="single-event"
+                    style={{ color: userId !== event.userId ? 'blue' : 'black' }}
+                  >
+                    {event.name}
+                  </li>
+                ))
+                .map((Event, idx) => (
+                  <li key={idx} className="single-event">
+                    <Popup
+                          trigger={<button>
+                              {Event.name}
+                          </button>}
+                          modal
+                          nested
+                        >
+                          {(close) => (
+                            <div className="modal">
+                              <h2>
+                                Delete Event?
+                              </h2>
+                              <form onSubmit={(e) => handleDelete(e, Event.id, close)}>
+                                <div>
+                                  <button type="submit">Delete</button>
+                                  <button type="button" onClick={close}>Cancel</button>
+                                </div>
+                              </form>
+                            </div>
+                          )}
+                        </Popup>
+                  </li>
+                ))}
               </ul>
             </h1>
           </div>

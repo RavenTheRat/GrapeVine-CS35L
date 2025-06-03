@@ -2,7 +2,7 @@ import { useState, useEffect} from "react";
 import EventPopup from "./EventPopup";
 import DaySummary from "./DaySummary"
 import Sidebar from "./Sidebar"
-import Days from "./Days";
+import Days from "./days";
 import axios from "axios";
 import "./styles.css";
 
