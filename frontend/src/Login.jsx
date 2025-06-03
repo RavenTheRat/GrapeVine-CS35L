@@ -6,7 +6,7 @@ function Login() {
     <div className = "login-parent">
       <div className = "login-page">
         <div className = "welcome-message">
-          <img src={image} alt="My Title" />
+          <div className = "image-border">GRAPEVINE</div>
           <button
           onClick={() => {
             window.location.href = "http://localhost:3000/login";

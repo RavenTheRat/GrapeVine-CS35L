@@ -158,11 +158,11 @@ function Calendar({user}) {
 
     {showDaySummary ? (
       <div>
-        <DaySummary selectedDay={currentDay} friendsToDisplay = {friendsToDisplay} />
+        <DaySummary selectedDay={currentDay} friendsToDisplay = {friendsToDisplay} friends = {friends}/>
       </div>
     ) : (
       <div>
-        <Sidebar friends={friends} onCheckboxToggle={onCheckboxToggle} friendsToDisplay={friendsToDisplay} />
+        <Sidebar friends={friends} onCheckboxToggle={onCheckboxToggle} friendsToDisplay={friendsToDisplay}/>
       </div>
     )}
 
