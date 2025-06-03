@@ -12,8 +12,18 @@ import axios from "axios";
 //];
 
 function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
-  const handleEdit = async (event) => {
-
+  
+  const handleDelete = async (e, eventID, close) => {
+    //e.preventDefault();
+      axios
+        .delete(`http://localhost:3000/event/${eventID}`, {
+        withCredentials: true,
+        })
+  
+        .catch((error) => {
+          console.log(error);
+          alert("There was an error deleting your data. Please try again.");
+        });
   }
 
   const firstOfMonth = new Date(
