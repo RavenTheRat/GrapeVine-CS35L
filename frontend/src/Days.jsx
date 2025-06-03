@@ -1,5 +1,6 @@
 import './styles.css'
 import React, { useEffect, useState } from "react";
+import Popup from "reactjs-popup";
 import axios from "axios";
 
 // hard-coded set of events; this will be replaced by user's events, and have a date associated
@@ -12,6 +13,10 @@ import axios from "axios";
 
 function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
   
+  const handleEdit = async (event) => {
+
+  }
+
 
   const firstOfMonth = new Date(
     day.getFullYear(),
@@ -46,6 +51,7 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
 
     loopDay++;
   }
+
 
   return (
     <div className="table-content">
@@ -83,6 +89,7 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
                       {event.name}
                     </li>
                   ))}
+
               </ul>
             </h1>
           </div>
