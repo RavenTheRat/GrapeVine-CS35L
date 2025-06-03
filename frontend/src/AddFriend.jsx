@@ -34,7 +34,7 @@ function AddFriend() {
 
   return (
     <div className="side-bar-add">
-      <Popup trigger={<button className = "cute-buttons">Add Friend!</button>} modal nested>
+      <Popup trigger={<button className = "cute-buttons">Add Friend</button>} modal nested>
         {(close) => (
           <>
             <div className="modal">

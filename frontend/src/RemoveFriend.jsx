@@ -33,8 +33,7 @@ function RemoveFriend() {
   };
 
   return (
-    <div className="side-bar-add">
-      <Popup trigger={<button>Remove friend...</button>} modal nested>
+      <Popup trigger={<button className = "cute-buttons">Remove Friend</button>} modal nested>
         {(close) => (
           <>
             <div className="modal">
@@ -67,7 +66,6 @@ function RemoveFriend() {
           </>
         )}
       </Popup>
-    </div>
   );
 }
 

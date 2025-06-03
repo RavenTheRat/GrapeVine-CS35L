@@ -95,29 +95,9 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
                   <li
                     key={idx}
                     className="single-event"
-                    style={{ color: userId !== event.userId ? 'blue' : 'black' }}
+                    style={{ color: userId !== event.userId ? '#6F4F67' : 'black' }}
                   >
-                    <Popup
-                          trigger={<button>
-                              {event.name}
-                          </button>}
-                          modal
-                          nested
-                        >
-                          {(close) => (
-                            <div className="modal">
-                              <h2>
-                                Delete Event?
-                              </h2>
-                              <form onSubmit={(e) => handleDelete(e, event.id, close)}>
-                                <div>
-                                  <button type="submit">Delete</button>
-                                  <button type="button" onClick={close}>Cancel</button>
-                                </div>
-                              </form>
-                            </div>
-                          )}
-                        </Popup>
+                    {event.name}
                   </li>
                 ))}
               </ul>

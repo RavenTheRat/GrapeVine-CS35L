@@ -55,24 +55,26 @@ html, body, #root {
 }
 
 .calendar-parent {
-  display: flex;
-  gap: 50px;
-  align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    width: 100%;
+    padding: 20px;
+}
+
+.calendar-parent > div:last-child {
+    flex: 1 1 30%;
+    min-width: 280px;
+    box-sizing: border-box;
+
 }
 
 .calendar {
-    width: 800px;
-    display: flex;
-
-    flex-direction: column;
-    position: relative;
-    left: 20px;
-    top: 20px;
-
-    border-left: 4px solid black;
-    border-right: 4px solid black;
-    border-top: 4px solid black;
-    border-bottom: 4px solid black;
+    flex: 2 1 65%;
+    min-width: 500px;
+    border: 4px solid black;
+    box-sizing: border-box;
 }
   
 .month-display {
@@ -183,16 +185,11 @@ html, body, #root {
 /* side bar stuff */
 
 .friend-display {
-    width: 340px;
+    width: 100%;
     height: 581px;
     background-color: #b4be89;
     border: 4px solid black;
     font-size: 20px;
-
-    
-    position: relative;
-    left: 5px;
-    top: 20px;
 }
 
 .friend-header {
@@ -222,15 +219,11 @@ html, body, #root {
 }
 
 .day-summary {
-    width: 340px;
+    width: 100%;
     height: 581px;
     background-color: #b4be89;
     border: 4px solid black;
     font-size: 20px;
-
-    position: relative;
-    left: 5px;
-    top: 20px;
 }
 
 .day-summary-header {
@@ -491,17 +484,43 @@ html, body, #root {
 }
 
 .cute-buttons {
+    height: 50px;
+    position: relative;
+    top: 10px;
+    border: 4px solid #000;
     border-radius: 25px;
     background-color: thistle;
 
     font-family: 'Courier New';
+    font-weight: 575;
+}
+
+.cute-buttons:hover {
+    background-color: #bca6bc;
 }
 
 .day-summary-button {
     border-radius: 25px;
     background-color: thistle;
+    border: 1px solid #000;
 
     font-family: 'Courier New';
     position: relative;
     right: 70px;
+}
+
+.delete-event-button {
+    border-radius: 25px;
+    background-color: #b4be89;
+    border: 1px solid #000;
+
+    font-family: 'Courier New';
+    font-weight: bold;
+
+    position: relative;
+    bottom: 5px;
+}
+
+.delete-event-button:hover {
+    background-color: #90986d;
 }

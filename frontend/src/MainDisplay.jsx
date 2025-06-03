@@ -17,15 +17,17 @@ function MainDisplay() {
       <div className = "right-header">
         <h1> <EventPopup /></h1>
         <h2> <AddFriend /></h2>
-        <h2> <RemoveFriend /></h2>
-        <h3> <ProfilePopup /></h3>
+        <h1> <RemoveFriend /></h1>
+        <h1> 
           <button
             onClick={() => {
               window.location.href = "http://localhost:3000/logout";
             }}
+            className = "cute-buttons"
           >
             Logout
           </button>
+        </h1>
       </div>
     </header>
     <Tabs>

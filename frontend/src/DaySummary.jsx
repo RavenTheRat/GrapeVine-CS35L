@@ -37,6 +37,23 @@ function DaySummary( {selectedDay, friendsToDisplay} ) {
   const todayFriendEvents = friendEvents.filter(
     (event) => event.startDt.slice(0, 10) === dateToDisplay);
 
+
+  const handleDelete = async (e, eventID, close) => {
+    e.preventDefault();
+      axios
+        .delete(`http://localhost:3000/event/${eventID}`, {
+        withCredentials: true,
+        })
+        .then((response) => {
+          close()
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("There was an error deleting your data. Please try again.");
+        });
+  }
+
     return (
         <div className = "day-summary">
             <header className = "day-summary-header">
@@ -45,11 +62,32 @@ function DaySummary( {selectedDay, friendsToDisplay} ) {
 
             <div className = "day-summary-body">
                 {todayEvents.length === 0 && todayFriendEvents.length === 0 ? (
-          <p>Nothing to see here!</p>
+          <p></p> // display nothing!!!
         ) : (
           <div className="day-summary-list">
             {todayEvents.map((event, idx) => (
-              <div key={idx} className="event-summary-card">
+              <div key={idx} className="event-summary-card" style={{ position: "relative" }}>
+                  <div style={{ position: "absolute", top: 8, right: 8 }}>
+                    <Popup
+                      trigger={<button className = "delete-event-button">X</button>}
+                          modal
+                          nested
+                        >
+                        {(close) => (
+                          <div className="modal">
+                            <h2>
+                              Delete Event?
+                            </h2>
+                          <form onSubmit={(e) => handleDelete(e, event.id, close)}>
+                          <div>
+                          <button type="submit">Delete</button>
+                          <button type="button" onClick={close}>Cancel</button>
+                          </div>
+                          </form>
+                          </div>
+                          )}
+                      </Popup>
+                    </div>
                 <strong>{event.name}</strong>
                 <p>{event.description}</p>
               </div>
