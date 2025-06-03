@@ -2,6 +2,7 @@ import { useState } from "react";
 import "reactjs-popup/dist/index.css";
 import Popup from "reactjs-popup";
 import './styles.css'
+import axios from "axios";
 
 function AddFriend() {
   // State containing text when searching for a friend to add
@@ -9,16 +10,26 @@ function AddFriend() {
   // State containing array of users that are being searched for
   const [displayedUsers, setDisplayedUsers] = useState([]);
 
-  // Searching algorithm
-  // Will need to be updated to allow for searching users in database
-  const searchForFriends = (e) => {
-    e.preventDefault();
-
-    const filteredItems = otherUsers.filter((user) =>
-      user.name.toLowerCase().includes(searchAddFriend.toLowerCase()),
-    );
-
-    setDisplayedUsers(filteredItems);
+  const handleSubmit = async (e, onSuccess) => {
+    e.preventDefault(); // Prevent form submission from reloading the page
+    if (searchAddFriend) {
+      axios
+        .post("http://localhost:3000/friends/add", {
+          email: searchAddFriend.toLowerCase()
+        })
+        .then((response) => {
+          setSearchAddFriend("");
+          alert("Friend request sent!");
+          onSuccess();
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Friend request sent!");
+          onSuccess();
+        });
+    } else {
+      alert("Please fill in all fields.");
+    }
   };
 
   return (
@@ -29,7 +40,7 @@ function AddFriend() {
             <div className="modal">
               <div className="side-bar">
                 <h2>Add Friends</h2>
-                <form onSubmit={searchForFriends}>
+                <form onSubmit={(e) => handleSubmit(e, close)}>
                   <input
                     type="text"
                     placeholder="Enter an email address"
@@ -37,7 +48,7 @@ function AddFriend() {
                     onChange={(e) => setSearchAddFriend(e.target.value)}
                   />
                   <button type="submit" style={{ marginLeft: "5px" }}>
-                    Search
+                    Add
                   </button>
                 </form>
                 <ul style={{ listStyleType: "none" }}>
