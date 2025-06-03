@@ -57,7 +57,7 @@ function DaySummary( {selectedDay, friendsToDisplay} ) {
     return (
         <div className = "day-summary">
             <header className = "day-summary-header">
-                {selectedDay.toDateString()} — Events:
+                {selectedDay.toDateString()}
             </header> 
 
             <div className = "day-summary-body">

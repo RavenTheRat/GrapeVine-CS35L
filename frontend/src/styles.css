@@ -194,15 +194,14 @@ html, body, #root {
 
 .friend-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     background-color: white;
-    border-top: 4px solid black;
-    border-left: 4px solid black;
-    border-right: 4px solid black;
-    border-bottom: 4px solid black;
+    border: 4px solid black;
     margin: 8px 8px 0 8px;
-
     height: 40px;
+
+    font-weight: bold;
 }
 
 .friend-body {
@@ -228,15 +227,14 @@ html, body, #root {
 
 .day-summary-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     background-color: white;
-    border-top: 4px solid black;
-    border-left: 4px solid black;
-    border-right: 4px solid black;
-    border-bottom: 4px solid black;
+    border: 4px solid black;
     margin: 8px 8px 0 8px;
-
     height: 40px;
+
+    font-weight: bold;
 }
 
 .day-summary-body {
@@ -258,11 +256,16 @@ html, body, #root {
     align-items: flex-start;
 
     position: relative;
-    left: 5px;
     top: 10px;
 
     overflow-y: auto;
     max-height: 490px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    gap: 10px;
+    padding-bottom: 12px;
 }
 
 /* made da scroll bar invisible B) */
@@ -280,8 +283,9 @@ html, body, #root {
     transition: box-shadow 0.3s ease;
 
     text-align: left;
-    width: 100%;
-    width: 266px;
+    width: 90%;
+    box-sizing: border-box;
+    margin: 0 auto;
 }
 
 .event-summary-card:hover {
@@ -310,8 +314,25 @@ html, body, #root {
     transition: box-shadow 0.3s ease;
 
     text-align: left;
-    width: 100%;
-    width: 266px;
+    width: 90%;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.friend-event-summary-card:hover {
+    box-shadow: 0 4px 12px #b4be89;
+    cursor: pointer;
+}
+
+.friend-event-summary-card strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+}
+
+.friend-event-summary-card p {
+    margin: 0;
+    color: #555;
 }
 
 /* profile */
@@ -474,13 +495,50 @@ html, body, #root {
     margin-bottom: 20px;
 }
 
+.login-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .login-page {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: thistle;
-    height: 650px;
+
+    height: 100%;
+    min-height: 650px;
+
+    width: 100%;
+
+    border: 8px solid black;
+    margin: 20px;
+    padding-bottom: 20px;
+}
+
+.welcome-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.login-button {
+    height: 50px;
+    position: relative;
+    top: 10px;
+    border: 4px solid #000;
+    border-radius: 25px;
+    background-color: #F4F3EF;
+
+    font-family: 'Courier New';
+    font-weight: 575;
+}
+
+.login-button:hover {
+    background-color: thistle;
 }
 
 .cute-buttons {
@@ -489,24 +547,28 @@ html, body, #root {
     top: 10px;
     border: 4px solid #000;
     border-radius: 25px;
-    background-color: thistle;
+    background-color: #F4F3EF;
 
     font-family: 'Courier New';
     font-weight: 575;
 }
 
 .cute-buttons:hover {
-    background-color: #bca6bc;
+    background-color: thistle;
 }
 
 .day-summary-button {
     border-radius: 25px;
-    background-color: thistle;
+    background-color: #F4F3EF;
     border: 1px solid #000;
 
     font-family: 'Courier New';
     position: relative;
     right: 70px;
+}
+
+.day-summary-button:hover {
+    background-color: thistle;
 }
 
 .delete-event-button {
@@ -523,4 +585,17 @@ html, body, #root {
 
 .delete-event-button:hover {
     background-color: #90986d;
+}
+
+
+/*For login page!*/
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.4s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }

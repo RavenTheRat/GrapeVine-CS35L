@@ -8,7 +8,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import "./styles.css"
 
-function MainDisplay() {
+function MainDisplay({className = ""}) {
     return (
     <>
     <div className = "body-font">

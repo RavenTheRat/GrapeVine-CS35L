@@ -6,7 +6,7 @@ function Sidebar({friends, onCheckboxToggle, friendsToDisplay}) {
     <>
       <div className="friend-display">
         <header className="friend-header">
-          Friends:
+          Friends
         </header>
         <div className="friend-body">
           <ul className="friends-display" style={{ listStyleType: "none" }}>
