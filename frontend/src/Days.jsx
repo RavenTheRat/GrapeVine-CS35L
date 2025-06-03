@@ -14,12 +14,15 @@ import axios from "axios";
 function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
   
   const handleDelete = async (e, eventID, close) => {
-    //e.preventDefault();
+    e.preventDefault();
       axios
         .delete(`http://localhost:3000/event/${eventID}`, {
         withCredentials: true,
         })
-  
+        .then((response) => {
+          close()
+          window.location.reload();
+        })
         .catch((error) => {
           console.log(error);
           alert("There was an error deleting your data. Please try again.");
@@ -88,15 +91,35 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
                     // the first 10 chars) turn day.date to ISOString and get the same components to compare!
                 )
                 .filter((event) => friendsToDisplay.includes(event.userId) || event.userId == userId)
-                  .map((event, idx) => (
-                    <li
-                      key={idx}
-                      className="single-event"
-                      style={{ color: userId !== event.userId ? 'blue' : 'black' }}
-                    >
-                      {event.name}
-                    </li>
-                  ))}
+                .map((event, idx) => (
+                  <li
+                    key={idx}
+                    className="single-event"
+                    style={{ color: userId !== event.userId ? 'blue' : 'black' }}
+                  >
+                    <Popup
+                          trigger={<button>
+                              {event.name}
+                          </button>}
+                          modal
+                          nested
+                        >
+                          {(close) => (
+                            <div className="modal">
+                              <h2>
+                                Delete Event?
+                              </h2>
+                              <form onSubmit={(e) => handleDelete(e, event.id, close)}>
+                                <div>
+                                  <button type="submit">Delete</button>
+                                  <button type="button" onClick={close}>Cancel</button>
+                                </div>
+                              </form>
+                            </div>
+                          )}
+                        </Popup>
+                  </li>
+                ))}
               </ul>
             </h1>
           </div>
