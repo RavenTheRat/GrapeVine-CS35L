@@ -50,7 +50,7 @@ function AddFriend() {
                     value={searchAddFriend}
                     onChange={(e) => setSearchAddFriend(e.target.value)}
                   />
-                  <button type="submit" style={{ marginLeft: "5px" }} className = "cute-buttons">
+                  <button type="submit" style={{ marginLeft: "5px" }}>
                     Add
                   </button>
                 </form>
