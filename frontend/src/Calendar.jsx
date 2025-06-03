@@ -129,10 +129,9 @@ function Calendar({user}) {
           />
         </search-field>
 
-        <button onClick={() => setShowDaySummary((prev) => !prev)} className = "cute-buttons">
+        <button onClick={() => setShowDaySummary((prev) => !prev)} className = "day-summary-button">
           {showDaySummary ? "Hide" : "Show"} Day's Events!
           </button>
-
       </div>
       <div
         className="calendar-body"

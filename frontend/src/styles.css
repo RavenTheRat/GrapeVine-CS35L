@@ -376,7 +376,6 @@ html, body, #root {
 }
 
 .add-event-btn, .side-bar-add {
-    background: #c5a0c5;
     font-family: 'Comic Sans MS';
 }
 
@@ -494,4 +493,15 @@ html, body, #root {
 .cute-buttons {
     border-radius: 25px;
     background-color: thistle;
+
+    font-family: 'Courier New';
+}
+
+.day-summary-button {
+    border-radius: 25px;
+    background-color: thistle;
+
+    font-family: 'Courier New';
+    position: relative;
+    right: 70px;
 }

@@ -38,7 +38,7 @@ function AddFriend() {
         {(close) => (
           <>
             <div className="modal">
-              <div className="side-bar">
+              <div>
                 <h2>Add Friends</h2>
                 <form onSubmit={(e) => handleSubmit(e, close)}>
                   <input
