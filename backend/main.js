@@ -420,6 +420,7 @@ app.post("/friends/add", requiresAuth(), async (req, res) => {
         recvUserId: recvUserId,
       }
     });
+    res.sendStatus(200);
   } catch (e) {
     console.log(e);
     // Internal Error
@@ -459,12 +460,14 @@ app.post("/friends/remove", requiresAuth(), async (req, res) => {
         recvUserId: recvUserId,
       }
     });
+    res.sendStatus(200);
   } catch (e) {
     console.log(e);
     // Internal Error
     res.sendStatus(500);
     return;
   }
+
 });
 
 app.get("/friends", requiresAuth(), async (req, res) => {
