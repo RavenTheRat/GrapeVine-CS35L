@@ -2,7 +2,6 @@ import './styles.css'
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import axios from "axios";
-import Popup from "reactjs-popup";
 
 // hard-coded set of events; this will be replaced by user's events, and have a date associated
 // to only display on relevant day (my birthday is currently everyday apparently :P)
@@ -14,25 +13,21 @@ import Popup from "reactjs-popup";
 
 function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
   
-<<<<<<< HEAD
   const handleDelete = async (e, eventID, close) => {
-    //e.preventDefault();
+    e.preventDefault();
       axios
         .delete(`http://localhost:3000/event/${eventID}`, {
         withCredentials: true,
         })
-  
+        .then((response) => {
+          close()
+          window.location.reload();
+        })
         .catch((error) => {
           console.log(error);
           alert("There was an error deleting your data. Please try again.");
         });
   }
-=======
-  const handleEdit = async (event) => {
-
-  }
-
->>>>>>> d15727e70b547a4d805b6d07d17b98974e811f43
 
   const firstOfMonth = new Date(
     day.getFullYear(),
@@ -102,14 +97,9 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
                     className="single-event"
                     style={{ color: userId !== event.userId ? 'blue' : 'black' }}
                   >
-                    {event.name}
-                  </li>
-                ))
-                .map((Event, idx) => (
-                  <li key={idx} className="single-event">
                     <Popup
                           trigger={<button>
-                              {Event.name}
+                              {event.name}
                           </button>}
                           modal
                           nested
@@ -119,7 +109,7 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
                               <h2>
                                 Delete Event?
                               </h2>
-                              <form onSubmit={(e) => handleDelete(e, Event.id, close)}>
+                              <form onSubmit={(e) => handleDelete(e, event.id, close)}>
                                 <div>
                                   <button type="submit">Delete</button>
                                   <button type="button" onClick={close}>Cancel</button>
