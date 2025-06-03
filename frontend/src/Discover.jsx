@@ -38,7 +38,6 @@ function Discover() {
           // response will be the json object returned (in this case the data)
           .then((response) => {
             setEvents(response.data);
-            console.log(response.data);
           })
           .catch((error) => {
             alert("There was an error fetching your data. Please try again.");

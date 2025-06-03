@@ -4,27 +4,27 @@ import Popup from "reactjs-popup";
 import './styles.css'
 import axios from "axios";
 
-function AddFriend() {
+function RemoveFriend() {
   // State containing text when searching for a friend to add
-  const [searchAddFriend, setSearchAddFriend] = useState("");
+  const [searchRemoveFriend, setSearchRemoveFriend] = useState("");
   // State containing array of users that are being searched for
   const [displayedUsers, setDisplayedUsers] = useState([]);
 
   const handleSubmit = async (e, onSuccess) => {
     e.preventDefault(); // Prevent form submission from reloading the page
-    if (searchAddFriend) {
+    if (searchRemoveFriend) {
       axios
-        .post("http://localhost:3000/friends/add", {
-          email: searchAddFriend.toLowerCase()
+        .post("http://localhost:3000/friends/remove", {
+          email: searchRemoveFriend.toLowerCase()
         })
         .then((response) => {
-          setSearchAddFriend("");
-          alert("Friend request sent!");
+          setSearchRemoveFriend("");
+          alert("Friend removed!");
           onSuccess();
         })
         .catch((error) => {
           console.log(error);
-          alert("Friend request sent!");
+          alert("Friend removed!");
           onSuccess();
         });
     } else {
@@ -34,12 +34,12 @@ function AddFriend() {
 
   return (
     <div className="side-bar-add">
-      <Popup trigger={<button>Add Friend!</button>} modal nested>
+      <Popup trigger={<button>Remove friend...</button>} modal nested>
         {(close) => (
           <>
             <div className="modal">
               <div className="side-bar">
-                <h2>Add Friends</h2>
+                <h2>Remove friend</h2>
                 <form onSubmit={(e) => handleSubmit(e, () => {
                   close();
                   window.location.reload();
@@ -47,11 +47,11 @@ function AddFriend() {
                   <input
                     type="text"
                     placeholder="Enter an email address"
-                    value={searchAddFriend}
-                    onChange={(e) => setSearchAddFriend(e.target.value)}
+                    value={searchRemoveFriend}
+                    onChange={(e) => setSearchRemoveFriend(e.target.value)}
                   />
                   <button type="submit" style={{ marginLeft: "5px" }}>
-                    Add
+                    Remove
                   </button>
                 </form>
                 <ul style={{ listStyleType: "none" }}>
@@ -71,4 +71,4 @@ function AddFriend() {
   );
 }
 
-export default AddFriend;
+export default RemoveFriend;
