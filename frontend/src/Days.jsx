@@ -2,7 +2,6 @@ import './styles.css'
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import axios from "axios";
-import Popup from "reactjs-popup";
 
 // hard-coded set of events; this will be replaced by user's events, and have a date associated
 // to only display on relevant day (my birthday is currently everyday apparently :P)
@@ -14,7 +13,6 @@ import Popup from "reactjs-popup";
 
 function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
   
-<<<<<<< HEAD
   const handleDelete = async (e, eventID, close) => {
     //e.preventDefault();
       axios
@@ -27,12 +25,6 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
           alert("There was an error deleting your data. Please try again.");
         });
   }
-=======
-  const handleEdit = async (event) => {
-
-  }
-
->>>>>>> d15727e70b547a4d805b6d07d17b98974e811f43
 
   const firstOfMonth = new Date(
     day.getFullYear(),
