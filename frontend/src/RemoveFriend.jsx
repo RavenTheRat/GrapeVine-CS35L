@@ -11,7 +11,7 @@ function RemoveFriend() {
   const [displayedUsers, setDisplayedUsers] = useState([]);
 
   const handleSubmit = async (e, onSuccess) => {
-    // e.preventDefault(); // Prevent form submission from reloading the page
+    e.preventDefault(); // Prevent form submission from reloading the page
     if (searchRemoveFriend) {
       axios
         .post("http://localhost:3000/friends/remove", {

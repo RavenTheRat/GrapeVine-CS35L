@@ -13,7 +13,7 @@ function EventPopup() {
   const [isPublic, setIsPublic] = useState(false);
 
   const handleSubmit = async (e, onSuccess) => {
-    // e.preventDefault(); // Prevent form submission from reloading the page
+    e.preventDefault(); // Prevent form submission from reloading the page
     if (name && description && startDate && endDate) {
       axios
         .post("http://localhost:3000/event/new", {
