@@ -13,22 +13,6 @@ import axios from "axios";
 
 function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
   
-  const handleDelete = async (e, eventID, close) => {
-    e.preventDefault();
-      axios
-        .delete(`http://localhost:3000/event/${eventID}`, {
-        withCredentials: true,
-        })
-        .then((response) => {
-          close()
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log(error);
-          alert("There was an error deleting your data. Please try again.");
-        });
-  }
-
   const firstOfMonth = new Date(
     day.getFullYear(),
     day.getMonth(),
@@ -78,38 +62,39 @@ function Days({events, day, userId, friendsToDisplay, changeCurrentDay}) {
             onClick={() => changeCurrentDay(day)}
           >
             <p>{day.number}</p>
-            <h1 className="days-events">
-              <ul className="event-list">
-                {events
-                .filter(
-                  (event) => 
-                    // adi's note on fix: it seemed like all of the events were being displayed one day earlier
-                    // this was because of some wonky thing with timezones, so the fix ensures we only check the
-                    // date, and not the time (to avoid that issue!)
-                    event.startDt.slice(0, 10) === day.date.toISOString().slice(0, 10)
-                    // more details from adi: slice extracts the "date part" without the timezone part (gets only
-                    // the first 10 chars) turn day.date to ISOString and get the same components to compare!
-                )
-                .filter((event) => friendsToDisplay.includes(event.userId) || event.userId == userId)
-                .map((event, idx) => (
-                  <li
-                    key={idx}
-                    className="single-event"
-                    style={{ color: userId !== event.userId ? '#6F4F67' : 'black' }}
-                  >
-                    {event.name}
-                  </li>
-                ))}
-              </ul>
-            </h1>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
-// at the end comment = ugly but whatever. "days-events" is where we will pull from backend to display events
-// associated with the relevant date
+            <div className="calendar-event-list">
+            {(() => {
+              const dayEvents = events
+                .filter(
+                  (event) =>
+                    event.startDt.slice(0, 10) === day.date.toISOString().slice(0, 10))
+                .filter(
+                  (event) =>
+                    friendsToDisplay.includes(event.userId) || event.userId === userId);
+
+                const maxVisible = 2;
+                const visibleEvents = dayEvents.slice(0, maxVisible);
+                const hiddenCount = dayEvents.length - maxVisible;
+
+                return (
+                  <>
+                  {visibleEvents.map((event, idx) => (
+                    <div
+                      key={idx}
+                      className="calendar-event-card"
+                      style={{color: userId !== event.userId ? '#6F4F67' : 'black'}}>
+                      <strong>{event.name}</strong>
+                    </div>
+                  ))}
+                  {hiddenCount > 0 && (
+                    <div className="calendar-event-card more-indicator">
+                      +{hiddenCount} more
+                    </div>
+                  )}</>);})()}
+            </div>
+          </div>);})}
+    </div>);
+}
 
 export default Days;

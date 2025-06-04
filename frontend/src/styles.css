@@ -385,15 +385,6 @@ html, body, #root {
     color: black;
 }
 
-.event-list {
-    /* list-style-type: circle; */
-    list-style-type: none;
-}
-
-.event-list li {
-    display: inline-block;
-}
-
 .add-event-btn, .side-bar-add {
     font-family: 'Comic Sans MS';
 }
@@ -407,6 +398,14 @@ html, body, #root {
 }
 
 /* Event Card Styles */
+.event-list {
+    list-style-type: none;
+}
+
+.event-list li {
+    display: inline-block;
+}
+
 .event-card {
     background-color: white;
     border: 2px solid #b4be89;
@@ -691,4 +690,54 @@ html, body, #root {
     height: 16px;
 
     vertical-align: middle;
+}
+
+
+/* calendar day event cards */
+.calendar-event-list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    max-height: 100px;
+    overflow: hidden;
+    padding: 2px 0;
+}
+
+.calendar-event-card {
+    background-color: #f9f9f9;
+    border: 1px solid #b4be89;
+    border-radius: 6px;
+    padding: 4px 6px;
+    font-size: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    width: 100%;
+    max-width: 100px;
+    box-sizing: border-box;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.calendar-event-card strong {
+    display: block;
+    font-size: 0.75rem;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    width: 100%;
+}
+
+.more-indicator {
+    background-color: transparent;
+    color: #777;
+    border: none;
+    text-align: center;
+    font-style: italic;
+    cursor: default;
+    box-shadow: none;
 }
