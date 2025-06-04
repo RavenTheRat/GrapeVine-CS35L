@@ -7,6 +7,7 @@ function Login() {
       <div className = "login-page">
         <div className = "welcome-message">
           <div className = "image-border">GRAPEVINE</div>
+          <div className = "welcome-text">Welcome to Grapevine! Please Log In to Continue!</div>
           <button
           onClick={() => {
             window.location.href = "http://localhost:3000/login";

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import './styles.css'
 
 function Sidebar({friends, onCheckboxToggle, friendsToDisplay}) {
