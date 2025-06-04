@@ -50,7 +50,7 @@ function EventPopup() {
       trigger={<button className="cute-buttons">Schedule Event</button>}
       modal
       nested
-      contentStyle={{ color: '#5f3a5f' }}
+      contentStyle={{fontFamily: 'Courier New'}}
     >
       {(close) => (
         <div className="modal">

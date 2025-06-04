@@ -24,8 +24,8 @@ function DaySummary( {selectedDay, friendsToDisplay, friends} ) {
       const friendResponse = await axios.get("http://localhost:3000/events/friends");
       setFriendEvents(friendResponse.data);
     }
-  loadEvents();
-  loadFriendEvents();
+    loadEvents();
+    loadFriendEvents();
   }, []);
 
   const pad = (num) => num.toString().padStart(2, "0");
@@ -72,6 +72,7 @@ function DaySummary( {selectedDay, friendsToDisplay, friends} ) {
                       trigger={<button className = "delete-event-button">X</button>}
                           modal
                           nested
+                          contentStyle={{fontFamily: 'Courier New'}}
                         >
                         {(close) => (
                           <div className="modal">
