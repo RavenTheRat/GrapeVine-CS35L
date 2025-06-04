@@ -1,5 +1,4 @@
 import Calendar from "./Calendar";
-import ProfilePopup from "./ProfilePopup";
 import AddFriend from "./AddFriend";
 import RemoveFriend from "./RemoveFriend";
 import EventPopup from "./EventPopup";

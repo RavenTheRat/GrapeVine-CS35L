@@ -1,5 +1,4 @@
 import { useState, useEffect} from "react";
-import EventPopup from "./EventPopup";
 import DaySummary from "./DaySummary"
 import Sidebar from "./Sidebar"
 import Days from "./Days";

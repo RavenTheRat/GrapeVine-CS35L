@@ -526,9 +526,8 @@ html, body, #root {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-
-    margin-top: 80px;
+    gap: 35px;
+    text-align: center;
 }
 
 .image-border {
@@ -546,22 +545,41 @@ html, body, #root {
     margin: 0 auto;
     box-sizing: border-box;
     line-height: 1;
+}
 
-    position: relative;
-    bottom: 150px;
+.welcome-text {
+    font-family: 'Courier New';
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.typewriter {
+    overflow: hidden;
+    border-right: 0.15em solid #6F4F67;
+    white-space: nowrap;
+    width: 0;
+    animation: typing 5s steps(52, end) forwards, blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to   { width: 52ch }
+}
+
+@keyframes blink-caret {
+    50% { border-color: transparent }
 }
 
 .login-button {
-    height: 50px;
-    width: 100px;
-    position: relative;
-    top: 10px;
+    height: 70px;
+    width: 200px;
     border: 4px solid #000;
     border-radius: 25px;
     background-color: #F4F3EF;
 
     font-family: 'Courier New';
     font-weight: 575;
+    font-size: 30px;
 }
 
 .login-button:hover {
