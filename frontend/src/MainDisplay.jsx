@@ -3,6 +3,7 @@ import AddFriend from "./AddFriend";
 import RemoveFriend from "./RemoveFriend";
 import EventPopup from "./EventPopup";
 import Discover from "./Discover";
+import ProfilePopup from "./ProfilePopup";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import "./styles.css"
@@ -14,7 +15,8 @@ function MainDisplay({className = ""}) {
     <header className = "page-header">
       <h1 className = "logo-header">GRAPEVINE</h1>
       <div className = "right-header">
-        <h1> <EventPopup /></h1>
+        <h2> <ProfilePopup /></h2>
+        <h2> <EventPopup /></h2>
         <h2> <AddFriend /></h2>
         <h1> <RemoveFriend /></h1>
         <h1> 
