@@ -13,7 +13,7 @@ function Discover() {
 
     const EventCard = ({ event }) => {
         return (
-          <div className="event-card">
+          <div className="event-card" style={{width: "267px", height: "215px", overflowY: "auto"}}>
             <div className="event-header">
               <span className="event-user">{event.user.name}</span>
               &nbsp;
@@ -21,13 +21,6 @@ function Discover() {
             </div>
             <h3 className="event-title">{event.name}</h3>
             <p className="event-description">{event.description}</p>
-            <div className="event-comment-section">
-              <label className="comment-label">Comments</label>
-              <textarea 
-                className="comment-input" 
-                placeholder="Add a comment..."
-              />
-            </div>
           </div>
         );
       };
@@ -67,7 +60,7 @@ function Discover() {
             }}
           />
         </div>
-        <div>
+        <div style={{display: "flex", justifyContent: "center"}}>
           <ul className="event-list">
             {events
               .filter(event => {
