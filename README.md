@@ -66,6 +66,9 @@ npm run build
 npm run dev
 ```
 
+(If this fails, try running `npm install` in the `backend` and `frontend` folders separately, or running 
+`npm install --force`, or both. This has helped one of our groupmates who run on Windows.)
+
 This will complete three steps:
 
 1. Generate the backend's database files
