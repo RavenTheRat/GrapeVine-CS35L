@@ -28,6 +28,8 @@ AUTH0_CLIENT_ID="CLIENT_ID"
 AUTH0_CLIENT_SECRET="CLIENT_SECRET"
 ```
 
+For TAs, our auth0 keys are provided in the .env. Please don't do anything evil.
+
 Next, you must create a MySQL database.
 This database may be set up locally or in the cloud.
 For development, we recommend following [these steps](https://dev.mysql.com/doc/mysql-getting-started/en/) to set up MySQL locally.
@@ -56,16 +58,11 @@ npx prisma migrate dev
 If the command fails, it is likely that your `DATABASE_URL` is not configured correctly or the database is not running.
 If you want to reset the database in a development environment, run `npx prisma migrate reset`.
 
-Finally, to run the project, you can use the following command in both the **frontend** directory and the **top level** directory.
+Then, you can run the commands below in the **top level** directory, and navigate to `http://localhost:3000/index.html`:
 
 ```sh
 npm install
 npm run build
-```
-
-Then, you can run the command below in either the **frontend** or **top level** directory. If you choose to run in **top level** you must navigate to your local browser and open the page with `http://localhost:3000/index.html` in the URL
-
-```sh
 npm run dev
 ```
 
