@@ -20,6 +20,7 @@ For development, we used the `nodemon` package to live reload database changes.
 ### External Setup
 
 Firstly, you need to create a project within auth0.
+You can navigate to the auth0 website, sign in using any google account, and create a new application. The codes below will be in the settings bar
 This should give you a client ID and client secret which you must store in `backend/.env` in the following format.
 
 ```
@@ -33,6 +34,7 @@ For development, we recommend following [these steps](https://dev.mysql.com/doc/
 
 Once set up, you should have a MySQL URL which may also contain authentication data.
 The URL should look like this: `mysql://USER:PASSWORD@URL`
+Most likely the template for this will be `mysql://USERNAME:PASSWORD@localhost:PORT#/dbname` (you can access all of this information in your mysql workbench or through scripts)
 You will also place this string in `backend/.env`.
 
 ```
@@ -54,10 +56,16 @@ npx prisma migrate dev
 If the command fails, it is likely that your `DATABASE_URL` is not configured correctly or the database is not running.
 If you want to reset the database in a development environment, run `npx prisma migrate reset`.
 
-Finally, to run the project, you can use the following command in the **top level** directory.
+Finally, to run the project, you can use the following command in both the **frontend** directory and the **top level** directory.
 
 ```sh
+npm install
 npm run build
+```
+
+Then, you can run the command below in either the **frontend** or **top level** directory. If you choose to run in **top level** you must navigate to your local browser and open the page with `http://localhost:3000/index.html` in the URL
+
+```sh
 npm run dev
 ```
 
@@ -65,7 +73,7 @@ This will complete three steps:
 
 1. Generate the backend's database files
 2. Compile the frontend (this means no hot reloading)
-3. Serve the frontnend and run the backend via `nodemon`
+3. Serve the frontend and run the backend via `nodemon`
 
 > Made with ❤️ by the DARTZ team.
 
