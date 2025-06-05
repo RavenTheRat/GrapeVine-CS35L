@@ -8,6 +8,17 @@ import "dotenv/config"
 const app = express();
 const prisma = new PrismaClient();
 
+//
+// A NOTE ABOUT ACID:
+// 
+// You may notice that some database operations use multiple database queries and writes.
+// We can assure you that this is safe and atomic.
+// There are two cases here: multiple reads or multiple reads then one write.
+// In the case of many reads, invalidated / new data WILL cause a failure which is expected behaviour. 
+// In the case of many reads, then writes, invalidation / new data WILL cause a failure which is expected behaviour.
+// In other words, in theory, multiple concurrent or interweaving connections CANNOT write improper data to our state.
+//
+
 const authConfig = {
   authRequired: false,
   auth0Logout: true,
