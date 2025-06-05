@@ -29,7 +29,7 @@ html, body, #root {
 .right-header {
     display: flex;
     justify-content: flex-end;
-    position: relative;
+    position: center;
 }
 
 .right-header h1, h2, h3 {
@@ -761,4 +761,9 @@ input::placeholder {
   font-size: 12px;
   color: gray;
   font-style: italic;
+}
+
+.welcome-user {
+    position: relative;
+    top: 10px;
 }
