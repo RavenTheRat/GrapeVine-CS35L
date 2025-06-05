@@ -1,5 +1,4 @@
 import { useState, useEffect} from "react";
-import EventPopup from "./EventPopup";
 import DaySummary from "./DaySummary"
 import Sidebar from "./Sidebar"
 import Days from "./Days";
@@ -37,15 +36,12 @@ function Calendar({user}) {
   const [searchItem, setSearchItem] = useState("");
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [userId, setUserId] = useState(-1);
-  //const [loading, setLoading] = useState(true);
 
-  // Searching algorithm
   const handleInputChange = (e) => {
     const searchTerm = e.target.value;
     setSearchItem(searchTerm);
 
     const filteredItems = events.filter((event) =>
-      //event.name.toLowerCase().includes(searchTerm.toLowerCase()),
       event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       event.description.toLowerCase().includes(searchTerm.toLowerCase()),
     );
@@ -120,18 +116,32 @@ function Calendar({user}) {
         <h2>
           {months[currentDay.getMonth()]} {currentDay.getFullYear()}
         </h2>
+        <div className = "right-header"
+        style = {{position: "relative", right: "75px"}}>
         <search-field>
           <input
           type="text"
           value={searchItem}
           onChange={handleInputChange}
           placeholder="Search events by name or description"
+          style={{
+            width: "259px",
+            padding: "8px 10px",
+            fontSize: "10px",
+            fontFamily: "Courier New",
+          }}
           />
         </search-field>
-
-        <button onClick={() => setShowDaySummary((prev) => !prev)} className = "day-summary-button">
-          {showDaySummary ? "Hide" : "Show"} Day's Events!
+        <button onClick={() => setShowDaySummary((prev) => !prev)} 
+          style={{
+            padding: "8px 10px",
+            fontSize: "12px",
+            fontFamily: "Courier New",
+          }}
+          className = "day-summary-button">
+          {showDaySummary ? "Show Friends List!" : "Show Day's Events!"}
           </button>
+        </div>
       </div>
       <div
         className="calendar-body"
@@ -158,11 +168,11 @@ function Calendar({user}) {
 
     {showDaySummary ? (
       <div>
-        <DaySummary selectedDay={currentDay} friendsToDisplay = {friendsToDisplay} />
+        <DaySummary selectedDay={currentDay} friendsToDisplay = {friendsToDisplay} friends = {friends}/>
       </div>
     ) : (
       <div>
-        <Sidebar friends={friends} onCheckboxToggle={onCheckboxToggle} friendsToDisplay={friendsToDisplay} />
+        <Sidebar friends={friends} onCheckboxToggle={onCheckboxToggle} friendsToDisplay={friendsToDisplay}/>
       </div>
     )}
 

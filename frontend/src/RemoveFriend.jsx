@@ -33,13 +33,13 @@ function RemoveFriend() {
   };
 
   return (
-    <div className="side-bar-add">
-      <Popup trigger={<button>Remove friend...</button>} modal nested>
+      <Popup trigger={<button className = "cute-buttons">Remove Friend</button>} modal nested
+        contentStyle={{fontFamily: 'Courier New'}}>
         {(close) => (
           <>
             <div className="modal">
               <div className="side-bar">
-                <h2>Remove friend</h2>
+                <h2>Remove a Friend!</h2>
                 <form onSubmit={(e) => handleSubmit(e, () => {
                   close();
                   window.location.reload();
@@ -67,7 +67,6 @@ function RemoveFriend() {
           </>
         )}
       </Popup>
-    </div>
   );
 }
 

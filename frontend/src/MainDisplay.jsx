@@ -1,31 +1,34 @@
 import Calendar from "./Calendar";
-import ProfilePopup from "./ProfilePopup";
 import AddFriend from "./AddFriend";
 import RemoveFriend from "./RemoveFriend";
 import EventPopup from "./EventPopup";
 import Discover from "./Discover";
+import ProfilePopup from "./ProfilePopup";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import "./styles.css"
 
-function MainDisplay() {
+function MainDisplay({className = ""}) {
     return (
     <>
     <div className = "body-font">
     <header className = "page-header">
       <h1 className = "logo-header">GRAPEVINE</h1>
       <div className = "right-header">
-        <h1> <EventPopup /></h1>
+        <h2> <ProfilePopup /></h2>
+        <h2> <EventPopup /></h2>
         <h2> <AddFriend /></h2>
-        <h2> <RemoveFriend /></h2>
-        <h3> <ProfilePopup /></h3>
+        <h1> <RemoveFriend /></h1>
+        <h1> 
           <button
             onClick={() => {
               window.location.href = "http://localhost:3000/logout";
             }}
+            className = "cute-buttons"
           >
             Logout
           </button>
+        </h1>
       </div>
     </header>
     <Tabs>

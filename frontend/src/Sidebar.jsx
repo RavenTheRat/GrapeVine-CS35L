@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import './styles.css'
 
 function Sidebar({friends, onCheckboxToggle, friendsToDisplay}) {
@@ -6,21 +5,23 @@ function Sidebar({friends, onCheckboxToggle, friendsToDisplay}) {
     <>
       <div className="friend-display">
         <header className="friend-header">
-          Friends:
+          Friends
         </header>
         <div className="friend-body">
-          <ul className="friends-display" style={{ listStyleType: "none" }}>
-            {friends.map((friend) => (
-              <li key={friend.id}>
+          <div className = "friend-list">
+          {friends
+              .map((friend, idx) => (
+              <div key={idx} className="friend-card">
                 <input 
                   type="checkbox"
+                  className = "friend-checkbox"
                   checked = {friendsToDisplay.includes(friend.id)}
                   onChange={() => onCheckboxToggle(friend.id)}
                 />
-                {friend.name}
-              </li>
+                <strong>{friend.name}</strong>
+              </div>
             ))}
-          </ul>
+            </div>
         </div>
       </div>
     </>

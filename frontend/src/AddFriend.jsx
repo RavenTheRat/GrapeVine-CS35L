@@ -34,12 +34,13 @@ function AddFriend() {
 
   return (
     <div className="side-bar-add">
-      <Popup trigger={<button className = "cute-buttons">Add Friend!</button>} modal nested>
+      <Popup trigger={<button className = "cute-buttons">Add Friend</button>} modal nested
+        contentStyle={{fontFamily: 'Courier New'}}>
         {(close) => (
           <>
             <div className="modal">
               <div>
-                <h2>Add Friends</h2>
+                <h2>Add a Friend!</h2>
                 <form onSubmit={(e) => handleSubmit(e, () => {
                   close();
                   window.location.reload();
@@ -50,7 +51,7 @@ function AddFriend() {
                     value={searchAddFriend}
                     onChange={(e) => setSearchAddFriend(e.target.value)}
                   />
-                  <button type="submit" style={{ marginLeft: "5px" }} className = "cute-buttons">
+                  <button type="submit" style={{ marginLeft: "5px" }}>
                     Add
                   </button>
                 </form>

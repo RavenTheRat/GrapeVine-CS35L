@@ -29,7 +29,7 @@ html, body, #root {
 .right-header {
     display: flex;
     justify-content: flex-end;
-    position: relative;
+    position: center;
 }
 
 .right-header h1, h2, h3 {
@@ -55,24 +55,26 @@ html, body, #root {
 }
 
 .calendar-parent {
-  display: flex;
-  gap: 50px;
-  align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    width: 100%;
+    padding: 20px;
+}
+
+.calendar-parent > div:last-child {
+    flex: 1 1 30%;
+    min-width: 280px;
+    box-sizing: border-box;
+
 }
 
 .calendar {
-    width: 800px;
-    display: flex;
-
-    flex-direction: column;
-    position: relative;
-    left: 20px;
-    top: 20px;
-
-    border-left: 4px solid black;
-    border-right: 4px solid black;
-    border-top: 4px solid black;
-    border-bottom: 4px solid black;
+    flex: 2 1 65%;
+    min-width: 500px;
+    border: 4px solid black;
+    box-sizing: border-box;
 }
   
 .month-display {
@@ -183,29 +185,23 @@ html, body, #root {
 /* side bar stuff */
 
 .friend-display {
-    width: 340px;
+    width: 100%;
     height: 581px;
     background-color: #b4be89;
     border: 4px solid black;
     font-size: 20px;
-
-    
-    position: relative;
-    left: 5px;
-    top: 20px;
 }
 
 .friend-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     background-color: white;
-    border-top: 4px solid black;
-    border-left: 4px solid black;
-    border-right: 4px solid black;
-    border-bottom: 4px solid black;
+    border: 4px solid black;
     margin: 8px 8px 0 8px;
-
     height: 40px;
+
+    font-weight: bold;
 }
 
 .friend-body {
@@ -222,28 +218,23 @@ html, body, #root {
 }
 
 .day-summary {
-    width: 340px;
+    width: 100%;
     height: 581px;
     background-color: #b4be89;
     border: 4px solid black;
     font-size: 20px;
-
-    position: relative;
-    left: 5px;
-    top: 20px;
 }
 
 .day-summary-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     background-color: white;
-    border-top: 4px solid black;
-    border-left: 4px solid black;
-    border-right: 4px solid black;
-    border-bottom: 4px solid black;
+    border: 4px solid black;
     margin: 8px 8px 0 8px;
-
     height: 40px;
+
+    font-weight: bold;
 }
 
 .day-summary-body {
@@ -265,11 +256,16 @@ html, body, #root {
     align-items: flex-start;
 
     position: relative;
-    left: 5px;
     top: 10px;
 
     overflow-y: auto;
     max-height: 490px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    gap: 10px;
+    padding-bottom: 12px;
 }
 
 /* made da scroll bar invisible B) */
@@ -287,8 +283,9 @@ html, body, #root {
     transition: box-shadow 0.3s ease;
 
     text-align: left;
-    width: 100%;
-    width: 266px;
+    width: 90%;
+    box-sizing: border-box;
+    margin: 0 auto;
 }
 
 .event-summary-card:hover {
@@ -317,8 +314,30 @@ html, body, #root {
     transition: box-shadow 0.3s ease;
 
     text-align: left;
-    width: 100%;
-    width: 266px;
+    width: 90%;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.friend-event-summary-card:hover {
+    box-shadow: 0 4px 12px #b4be89;
+    cursor: pointer;
+}
+
+.friend-event-summary-card strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+}
+
+.friend-event-summary-card p {
+    margin: 0;
+    color: #555;
+}
+
+.friend-name-card {
+    font-weight: bold;
+    font-size: 15px;
 }
 
 /* profile */
@@ -366,15 +385,6 @@ html, body, #root {
     color: black;
 }
 
-.event-list {
-    /* list-style-type: circle; */
-    list-style-type: none;
-}
-
-.event-list li {
-    display: inline-block;
-}
-
 .add-event-btn, .side-bar-add {
     font-family: 'Comic Sans MS';
 }
@@ -388,6 +398,14 @@ html, body, #root {
 }
 
 /* Event Card Styles */
+.event-list {
+    list-style-type: none;
+}
+
+.event-list li {
+    display: inline-block;
+}
+
 .event-card {
     background-color: white;
     border: 2px solid #b4be89;
@@ -481,27 +499,271 @@ html, body, #root {
     margin-bottom: 20px;
 }
 
+.login-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .login-page {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: thistle;
-    height: 650px;
+
+    height: 100%;
+    min-height: 650px;
+
+    width: 100%;
+
+    border: 8px solid black;
+    margin: 20px;
+    padding-bottom: 20px;
+}
+
+.welcome-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    text-align: center;
+}
+
+.image-border {
+    border: 8px solid black;
+    background-color: #b4be89;
+    padding: 40px 60px;
+
+    font-family: 'Courier New', monospace;
+    font-size: 160px;
+    font-weight: 530;
+    text-align: center;
+
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    line-height: 1;
+}
+
+.welcome-text {
+    font-family: 'Courier New';
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.typewriter {
+    overflow: hidden;
+    border-right: 0.15em solid #6F4F67;
+    white-space: nowrap;
+    width: 0;
+    animation: typing 5s steps(52, end) forwards, blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to   { width: 52ch }
+}
+
+@keyframes blink-caret {
+    50% { border-color: transparent }
+}
+
+.login-button {
+    height: 70px;
+    width: 200px;
+    border: 4px solid #000;
+    border-radius: 25px;
+    background-color: #F4F3EF;
+
+    font-family: 'Courier New';
+    font-weight: 575;
+    font-size: 30px;
+}
+
+.login-button:hover {
+    background-color: #b4be89;
 }
 
 .cute-buttons {
+    height: 50px;
+    position: relative;
+    top: 10px;
+    border: 4px solid #000;
     border-radius: 25px;
     background-color: thistle;
 
     font-family: 'Courier New';
+    font-weight: 575;
+}
+
+.cute-buttons:hover {
+    background-color: #F4F3EF;
 }
 
 .day-summary-button {
+    background-color: thistle;
+    border: 1px solid black;
+
+}
+
+.day-summary-button:hover {
+    background-color: #F4F3EF;
+}
+
+.delete-event-button {
     border-radius: 25px;
     background-color: thistle;
+    border: 1px solid #000;
 
     font-family: 'Courier New';
+    font-weight: bold;
+
     position: relative;
-    right: 70px;
+    bottom: 5px;
+}
+
+.delete-event-button:hover {
+    background-color: #90986d;
+}
+
+
+/*For login page!*/
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.4s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* friend cards */
+
+.friend-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    position: relative;
+    top: 10px;
+
+    overflow-y: auto;
+    max-height: 490px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    gap: 10px;
+    padding-bottom: 12px;
+}
+
+.friend-card {
+    background-color: #f9f9f9;
+    border: 1px solid #b4be89;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 5px #b4be89;
+    transition: box-shadow 0.3s ease;
+
+    text-align: left;
+    width: 90%;
+    box-sizing: border-box;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    vertical-align: middle;
+}
+
+.friend-card:hover {
+    box-shadow: 0 4px 12px #b4be89;
+    cursor: pointer;
+}
+
+.friend-card strong {
+    display: block;
+    font-size: 1.1rem;
+}
+
+.friend-card p {
+    margin: 0;
+    color: #555;
+}
+
+.friend-checkbox {
+    accent-color: thistle;
+
+    width: 16px;
+    height: 16px;
+
+    vertical-align: middle;
+}
+
+
+/* calendar day event cards */
+.calendar-event-list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    max-height: 100px;
+    overflow: hidden;
+    padding: 2px 0;
+}
+
+.calendar-event-card {
+    background-color: #f9f9f9;
+    border: 1px solid #b4be89;
+    border-radius: 6px;
+    padding: 4px 6px;
+    font-size: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    width: 100%;
+    max-width: 100px;
+    box-sizing: border-box;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.calendar-event-card strong {
+    display: block;
+    font-size: 0.75rem;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    width: 100%;
+}
+
+.more-indicator {
+    background-color: transparent;
+    color: #777;
+    border: none;
+    text-align: center;
+    font-style: italic;
+    cursor: default;
+    box-shadow: none;
+}
+
+input::placeholder {
+  font-family: 'Courier New';
+  font-size: 12px;
+  color: gray;
+  font-style: italic;
+}
+
+.welcome-user {
+    position: relative;
+    top: 10px;
 }
