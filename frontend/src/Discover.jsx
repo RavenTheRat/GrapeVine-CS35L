@@ -4,6 +4,7 @@ import "./styles.css";
 
 function Discover() {
     const [events, setEvents] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const formatDate = (dateString) => {
       const d = new Date(dateString);
@@ -46,27 +47,52 @@ function Discover() {
         loadEvents();
         }, []);
 
-    return (
-        <>
-            <ul className="event-list">
-                {events
-                .filter(event => {
-                  const eventDate = new Date(event.startDt);
-                  const today = new Date();
+  return (
+    <>
+      <div style={{display: "flex", flexDirection: "column"}}>
+        <div style={{
+          marginTop: "25px",
+          marginLeft: "56px"
+        }}>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search by name, date, or description"
+            style={{
+              width: "285px",
+              padding: "8px 10px",
+              fontSize: "10px",
+              fontFamily: "Courier New",
+            }}
+          />
+        </div>
+        <div>
+          <ul className="event-list">
+            {events
+              .filter(event => {
+                const eventDate = new Date(event.startDt);
+                const today = new Date();
+                // we don't really care if this is an invalid date, it'll just cause the check to fail later.
+                const searchDate = new Date(searchTerm.toLowerCase());
 
-                  const todayUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
-                  const eventUTC = new Date(Date.UTC(eventDate.getUTCFullYear(), eventDate.getUTCMonth(), eventDate.getUTCDate()));
-                  
-                  return eventUTC >= todayUTC;
-                })
-                .map((event) => (
+                const todayUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+                const eventUTC = new Date(Date.UTC(eventDate.getUTCFullYear(), eventDate.getUTCMonth(), eventDate.getUTCDate()));
+                const searchUTC = new Date(Date.UTC(searchDate.getUTCFullYear(), searchDate.getUTCMonth(), searchDate.getUTCDate()));
+
+                return eventUTC >= todayUTC && (event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  event.description.toLowerCase().includes(searchTerm.toLowerCase()) || eventUTC.getTime() === searchUTC.getTime());
+              })
+              .map((event) => (
                 <li key={event.id}>
-                    <EventCard event={event} />
+                  <EventCard event={event} />
                 </li>
-                ))}
-            </ul>
-        </>  
-    );
+              ))}
+          </ul>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Discover;
