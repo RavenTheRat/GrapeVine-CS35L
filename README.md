@@ -47,6 +47,15 @@ AUTH0_CLIENT_SECRET="CLIENT_SECRET"
 
 ### Repository Setup
 
+First, install the required packages:
+
+```sh
+npm install
+```
+
+(If this fails, try running `npm install` in the `backend` and `frontend` folders separately, or running 
+`npm install --force`, or both. This has helped one of our groupmates who run on Windows.)
+
 The only setup you must complete is the database.
 In order to create the database schema, you must run the following commands initially and on each database schema change:
 
@@ -61,13 +70,9 @@ If you want to reset the database in a development environment, run `npx prisma 
 Then, you can run the commands below in the **top level** directory, and navigate to `http://localhost:3000/index.html`:
 
 ```sh
-npm install
 npm run build
 npm run dev
 ```
-
-(If this fails, try running `npm install` in the `backend` and `frontend` folders separately, or running 
-`npm install --force`, or both. This has helped one of our groupmates who run on Windows.)
 
 This will complete three steps:
 
