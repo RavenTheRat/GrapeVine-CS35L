@@ -2,6 +2,9 @@
 
 Grapevine developed by DARTZ, by Remi Akopians, Adelisa Navarro Cobian, David Zhong, Zayd Khan, and Thomas Scullin.
 
+![Calendar Page](docs/calendar_example.png)
+![Login Page](docs/public_example.png)
+
 ## Architecture
 
 Grapevine is broadly split into two components and their respective folders in `frontend` and `backend`.
